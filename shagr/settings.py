@@ -40,6 +40,9 @@ INSTALLED_APPS = [
 
     'baseapp',
     'goodsapp',
+
+    'rest_framework',
+    'apiapp',
 ]
 
 MIDDLEWARE = [

@@ -3,9 +3,11 @@ from django.db import models
 import uuid
 
 
-def get_uuid():
-    # return str(uuid.uuid4().fields[0])
+def get_uuid4():
     return str(uuid.uuid4())
+
+def get_uuid():
+    return str(uuid.uuid4().fields[0])
 
 def get_image_name(instance, filename):
     new_name = ('%s' + '.' + filename.split('.')[-1]) % instance.slug
@@ -78,7 +80,7 @@ class Category(models.Model):
         verbose_name_plural = 'Категории'
 
 
-class ObjectPropertyValue(models.Model):
+class GoodsPropertyValue(models.Model):
     good = models.ForeignKey(
         'Good',
         on_delete=models.CASCADE, verbose_name="Номенклатура", null=False
@@ -110,7 +112,7 @@ class ObjectPropertyValue(models.Model):
 
     def save(self, *args, **kwargs):
 
-        super(ObjectPropertyValue, self).save(*args, **kwargs)
+        super(GoodsPropertyValue, self).save(*args, **kwargs)
 
     class Meta:
         verbose_name = 'Значение свойства'
@@ -138,10 +140,33 @@ class Good(models.Model):
 
     def save(self, *args, **kwargs):
         if self.slug == "":
-            self.slug = get_uuid()
+            self.slug = get_uuid4()
 
         super(Good, self).save(*args, **kwargs)
 
     class Meta:
         verbose_name = 'Номенклатура'
         verbose_name_plural = 'Номенклатура'
+
+
+class Picture(models.Model):
+    title = models.CharField(max_length=150, verbose_name='Наименование', blank=True)
+    slug = models.SlugField(max_length=36, verbose_name='Url', blank=True, db_index=True)
+    good = models.ForeignKey('Good', verbose_name='Номенклатура', on_delete=models.CASCADE)
+    images = models.ImageField(upload_to=get_image_name, verbose_name='Изображение 370x220', default=None, null=True,
+                               blank=True)
+    main_image = models.BooleanField(verbose_name='Основная картинка', default=False)
+
+    def __str__(self):
+        return self.slug
+
+    def save(self, *args, **kwargs):
+        if self.slug == "":
+            self.slug = get_uuid()
+            self.title = self.slug
+
+        super(Picture, self).save(*args, **kwargs)
+
+    class Meta:
+        verbose_name = 'Картинка'
+        verbose_name_plural = 'Картинки'

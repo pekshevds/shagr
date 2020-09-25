@@ -2,8 +2,12 @@ from django.contrib import admin
 
 from django import forms
 
-from .models import Good, Category, Property, Value, ObjectPropertyValue
+from .models import Good, Category, Property, Value, GoodsPropertyValue, Picture
 
+class PictureInline(admin.TabularInline):
+    model = Picture
+    exclude = ('title', 'slug')
+    extra = 0
 
 class ValueInline(admin.TabularInline):
     model = Value
@@ -46,14 +50,14 @@ class GoodAdmin(admin.ModelAdmin):
         'is_hot'
     )
 
-    # inlines = [PictureInline, ]
+    inlines = [PictureInline, ]
 
     list_filter = ('is_sale', 'is_new', 'is_hot')
 
     exclude = ('slug',)
 
 
-class ObjectPropertyValueAdmin(admin.ModelAdmin):
+class GoodsPropertyValueAdmin(admin.ModelAdmin):
     list_display = (
         'good',
         'property',
@@ -65,5 +69,5 @@ class ObjectPropertyValueAdmin(admin.ModelAdmin):
 
 admin.site.register(Property, PropertyAdmin)
 admin.site.register(Category, CategoryAdmin)
-admin.site.register(ObjectPropertyValue, ObjectPropertyValueAdmin)
+admin.site.register(GoodsPropertyValue, GoodsPropertyValueAdmin)
 admin.site.register(Good, GoodAdmin)

@@ -1,7 +1,9 @@
 from .models import Good
 from .models import Offer
+from .models import GoodsPropertyValue
 
 
+# universal
 def find_good_by_slug(slug):
     try:
         good = Good.objects.get(slug=slug)
@@ -11,6 +13,7 @@ def find_good_by_slug(slug):
     return good
 
 
+# goods
 def create_good(slug, name, art='', full_name='', description='', is_sale=False, is_new=False, is_hot=False):
     good = find_good_by_slug(slug)
     if not good is None:
@@ -49,14 +52,46 @@ def update_good(slug, name, art='', full_name='', description='', is_sale=False,
     return good
 
 
-def create_offer(good, price=0, quant=0):
-    good = find_good_by_slug(good)
+def get_properties_and_values(good):
+    try:
+        records = GoodsPropertyValue.objects.filter(good=good)
+    except:
+        return None
+    return records
+
+
+def get_category_goods(category_list):
+    try:
+        goods = Good.objects.filter(category__in=category_list)
+    except:
+        return None
+    return goods
+
+
+
+
+
+
+
+
+
+
+# offers
+def create_offer(slug, price=0, quant=0):
+    good = find_good_by_slug(slug)
     if good is None:
-        return False
+        return None
 
     try:
-
-        Offer.objects.create(good, price, quant)
+        offer = Offer.objects.create(good, price, quant)
     except:
-        return False
-    return True
+        return None
+    return offer
+
+
+def get_last_offer(good):
+    try:
+        offer = Offer.objects.filter(good=good).order_by('-date')[:0]
+    except:
+        return None
+    return offer

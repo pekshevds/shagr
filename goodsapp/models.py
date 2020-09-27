@@ -130,7 +130,7 @@ class Good(models.Model):
         'PropertySetTemplate',
         on_delete=models.PROTECT, verbose_name="Шаблон набора свойств", blank=True, null=True
     )
-    category = models.ManyToManyField(Category, verbose_name="Категория", null=True)
+    category = models.ManyToManyField('Category', verbose_name="Категория", null=True)
 
     def __str__(self):
         return self.name

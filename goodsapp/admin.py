@@ -2,12 +2,36 @@ from django.contrib import admin
 
 from django import forms
 
-from .models import Good, Category, Property, Value, GoodsPropertyValue, Picture
+from .models import Good
+from .models import Category
+from .models import Property
+from .models import Value
+from .models import GoodsPropertyValue
+from .models import Picture
+from .models import PropertySetTemplate
+from .models import Offer
+
 
 class PictureInline(admin.TabularInline):
     model = Picture
     exclude = ('title', 'slug')
     extra = 0
+
+
+class GoodsPropertyValueInlineForm(forms.ModelForm):
+    def __init__(self, *args, **kwargs):
+        super(GoodsPropertyValueInlineForm, self).__init__(*args, **kwargs)
+        try:
+            self.fields['value'].queryset = Value.objects.filter(property=self.instance.property)
+        except:
+            self.fields['value'].queryset = Value.objects
+
+
+class GoodsPropertyValueInline(admin.TabularInline):
+    model = GoodsPropertyValue
+    form = GoodsPropertyValueInlineForm
+    extra = 0
+
 
 class ValueInline(admin.TabularInline):
     model = Value
@@ -18,12 +42,9 @@ class ValueInline(admin.TabularInline):
 class PropertyAdmin(admin.ModelAdmin):
     list_display = (
         'name',
-        'category',
     )
 
     inlines = [ValueInline, ]
-
-    list_filter = ('category',)
 
     exclude = ('slug',)
 
@@ -33,10 +54,6 @@ class CategoryAdmin(admin.ModelAdmin):
         'name',
     )
 
-    # inlines = [PictureInline, ]
-
-    # list_filter = ('is_sale', 'is_new', 'is_hot')
-
     exclude = ('slug',)
 
 
@@ -44,30 +61,21 @@ class GoodAdmin(admin.ModelAdmin):
     list_display = (
         'name',
         'full_name',
-        'category',
         'is_sale',
         'is_new',
         'is_hot'
     )
 
-    inlines = [PictureInline, ]
+    inlines = [PictureInline, GoodsPropertyValueInline, ]
 
     list_filter = ('is_sale', 'is_new', 'is_hot')
 
     exclude = ('slug',)
 
 
-class GoodsPropertyValueAdmin(admin.ModelAdmin):
-    list_display = (
-        'good',
-        'property',
-        'value'
-    )
-
-    list_filter = ('good', 'property', 'value')
-
 
 admin.site.register(Property, PropertyAdmin)
 admin.site.register(Category, CategoryAdmin)
-admin.site.register(GoodsPropertyValue, GoodsPropertyValueAdmin)
 admin.site.register(Good, GoodAdmin)
+admin.site.register(PropertySetTemplate)
+admin.site.register(Offer)

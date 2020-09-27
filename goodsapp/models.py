@@ -6,8 +6,10 @@ import uuid
 def get_uuid4():
     return str(uuid.uuid4())
 
+
 def get_uuid():
     return str(uuid.uuid4().fields[0])
+
 
 def get_image_name(instance, filename):
     new_name = ('%s' + '.' + filename.split('.')[-1]) % instance.slug
@@ -39,14 +41,24 @@ class Value(models.Model):
         verbose_name_plural = 'Значения'
 
 
+class PropertySetTemplate(models.Model):
+    name = models.CharField(max_length=255, verbose_name="Наименование", null=True)
+
+    def __str__(self):
+        return self.name
+
+    def save(self, *args, **kwargs):
+        super(PropertySetTemplate, self).save(*args, **kwargs)
+
+    class Meta:
+        verbose_name = 'Шаблон наборов свойств'
+        verbose_name_plural = 'Шаблоны наборов свойств'
+
+
 class Property(models.Model):
     slug = models.SlugField(max_length=36, verbose_name='Url', blank=True, db_index=True)
     name = models.CharField(max_length=255, verbose_name="Наименование", null=True)
-
-    category = models.ForeignKey(
-        'Category',
-        on_delete=models.CASCADE, verbose_name="Категория", null=False
-    )
+    template = models.ManyToManyField(PropertySetTemplate, verbose_name="Шаблон", null=True)
 
     def __str__(self):
         return self.name
@@ -60,7 +72,6 @@ class Property(models.Model):
     class Meta:
         verbose_name = 'Свойство'
         verbose_name_plural = 'Свойства'
-
 
 class Category(models.Model):
     slug = models.SlugField(max_length=36, verbose_name='Url', blank=True, db_index=True)
@@ -93,26 +104,11 @@ class GoodsPropertyValue(models.Model):
 
     value = models.ForeignKey(
         'Value',
-        on_delete=models.CASCADE, verbose_name="Значение", null=False
+        on_delete=models.CASCADE, verbose_name="Значение", null=True, blank=True
     )
 
-    # value = ChainedForeignKey(
-    #     'Value',
-    #     on_delete=models.CASCADE,
-    #     verbose_name="Значение",
-    #     null=False,
-    #     chained_field="property",
-    #     chained_model_field="property",
-    #     show_all=False,
-    #     auto_choose=True
-    # )
-
     def __str__(self):
-        return str(self.id)
-
-    def save(self, *args, **kwargs):
-
-        super(GoodsPropertyValue, self).save(*args, **kwargs)
+        return str(self.property) + ': ' + str(self.value)
 
     class Meta:
         verbose_name = 'Значение свойства'
@@ -130,10 +126,11 @@ class Good(models.Model):
     is_new = models.BooleanField(verbose_name="Новинка")
     is_hot = models.BooleanField(verbose_name="Спецпредложение")
 
-    category = models.ForeignKey(
-        'Category',
-        on_delete=models.PROTECT, verbose_name="Категория", null=True
+    template = models.ForeignKey(
+        'PropertySetTemplate',
+        on_delete=models.PROTECT, verbose_name="Шаблон набора свойств", blank=True, null=True
     )
+    category = models.ManyToManyField(Category, verbose_name="Категория", null=True)
 
     def __str__(self):
         return self.name
@@ -143,6 +140,16 @@ class Good(models.Model):
             self.slug = get_uuid4()
 
         super(Good, self).save(*args, **kwargs)
+
+        queryset = GoodsPropertyValue.objects.filter(good=self)
+        if not self.template is None and len(queryset) == 0:
+
+            properties = Property.objects.filter(template=self.template)
+            for property in properties:
+                record = GoodsPropertyValue()
+                record.good = self
+                record.property = property
+                record.save()
 
     class Meta:
         verbose_name = 'Номенклатура'
@@ -170,3 +177,19 @@ class Picture(models.Model):
     class Meta:
         verbose_name = 'Картинка'
         verbose_name_plural = 'Картинки'
+
+
+class Offer(models.Model):
+    good = models.ForeignKey(
+        'Good',
+        on_delete=models.PROTECT, verbose_name="Номенклатура", blank=True, null=True
+    )
+
+    price = models.DecimalField( verbose_name='Цена', default=0, max_digits=15, decimal_places=2)
+    quant = models.DecimalField(verbose_name='Количество', default=0, max_digits=15, decimal_places=3)
+    date = models.DateTimeField(verbose_name='Период', auto_now=False, auto_now_add=True)
+
+
+    class Meta:
+        verbose_name = 'Предложение'
+        verbose_name_plural = 'Предложения'

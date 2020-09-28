@@ -35,7 +35,6 @@ class GoodsPropertyValueInline(admin.TabularInline):
 
 class ValueInline(admin.TabularInline):
     model = Value
-    exclude = ('slug',)
     extra = 0
 
 

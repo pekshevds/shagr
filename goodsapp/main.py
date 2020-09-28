@@ -4,9 +4,9 @@ from .models import GoodsPropertyValue
 
 
 # universal
-def find_good_by_slug(slug):
+def find_good_by_uid_1c(uid_1c):
     try:
-        good = Good.objects.get(slug=slug)
+        good = Good.objects.get(uid_1c=uid_1c)
     except:
         return None
 
@@ -14,14 +14,14 @@ def find_good_by_slug(slug):
 
 
 # goods
-def create_good(slug, name, art='', full_name='', description='', is_sale=False, is_new=False, is_hot=False):
-    good = find_good_by_slug(slug)
+def create_good(uid_1c, name, art='', full_name='', description='', is_sale=False, is_new=False, is_hot=False):
+    good = find_good_by_uid_1c(uid_1c)
     if not good is None:
         return good
 
     try:
 
-        good = Good.objects.create(slug=slug, name=name, art=art, full_name=full_name, description=description,
+        good = Good.objects.create(uid_1c=uid_1c, name=name, art=art, full_name=full_name, description=description,
                                    is_sale=is_sale, is_new=is_new, is_hot=is_hot)
         # good.save()
 
@@ -30,10 +30,11 @@ def create_good(slug, name, art='', full_name='', description='', is_sale=False,
     return good
 
 
-def update_good(slug, name, art='', full_name='', description='', is_sale=False, is_new=False, is_hot=False):
-    good = find_good_by_slug(slug)
+def update_good(uid_1c, name, art='', full_name='', description='', is_sale=False, is_new=False, is_hot=False):
+    good = find_good_by_uid_1c(uid_1c)
     if good is None:
-        return create_good(slug=slug, name=name, art=art, full_name=full_name, description=description, is_sale=is_sale,
+        return create_good(uid_1c=uid_1c, name=name, art=art, full_name=full_name, description=description,
+                           is_sale=is_sale,
                            is_new=is_new, is_hot=is_hot)
 
     try:
@@ -68,17 +69,20 @@ def get_category_goods(category_list):
     return goods
 
 
-
-
-
-
-
-
-
-
 # offers
-def create_offer(slug, price=0, quant=0):
-    good = find_good_by_slug(slug)
+def download_offer(uid_1c, price=0, quant=0):
+    good = find_good_by_uid_1c(uid_1c)
+    if good is None:
+        return None
+
+    try:
+        offer = create_offer(good, price, quant)
+    except:
+        return None
+    return offer
+
+
+def create_offer(good, price=0, quant=0):
     if good is None:
         return None
 

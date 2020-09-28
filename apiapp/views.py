@@ -5,7 +5,7 @@ from rest_framework.views import APIView
 # Create your views here.
 
 from goodsapp.models import Good
-from goodsapp.main import update_good, create_offer
+from goodsapp.main import update_good, download_offer
 from .serializers import GoodSerializer
 
 
@@ -29,7 +29,7 @@ class UploadGoodsView(APIView):
 
         try:
             for good in goods:
-                update_good(slug=good['slug'],
+                update_good(slug=good['uid_1c'],
                             name=good['name'],
                             art=good['art'],
                             description=good['description'],
@@ -51,7 +51,7 @@ class UploadOffersView(APIView):
 
         try:
             for offer in offers:
-                create_offer(good=offer['good'],
+                download_offer(uid_1c=offer['uid_1c'],
                              price=offer['price'],
                              quant=offer['quant'])
         except:

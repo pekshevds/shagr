@@ -2,7 +2,7 @@ from rest_framework import serializers
 
 class GoodSerializer(serializers.Serializer):
 
-    slug = serializers.CharField(max_length=36)
+    uid_1c = serializers.CharField(max_length=36)
     name = serializers.CharField(max_length=255)
     art = serializers.CharField(max_length=25)
     description = serializers.CharField()

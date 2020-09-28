@@ -46,7 +46,6 @@ class PropertyAdmin(admin.ModelAdmin):
 
     inlines = [ValueInline, ]
 
-    exclude = ('slug',)
 
 
 class CategoryAdmin(admin.ModelAdmin):
@@ -54,7 +53,6 @@ class CategoryAdmin(admin.ModelAdmin):
         'name',
     )
 
-    exclude = ('slug',)
 
 
 class GoodAdmin(admin.ModelAdmin):
@@ -70,7 +68,7 @@ class GoodAdmin(admin.ModelAdmin):
 
     list_filter = ('is_sale', 'is_new', 'is_hot')
 
-    exclude = ('slug',)
+    exclude = ('uid_1c',)
 
 
 

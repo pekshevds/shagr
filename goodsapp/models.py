@@ -19,7 +19,6 @@ def get_image_name(instance, filename):
 # Create your models here.
 
 class Value(models.Model):
-    slug = models.SlugField(max_length=36, verbose_name='Url', blank=True, db_index=True)
     name = models.CharField(max_length=255, verbose_name="Наименование", null=True)
 
     property = models.ForeignKey(
@@ -31,9 +30,6 @@ class Value(models.Model):
         return self.name
 
     def save(self, *args, **kwargs):
-        if self.slug == "":
-            self.slug = get_uuid()
-
         super(Value, self).save(*args, **kwargs)
 
     class Meta:
@@ -56,34 +52,27 @@ class PropertySetTemplate(models.Model):
 
 
 class Property(models.Model):
-    slug = models.SlugField(max_length=36, verbose_name='Url', blank=True, db_index=True)
     name = models.CharField(max_length=255, verbose_name="Наименование", null=True)
-    template = models.ManyToManyField(PropertySetTemplate, verbose_name="Шаблон", null=True)
+    template = models.ManyToManyField(PropertySetTemplate, verbose_name="Шаблон", blank=True)
 
     def __str__(self):
         return self.name
 
     def save(self, *args, **kwargs):
-        if self.slug == "":
-            self.slug = get_uuid()
-
         super(Property, self).save(*args, **kwargs)
 
     class Meta:
         verbose_name = 'Свойство'
         verbose_name_plural = 'Свойства'
 
+
 class Category(models.Model):
-    slug = models.SlugField(max_length=36, verbose_name='Url', blank=True, db_index=True)
     name = models.CharField(max_length=255, verbose_name="Наименование", null=True)
 
     def __str__(self):
         return self.name
 
     def save(self, *args, **kwargs):
-        if self.slug == "":
-            self.slug = get_uuid()
-
         super(Category, self).save(*args, **kwargs)
 
     class Meta:
@@ -116,7 +105,6 @@ class GoodsPropertyValue(models.Model):
 
 
 class Good(models.Model):
-    slug = models.SlugField(max_length=36, verbose_name='Url', blank=True, db_index=True)
     name = models.CharField(max_length=255, verbose_name="Наименование", null=True)
     art = models.CharField(max_length=25, verbose_name="Артикул", null=True, blank=True)
     full_name = models.TextField(verbose_name="Наименование полное", null=True, blank=True)
@@ -125,19 +113,20 @@ class Good(models.Model):
     is_sale = models.BooleanField(verbose_name="Распродажа")
     is_new = models.BooleanField(verbose_name="Новинка")
     is_hot = models.BooleanField(verbose_name="Спецпредложение")
+    uid_1c = models.SlugField(max_length=36, verbose_name='Идентификаторв в 1С', null=True, blank=True)
 
     template = models.ForeignKey(
         'PropertySetTemplate',
         on_delete=models.PROTECT, verbose_name="Шаблон набора свойств", blank=True, null=True
     )
-    category = models.ManyToManyField('Category', verbose_name="Категория", null=True)
+    category = models.ManyToManyField('Category', verbose_name="Категория", blank=True)
 
     def __str__(self):
         return self.name
 
     def save(self, *args, **kwargs):
-        if self.slug == "":
-            self.slug = get_uuid4()
+        if self.uid_1c == "":
+            self.uid_1c = get_uuid4()
 
         super(Good, self).save(*args, **kwargs)
 
@@ -185,10 +174,9 @@ class Offer(models.Model):
         on_delete=models.PROTECT, verbose_name="Номенклатура", blank=True, null=True
     )
 
-    price = models.DecimalField( verbose_name='Цена', default=0, max_digits=15, decimal_places=2)
+    price = models.DecimalField(verbose_name='Цена', default=0, max_digits=15, decimal_places=2)
     quant = models.DecimalField(verbose_name='Количество', default=0, max_digits=15, decimal_places=3)
     date = models.DateTimeField(verbose_name='Период', auto_now=False, auto_now_add=True)
-
 
     class Meta:
         verbose_name = 'Предложение'

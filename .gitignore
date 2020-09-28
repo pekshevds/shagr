@@ -1,0 +1,8 @@
+*.pyc
+*~
+__pycache__
+djangoenvbsk31
+.DC_Store
+db.sqlite3
+media
+.env

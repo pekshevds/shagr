@@ -26,7 +26,7 @@ SECRET_KEY = '%s)1y^@2=jk&54(w!ji8n@y4+a@@huadr@+#^5j6o-rev)g2a1'
 DEBUG = True
 
 #ALLOWED_HOSTS = []
-ALLOWED_HOSTS = ['localhost', 'instrument-plus.ru', 'www.instrument-plus.ru']
+ALLOWED_HOSTS = ['vecuadorose.ru', 'www.vecuadorose.ru', 'localhost']
 
 # Application definition
 
@@ -123,12 +123,8 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.2/howto/static-files/
 
-#STATIC_ROOT = os.path.join(BASE_DIR, 'static') # пустая папка, сюда будет собирать статику collectstatic
+STATIC_ROOT = os.path.join(BASE_DIR, 'static') # пустая папка, сюда будет собирать статику collectstatic
 STATIC_URL = '/static/'
-
-STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, "static"),
-]
 
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media') # пустая папка, сюда будет собирать статику collectstatic
 MEDIA_URL = '/media/'

@@ -110,10 +110,10 @@ class Good(models.Model):
     full_name = models.TextField(verbose_name="Наименование полное", null=True, blank=True)
     description = models.TextField(verbose_name="Описание", null=True, blank=True)
 
-    is_sale = models.BooleanField(verbose_name="Распродажа")
-    is_new = models.BooleanField(verbose_name="Новинка")
-    is_hot = models.BooleanField(verbose_name="Спецпредложение")
-    is_service = models.BooleanField(verbose_name="Услуга")
+    is_sale = models.BooleanField(verbose_name="Распродажа", default=False)
+    is_new = models.BooleanField(verbose_name="Новинка", default=False)
+    is_hot = models.BooleanField(verbose_name="Спецпредложение", default=False)
+    is_service = models.BooleanField(verbose_name="Услуга", default=False)
     uid_1c = models.SlugField(max_length=36, verbose_name='Идентификаторв в 1С', null=True, blank=True)
 
     template = models.ForeignKey(

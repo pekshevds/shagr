@@ -14,15 +14,20 @@ def find_good_by_uid_1c(uid_1c):
 
 
 # goods
-def create_good(uid_1c, name, art='', full_name='', description='', is_sale=False, is_new=False, is_hot=False):
+def create_good(uid_1c, name,
+                art='', full_name='',
+                description='', is_sale=False,
+                is_new=False, is_hot=False, is_service=False):
     good = find_good_by_uid_1c(uid_1c)
     if not good is None:
         return good
 
     try:
 
-        good = Good.objects.create(uid_1c=uid_1c, name=name, art=art, full_name=full_name, description=description,
-                                   is_sale=is_sale, is_new=is_new, is_hot=is_hot)
+        good = Good.objects.create(uid_1c=uid_1c, name=name,
+                                   art=art, full_name=full_name,
+                                   description=description, is_sale=is_sale,
+                                   is_new=is_new, is_hot=is_hot, is_service=is_service)
         # good.save()
 
     except:
@@ -30,12 +35,17 @@ def create_good(uid_1c, name, art='', full_name='', description='', is_sale=Fals
     return good
 
 
-def update_good(uid_1c, name, art='', full_name='', description='', is_sale=False, is_new=False, is_hot=False):
+def update_good(uid_1c, name, art='',
+                full_name='', description='',
+                is_sale=False, is_new=False,
+                is_hot=False, is_service=False):
+
     good = find_good_by_uid_1c(uid_1c)
     if good is None:
-        return create_good(uid_1c=uid_1c, name=name, art=art, full_name=full_name, description=description,
-                           is_sale=is_sale,
-                           is_new=is_new, is_hot=is_hot)
+        return create_good(uid_1c=uid_1c, name=name,
+                           art=art, full_name=full_name,
+                           description=description, is_sale=is_sale,
+                           is_new=is_new, is_hot=is_hot, is_service=is_service)
 
     try:
 
@@ -46,6 +56,7 @@ def update_good(uid_1c, name, art='', full_name='', description='', is_sale=Fals
         good.is_sale = is_sale
         good.is_new = is_new
         good.is_hot = is_hot
+        good.is_hot = is_service
         good.save()
 
     except:

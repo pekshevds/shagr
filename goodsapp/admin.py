@@ -60,12 +60,13 @@ class GoodAdmin(admin.ModelAdmin):
         'full_name',
         'is_sale',
         'is_new',
-        'is_hot'
+        'is_hot',
+        'is_service'
     )
 
     inlines = [PictureInline, GoodsPropertyValueInline, ]
 
-    list_filter = ('is_sale', 'is_new', 'is_hot')
+    list_filter = ('is_sale', 'is_new', 'is_hot', 'is_service')
 
     exclude = ('uid_1c',)
 

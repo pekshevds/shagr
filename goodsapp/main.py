@@ -39,7 +39,7 @@ def update_good(uid_1c, name, art='', full_name='', description='', is_sale=Fals
 
     try:
 
-        good.name = name,
+        good.name = name
         good.art = art
         good.full_name = full_name
         good.description = description

@@ -66,7 +66,7 @@ class GoodAdmin(admin.ModelAdmin):
 
     inlines = [PictureInline, GoodsPropertyValueInline, ]
 
-    list_filter = ('is_sale', 'is_new', 'is_hot', 'is_service')
+    list_filter = ('is_sale', 'is_new', 'is_hot', 'is_service', 'category')
 
     exclude = ('uid_1c',)
 

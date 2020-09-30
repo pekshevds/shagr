@@ -56,7 +56,7 @@ def update_good(uid_1c, name, art='',
         good.is_sale = is_sale
         good.is_new = is_new
         good.is_hot = is_hot
-        good.is_hot = is_service
+        good.is_service = is_service
         good.save()
 
     except:

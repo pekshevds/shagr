@@ -107,7 +107,7 @@ class GoodsPropertyValue(models.Model):
 class Good(models.Model):
     name = models.CharField(max_length=255, verbose_name="Наименование", null=True)
     art = models.CharField(max_length=25, verbose_name="Артикул", null=True, blank=True)
-    full_name = models.TextField(verbose_name="Наименование полное", null=True, blank=True)
+    full_name = models.TextField(verbose_name="Наименование для магазина", null=True, blank=True)
     description = models.TextField(verbose_name="Описание", null=True, blank=True)
 
     is_sale = models.BooleanField(verbose_name="Распродажа", default=False)

@@ -33,7 +33,6 @@ class UploadGoodsView(APIView):
                             name=good['name'],
                             art=good['art'],
                             description=good['description'],
-                            full_name=good['full_name'],
                             is_service=good['is_service'] == "True")
         except:
             return Response({"success": "error"})

@@ -50,6 +50,7 @@ class PropertyAdmin(admin.ModelAdmin):
 class CategoryAdmin(admin.ModelAdmin):
     list_display = (
         'name',
+        'parent',
     )
 
 
@@ -58,6 +59,7 @@ class GoodAdmin(admin.ModelAdmin):
     list_display = (
         'name',
         'full_name',
+        'category',
         'is_sale',
         'is_new',
         'is_hot',
@@ -67,6 +69,10 @@ class GoodAdmin(admin.ModelAdmin):
     inlines = [PictureInline, GoodsPropertyValueInline, ]
 
     list_filter = ('is_sale', 'is_new', 'is_hot', 'is_service', 'category')
+
+    search_fields = ('name',)
+
+    readonly_fields = ('code_1c',)
 
     exclude = ('uid_1c',)
 

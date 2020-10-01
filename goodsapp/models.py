@@ -68,6 +68,8 @@ class Property(models.Model):
 
 class Category(models.Model):
     name = models.CharField(max_length=255, verbose_name="Наименование", null=True)
+    parent = models.ForeignKey('Category', verbose_name="Родитель", on_delete=models.PROTECT, blank=True, null=True)
+
 
     def __str__(self):
         return self.name
@@ -107,6 +109,7 @@ class GoodsPropertyValue(models.Model):
 class Good(models.Model):
     name = models.CharField(max_length=255, verbose_name="Наименование", null=True)
     art = models.CharField(max_length=25, verbose_name="Артикул", null=True, blank=True)
+    code_1c = models.CharField(max_length=11, verbose_name="Код 1С", null=True, blank=True)
     full_name = models.TextField(verbose_name="Наименование для магазина", null=True, blank=True)
     description = models.TextField(verbose_name="Описание", null=True, blank=True)
 
@@ -120,7 +123,7 @@ class Good(models.Model):
         'PropertySetTemplate',
         on_delete=models.PROTECT, verbose_name="Шаблон набора свойств", blank=True, null=True
     )
-    category = models.ManyToManyField('Category', verbose_name="Категория", blank=True)
+    category = models.ForeignKey('Category', verbose_name="Категория", on_delete=models.PROTECT, blank=True, null=True)
 
     def __str__(self):
         return self.name

@@ -30,6 +30,7 @@ class UploadGoodsView(APIView):
         try:
             for good in goods:
                 update_good(uid_1c=good['uid_1c'],
+                            code_1c=good['code_1c'],
                             name=good['name'],
                             art=good['art'],
                             description=good['description'],

@@ -63,12 +63,13 @@ class GoodAdmin(admin.ModelAdmin):
         'is_sale',
         'is_new',
         'is_hot',
-        'is_service'
+        'is_service',
+        'is_show'
     )
 
     inlines = [PictureInline, GoodsPropertyValueInline, ]
 
-    list_filter = ('is_sale', 'is_new', 'is_hot', 'is_service', 'category')
+    list_filter = ('is_sale', 'is_new', 'is_hot', 'is_service', 'is_show', 'category')
 
     search_fields = ('name',)
 

@@ -45,7 +45,7 @@ def update_good(uid_1c, name, art='',
         return create_good(uid_1c=uid_1c, name=name,
                            art=art, code_1c=code_1c,
                            description=description, is_sale=is_sale,
-                           is_new=is_new, is_hot=is_hot, is_service=is_service)
+                           is_new=True, is_hot=is_hot, is_service=is_service)
 
     try:
 

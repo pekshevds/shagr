@@ -117,6 +117,7 @@ class Good(models.Model):
     is_new = models.BooleanField(verbose_name="Новинка", default=False)
     is_hot = models.BooleanField(verbose_name="Спецпредложение", default=False)
     is_service = models.BooleanField(verbose_name="Услуга", default=False)
+    is_show = models.BooleanField(verbose_name="Виден для пользователей", default=False)
     uid_1c = models.SlugField(max_length=36, verbose_name='Идентификаторв в 1С', null=True, blank=True)
 
     template = models.ForeignKey(

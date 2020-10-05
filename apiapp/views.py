@@ -52,7 +52,7 @@ class UploadOffersView(APIView):
             return Response({"success": "offers list is none"})
 
         try:
-            for offer in offers:
+            for offer in offers:                
                 download_offer(uid_1c=offer['uid_1c'],
                              price=offer['price'],
                              quant=offer['quant'])

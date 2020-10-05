@@ -109,11 +109,12 @@ def get_category_goods(category_list):
 # offers
 def download_offer(uid_1c, price=0, quant=0):
     good = find_good_by_uid_1c(uid_1c)
+
     if good is None:
         return None
 
     try:
-        offer = create_offer(good, price, quant)
+        offer = create_offer(good=good, price=price, quant=quant)
     except:
         return None
     return offer
@@ -122,9 +123,9 @@ def download_offer(uid_1c, price=0, quant=0):
 def create_offer(good, price=0, quant=0):
     if good is None:
         return None
-
+    
     try:
-        offer = Offer.objects.create(good, price, quant)
+        offer = Offer.objects.create(good=good, price=price, quant=quant)
     except:
         return None
     return offer

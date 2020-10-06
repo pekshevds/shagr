@@ -115,6 +115,7 @@
 			</div>
 		</div>
 	</div>
+
 </footer>
 <!-- site__footer / end -->
 {% endblock %}
@@ -157,10 +158,11 @@
 						<div class="departments__arrow"></div>
 						<div class="departments__body">
 							<ul class="departments__list">
-								{% for item in categories %}
+								{% for item in categories.0 %}
+								{% if item.0 not in categories.1 %}
 								<li class="departments__item departments__item--submenu--megamenu departments__item--has-submenu">
 									<a href="" class="departments__item-link">
-										{{ item.0 }}
+										{{ item.0 }}		
 										<span class="departments__item-arrow">
 											<svg width="7" height="11">
 												<path d="M0.3,10.7L0.3,10.7c0.4,0.4,0.9,0.4,1.3,0L7,5.5L1.6,0.3C1.2-0.1,0.7,0,0.3,0.3l0,0c-0.4,0.4-0.4,1,0,1.3l4,3.9l-4,3.9
@@ -177,8 +179,14 @@
 												<div class="col-1of5">
 													<ul class="megamenu__links megamenu-links megamenu-links--root">
 														<li class="megamenu-links__item megamenu-links__item--has-submenu">
-															<a class="megamenu-links__item-link" href="">{{ cat }}</a>
-															<ul class="megamenu-links"></ul>
+															<a class="megamenu-links__item-link" href="">{{ cat.0 }}</a>
+															<ul class="megamenu-links">
+																{% if cat.1 %}
+																{% for n in cat.1 %}
+																<li class="megamenu-links__item"><a class="megamenu-links__item-link" href="">{{ n }}</a></li>
+																{% endfor %}
+																{% endif %}
+															</ul>
 														</li>
 													</ul>
 												</div>
@@ -187,6 +195,7 @@
 										</div>
 									</div>
 								</li>
+								{% endif %}
 								{% endfor %}
 							</ul>
 							<div class="departments__menu-container"></div>
@@ -212,7 +221,9 @@
 							</a>
 							<div class="main-menu__submenu">
 								<ul class="menu">
-									{% for item in categories %}
+
+									{% for item in categories.0 %}
+									{% if item.0 not in categories.1 %}
 									<li class="menu__item menu__item--has-submenu">
 										<a href="blog-classic-right-sidebar.html" class="menu__link">
 											{{ item.0 }}
@@ -225,15 +236,34 @@
 										<div class="menu__submenu">
 											<ul class="menu">
 												{% for cat in item.1 %}
-												<li class="menu__item">
+												<li class="menu__item {% if cat.1 %}menu__item--has-submenu{% endif %}">
 													<a href="blog-classic-left-sidebar.html" class="menu__link">
-														{{ cat }}
+														{{ cat.0 }}
+													{% if cat.1 %}
+													<span class="menu__arrow">
+														<svg width="6px" height="9px">
+														<path d="M0.3,7.4l3-2.9l-3-2.9c-0.4-0.3-0.4-0.9,0-1.3l0,0c0.4-0.3,0.9-0.4,1.3,0L6,4.5L1.6,8.7c-0.4,0.4-0.9,0.4-1.3,0l0,0C-0.1,8.4-0.1,7.8,0.3,7.4z" />
+														</svg>
+													</span>
+													{% endif %}	
 													</a>
+													<div class="menu__submenu">
+														<ul class="menu">
+															{% for n in cat.1 %}
+															<li class="menu__item {% if cat.1 %}menu__item--has-submenu{% endif %}">
+																<a href="blog-classic-left-sidebar.html" class="menu__link">
+																	{{ n }}
+																</a>
+															</li>
+															{% endfor %}
+														</ul>
+													</div>
 												</li>
 												{% endfor %}
 											</ul>
 										</div>
 									</li>
+									{% endif %}
 									{% endfor %}
 								</ul>
 							</div>
@@ -609,7 +639,8 @@
 						</div>
 						<div class="mobile-menu__panel-body">
 							<ul class="mobile-menu__links">
-								{% for item in categories %}
+								{% for item in categories.0 %}
+								{% if item.0 not in categories.1 %}
 								<li data-mobile-menu-item>
 									<a href="blog-classic-right-sidebar.html" class="" data-mobile-menu-trigger>
 										{{ item.0 }}
@@ -633,8 +664,39 @@
 													{% for cat in item.1 %}
 													<li data-mobile-menu-item>
 														<a href="blog-classic-left-sidebar.html" class="" data-mobile-menu-trigger>
-															{{ cat }}
+															{{ cat.0 }}
+															{% if cat.1 %}
+															<svg width="7" height="11">
+																<path d="M0.3,10.7L0.3,10.7c0.4,0.4,0.9,0.4,1.3,0L7,5.5L1.6,0.3C1.2-0.1,0.7,0,0.3,0.3l0,0c-0.4,0.4-0.4,1,0,1.3l4,3.9l-4,3.9
+																C-0.1,9.8-0.1,10.4,0.3,10.7z" />
+															</svg>
+															{% endif %}
 														</a>
+														{% if cat.1 %}
+														<div class="mobile-menu__links-panel" data-mobile-menu-panel>
+															<div class="mobile-menu__panel mobile-menu__panel--hidden">
+																<div class="mobile-menu__panel-header">
+																	<button class="mobile-menu__panel-back" type="button">
+																		<svg width="7" height="11">
+																			<path d="M6.7,0.3L6.7,0.3c-0.4-0.4-0.9-0.4-1.3,0L0,5.5l5.4,5.2c0.4,0.4,0.9,0.3,1.3,0l0,0c0.4-0.4,0.4-1,0-1.3l-4-3.9l4-3.9C7.1,1.2,7.1,0.6,6.7,0.3z" />
+																		</svg>
+																	</button>
+																	<div class="mobile-menu__panel-title">{{ cat.0 }}</div>
+																</div>
+																<div class="mobile-menu__panel-body">
+																	<ul class="mobile-menu__links">
+																		{% for n in cat.1 %}
+																		<li data-mobile-menu-item>
+																			<a href="blog-classic-left-sidebar.html" class="" data-mobile-menu-trigger>
+																				{{ n }}
+																			</a>
+																		</li>
+																		{% endfor %}
+																	</ul>
+																</div>
+															</div>
+														</div>
+														{% endif %}
 													</li>
 													{% endfor %}
 												</ul>
@@ -642,6 +704,7 @@
 										</div>
 									</div>
 								</li>
+								{% endif %}
 								{% endfor %}
 							</ul>
 						</div>

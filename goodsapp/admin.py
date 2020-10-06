@@ -53,6 +53,13 @@ class CategoryAdmin(admin.ModelAdmin):
         'parent',
     )
 
+    def formfield_for_foreignkey(self, db_field, request, **kwargs):
+
+        if db_field.name == "parent":
+            kwargs["queryset"] = Category.objects.all().order_by('name')
+            return super(CategoryAdmin, self).formfield_for_foreignkey(db_field, request, **kwargs)
+
+
 
 
 class GoodAdmin(admin.ModelAdmin):

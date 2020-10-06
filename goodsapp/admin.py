@@ -85,9 +85,18 @@ class GoodAdmin(admin.ModelAdmin):
     exclude = ('uid_1c',)
 
 
+class OfferAdmin(admin.ModelAdmin):
+    list_display = (
+        'good',
+        'price',
+        'quant',
+    )
+
+    readonly_fields = ('good',)
+
 
 admin.site.register(Property, PropertyAdmin)
 admin.site.register(Category, CategoryAdmin)
 admin.site.register(Good, GoodAdmin)
 admin.site.register(PropertySetTemplate)
-admin.site.register(Offer)
+admin.site.register(Offer, OfferAdmin)

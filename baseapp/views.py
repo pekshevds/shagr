@@ -48,7 +48,15 @@ def get_all_categories(parent=None):
 		else:
 			categories_without_parents.append(cat)
 
-	# categories_with_parents.append(['Без категории', [categories_without_parents[:10], None ]])
+	temp1 = []
+
+	for cat in categories_without_parents[:10]:
+
+		child_of_child = list(get_childs(ch))
+
+		temp1.append([cat, child_of_child])
+
+	categories_with_parents.append(['Без категории', temp1 ])
 
 	return [categories_with_parents, parents_not_for_menu]
 

@@ -69,12 +69,17 @@ class Property(models.Model):
 class Category(models.Model):
     name = models.CharField(max_length=255, verbose_name="Наименование", null=True)
     parent = models.ForeignKey('Category', verbose_name="Родитель", on_delete=models.PROTECT, blank=True, null=True)
-
+    picture = models.ImageField(upload_to=get_image_name, verbose_name='Изображение 200х200', default=None, null=True, blank=True)
+    slug = models.SlugField(max_length=36, verbose_name='Url', blank=True, db_index=True)
 
     def __str__(self):
         return self.name
 
     def save(self, *args, **kwargs):
+
+        if self.slug == "":
+            self.slug = get_uuid()
+
         super(Category, self).save(*args, **kwargs)
 
     class Meta:

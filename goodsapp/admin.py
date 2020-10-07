@@ -51,7 +51,12 @@ class CategoryAdmin(admin.ModelAdmin):
     list_display = (
         'name',
         'parent',
+        'grand_parent',
     )
+
+    search_fields = ('name',)
+
+    exclude = ('slug',)
 
     def formfield_for_foreignkey(self, db_field, request, **kwargs):
 
@@ -59,7 +64,17 @@ class CategoryAdmin(admin.ModelAdmin):
             kwargs["queryset"] = Category.objects.all().order_by('name')
             return super(CategoryAdmin, self).formfield_for_foreignkey(db_field, request, **kwargs)
 
+    def grand_parent(self, obj):
 
+        grand_parent = None
+
+        parent = obj.parent
+
+        if parent:
+
+            grand_parent = parent.parent
+
+        return grand_parent
 
 
 class GoodAdmin(admin.ModelAdmin):
@@ -83,6 +98,7 @@ class GoodAdmin(admin.ModelAdmin):
     readonly_fields = ('code_1c',)
 
     exclude = ('uid_1c',)
+
 
 
 class OfferAdmin(admin.ModelAdmin):

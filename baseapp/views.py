@@ -50,7 +50,7 @@ def get_all_categories(parent=None):
 
 	temp1 = []
 
-	for cat in categories_without_parents[:10]:
+	for cat in categories_without_parents:
 
 		child_of_child = list(get_childs(ch))
 

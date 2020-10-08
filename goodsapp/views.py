@@ -1,12 +1,12 @@
 from django.shortcuts import render
-from baseapp.views import get_all_categories
+from baseapp.views import get_all_categoryes
 from goodsapp.models import Category
 
 def show_catalog(request):
 
 	context = {
 
-		'categories' : get_all_categories(),
+		'categories' : get_all_categoryes(),
 
 	}
 	
@@ -24,7 +24,7 @@ def show_category(request, slug):
 
 	context = {
 
-		'categories' : get_all_categories(),
+		'categories' : get_all_categoryes(),
 		'childs'	: childs,
 		'parent'	: parent,
 

@@ -10,6 +10,7 @@ from .models import GoodsPropertyValue
 from .models import Picture
 from .models import PropertySetTemplate
 from .models import Offer
+from .models import Brand
 
 
 class PictureInline(admin.TabularInline):
@@ -55,9 +56,7 @@ class CategoryAdmin(admin.ModelAdmin):
     )
 
     search_fields = ('name',)
-
-    exclude = ('slug',)
-
+    
     def formfield_for_foreignkey(self, db_field, request, **kwargs):
 
         if db_field.name == "parent":
@@ -82,16 +81,17 @@ class GoodAdmin(admin.ModelAdmin):
         'name',
         'full_name',
         'category',
+        'brand',
         'is_sale',
         'is_new',
         'is_hot',
         'is_service',
-        'is_show'
+        'is_show',        
     )
 
     inlines = [PictureInline, GoodsPropertyValueInline, ]
 
-    list_filter = ('is_sale', 'is_new', 'is_hot', 'is_service', 'is_show', 'category')
+    list_filter = ( 'category', 'brand', 'is_sale', 'is_new', 'is_hot', 'is_service', 'is_show',)
 
     search_fields = ('name',)
 
@@ -110,9 +110,15 @@ class OfferAdmin(admin.ModelAdmin):
 
     readonly_fields = ('good',)
 
+class BrandAdmin(admin.ModelAdmin):
+    list_display = (
+        'name',        
+    )
+
 
 admin.site.register(Property, PropertyAdmin)
 admin.site.register(Category, CategoryAdmin)
 admin.site.register(Good, GoodAdmin)
 admin.site.register(PropertySetTemplate)
 admin.site.register(Offer, OfferAdmin)
+admin.site.register(Brand, BrandAdmin)

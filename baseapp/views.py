@@ -10,27 +10,27 @@ def get_childs(parent=None):
 	return childs
 
 
-def get_all_categories(parent=None):
+def get_all_categoryes(parent=None):
 
-	category = Category.objects.all().order_by('-name')
+	categoryes = Category.objects.all().order_by('-name')
 
 	parents_not_for_menu = []
 
 	parents = []
 
-	categories_with_parents = []
+	categoryes_with_parents = []
 
-	categories_without_parents = []
+	categoryes_without_parents = []
 
-	for cat in category:
+	for category in categoryes:
 
-		if cat.parent:
+		if category.parent:
 
-			if cat.parent not in parents:
+			if category.parent not in parents:
 
-				parents.append(cat.parent)
+				parents.append(category.parent)
 
-				childs = list(get_childs(cat.parent))
+				childs = list(get_childs(category.parent))
 
 				temp = []
 
@@ -43,29 +43,29 @@ def get_all_categories(parent=None):
 					if ch not in parents_not_for_menu:
 						parents_not_for_menu.append(ch)
 
-				categories_with_parents.append([cat.parent, temp])
+				categoryes_with_parents.append([category.parent, temp])
 
 		else:
-			categories_without_parents.append(cat)
+			categoryes_without_parents.append(category)
 
-	temp1 = []
+	temp1 = []	
+	for category in categoryes_without_parents:
 
-	for cat in categories_without_parents:
+		#child_of_child = list(get_childs(ch))
+		child_of_child = list(get_childs(category))
 
-		child_of_child = list(get_childs(ch))
+		temp1.append([category, child_of_child])
 
-		temp1.append([cat, child_of_child])
+	categoryes_with_parents.append(['Без категории', temp1 ])
 
-	categories_with_parents.append(['Без категории', temp1 ])
-
-	return [categories_with_parents, parents_not_for_menu]
+	return [categoryes_with_parents, parents_not_for_menu]
 
 
 def show_index(request):
 
 	context = {
 
-		'categories' : get_all_categories(),
+		'categories' : get_all_categoryes(),
 
 	}
 	

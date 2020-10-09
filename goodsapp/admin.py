@@ -95,8 +95,8 @@ class GoodAdmin(admin.ModelAdmin):
 
     search_fields = ('name',)
 
-    readonly_fields = ('code_1c',)
-
+    readonly_fields = ('code_1c', 'slug') 
+ 
     exclude = ('uid_1c', 'full_name')
 
 

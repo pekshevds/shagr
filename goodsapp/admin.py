@@ -79,7 +79,7 @@ class CategoryAdmin(admin.ModelAdmin):
 class GoodAdmin(admin.ModelAdmin):
     list_display = (
         'name',
-        'full_name',
+        'site_name',
         'category',
         'brand',
         'is_sale',
@@ -97,7 +97,7 @@ class GoodAdmin(admin.ModelAdmin):
 
     readonly_fields = ('code_1c',)
 
-    exclude = ('uid_1c',)
+    exclude = ('uid_1c', 'full_name')
 
 
 

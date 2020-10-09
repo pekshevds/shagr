@@ -58,7 +58,7 @@ class Property(models.Model):
     name = models.CharField(max_length=255, verbose_name="Наименование", null=True)
     template = models.ManyToManyField(PropertySetTemplate, verbose_name="Шаблон", blank=True)
 
-    slug = models.SlugField(verbose_name='Url', blank=True, db_index=True)
+    slug = models.SlugField(max_length=300, verbose_name='Url', blank=True, db_index=True)
 
     def __str__(self):
         return self.name
@@ -77,7 +77,7 @@ class Category(models.Model):
     name = models.CharField(max_length=255, verbose_name="Наименование", null=True)
     parent = models.ForeignKey('Category', verbose_name="Родитель", on_delete=models.PROTECT, blank=True, null=True)
     picture = models.ImageField(upload_to=get_image_name, verbose_name='Изображение 200х200', default=None, null=True, blank=True)
-    slug = models.SlugField(verbose_name='Url', blank=True, db_index=True)
+    slug = models.SlugField(max_length=300, verbose_name='Url', blank=True, db_index=True)
 
     def __str__(self):
         return self.name
@@ -110,7 +110,7 @@ class Good(models.Model):
     art = models.CharField(max_length=25, verbose_name="Артикул", null=True, blank=True)
     full_name = models.TextField(verbose_name="Наименование для магазина", null=True, blank=True)
     description = models.TextField(verbose_name="Описание", null=True, blank=True)
-    slug = models.SlugField(verbose_name='Url', blank=True, db_index=True)
+    slug = models.SlugField(max_length=300, verbose_name='Url', blank=True, db_index=True)
 
     is_sale = models.BooleanField(verbose_name="Распродажа", default=False)
     is_new = models.BooleanField(verbose_name="Новинка", default=False)
@@ -180,7 +180,7 @@ class Picture(models.Model):
 class Brand(models.Model):
     name = models.CharField(max_length=255, verbose_name="Наименование", null=True)    
     picture = models.ImageField(upload_to=get_image_name, verbose_name='Изображение 200х200', default=None, null=True, blank=True)
-    slug = models.SlugField(verbose_name='Url', blank=True, db_index=True)
+    slug = models.SlugField(max_length=300, verbose_name='Url', blank=True, db_index=True)
 
 
     def __str__(self):

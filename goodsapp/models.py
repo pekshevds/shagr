@@ -133,7 +133,7 @@ class Good(models.Model):
         if self.uid_1c == "":
             self.uid_1c = get_uuid4()
 
-        self.slug = slugify(unidecode(self.name))
+        self.slug = slugify(unidecode(self.site_name))
 
         super(Good, self).save(*args, **kwargs)
 

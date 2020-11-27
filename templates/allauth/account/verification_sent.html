@@ -1,0 +1,48 @@
+{% extends 'baseapp/index.html' %}
+
+{% load static %}
+
+{% block meta_description %}
+{{ block.super }}
+{% endblock %}
+
+{% block title %}
+{{ block.super }}
+{% endblock %}
+
+{% block header %}
+{{ block.super }}
+{% endblock %}
+
+{% load i18n %}
+
+{% block social %}
+{% endblock %}
+
+
+{% block content %}
+
+<div class="main-container no-sidebar">
+	<div class="container">
+		<nav class="woocommerce-breadcrumb breadcrumbs">
+			<a href="{% url 'show_index' %}">На главную</a>
+			Регистрация
+		</nav>
+		<div class="row">
+			<div class="col-sm-12 main-content">
+				<div class="text-center">
+
+					<h2 class="title">Подтвердите свой E-mail адрес</h2>
+
+					<p>Мы отправили вам электронное письмо для проверки. Перейдите по ссылке, чтобы завершить процесс регистрации. Пожалуйста, свяжитесь с нами, если вы не получили его в течение нескольких минут.</p>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+
+{% endblock %}
+
+{% block magnific_popup %}
+{% endblock %}

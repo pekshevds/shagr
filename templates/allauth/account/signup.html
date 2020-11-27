@@ -1,0 +1,92 @@
+{% extends 'baseapp/index.html' %}
+
+{% load static %}
+
+{% block meta_description %}
+{{ block.super }}
+{% endblock %}
+
+{% block title %}
+{{ block.super }}
+{% endblock %}
+
+{% block header %}
+{{ block.super }}
+{% endblock %}
+
+{% load i18n %}
+
+{% block social %}
+{% endblock %}
+
+
+{% block content %}
+
+<div class="main-container no-sidebar no-padding">
+	<div class="container">
+		<nav class="woocommerce-breadcrumb breadcrumbs">
+			<a href="{% url 'show_index' %}">На главную</a>
+			Регистрация
+		</nav>
+		<div class="form-authentication text-center">
+			<div class="form-register">
+				<h3 class="title">Создать аккаунт</h3>
+
+				<form class="signup" id="signup_form" method="post" action="{% url 'account_signup' %}">
+
+					
+					
+					{% csrf_token %}
+
+					{{ form.non_field_errors }}
+
+				    {% for error in form.email.errors %}
+		            <p  style="color: red">* {{ error|escape }}</p>
+		            {% endfor %}
+					<p>
+						<input type="email" name="email" placeholder="Email адрес" required id="id_email">
+					</p>
+					{% for error in form.username.errors %}
+		            <p  style="color: red">* {{ error|escape }}</p>
+		            {% endfor %}
+					<p>
+						<input type="text" name="username" placeholder="Имя пользователя" autofocus="autofocus" minlength="1" maxlength="150" required id="id_username">
+					</p>
+					{% for error in form.password1.errors %}
+					{% if forloop.first %}
+		            <p  style="color: red">* {{ error|escape }}</p>
+		            {% endif %}
+		            {% endfor %}
+					<p>
+						<input type="password" name="password1" placeholder="Пароль" required id="id_password1">
+					</p>
+					{% for error in form.password2.errors %}
+					{% if forloop.first %}
+		            <p  style="color: red">* {{ error|escape }}</p>
+		            {% endif %}
+		            {% endfor %}
+					<p>
+						<input type="password" name="password2" placeholder="Пароль (еще раз)" required id="id_password2">
+					</p>
+
+					{% if redirect_field_value %}
+					<input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}">
+					{% endif %}
+					{% for message in form.name_of_field.errors %}
+			        <p  style="color: red">* {{ message }} </p>
+			        {% endfor %}
+					<button type="submit">Регистрация</button>
+				</form>
+			</div>
+		</div>
+		<div class="form-authentication-footer">
+			<a href="{% url 'account_login' %}"> Войдите</a>, если у вас уже есть учетная запись.
+		</div>
+	</div>
+</div>
+
+
+{% endblock %}
+
+{% block magnific_popup %}
+{% endblock %}

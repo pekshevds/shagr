@@ -38,11 +38,16 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
-    'baseapp',
-    'goodsapp',
+    'django.contrib.sites',
 
+    'baseapp',
+    'catalogapp',
     'rest_framework',
     'apiapp',
+    'allauth',
+    'allauth.account',
+    'allauth.socialaccount',
+    'authapp',
 ]
 
 MIDDLEWARE = [
@@ -68,6 +73,8 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+
+                'django.template.context_processors.request',
             ],
         },
     },
@@ -106,6 +113,14 @@ AUTH_PASSWORD_VALIDATORS = [
 ]
 
 
+AUTHENTICATION_BACKENDS = [
+
+    'django.contrib.auth.backends.ModelBackend',
+    'allauth.account.auth_backends.AuthenticationBackend',
+    
+]
+
+
 # Internationalization
 # https://docs.djangoproject.com/en/2.2/topics/i18n/
 
@@ -128,3 +143,22 @@ STATIC_URL = '/static/'
 
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media') # пустая папка, сюда будет собирать статику collectstatic
 MEDIA_URL = '/media/'
+
+
+
+
+
+
+# tunning
+SITE_ID = 1
+
+ACCOUNT_EMAIL_REQUIRED =True
+ACCOUNT_AUTHENTICATION_METHOD='email'
+ACCOUNT_EMAIL_VERIFICATION='mandatory'
+
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_HOST_USER = 'pekshev.ds@gmail.com'
+EMAIL_HOST_PASSWORD = 'gthtcnhtkrf'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+DEFAULT_FROM_EMAIL = 'Денис'

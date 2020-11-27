@@ -8,3 +8,4 @@ class GoodSerializer(serializers.Serializer):
     art = serializers.CharField(max_length=25)
     description = serializers.CharField()
     full_name = serializers.CharField()
+    category_uid_1с = serializers.CharField(max_length=36)

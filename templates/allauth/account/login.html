@@ -1,0 +1,79 @@
+{% extends 'baseapp/index.html' %}
+
+{% load static %}
+
+{% block meta_description %}
+{{ block.super }}
+{% endblock %}
+
+{% block title %}
+{{ block.super }}
+{% endblock %}
+
+{% load i18n %}
+
+{% block header %}
+{{ block.super }}
+{% endblock %}
+
+{% block social %}
+{% endblock %}
+
+{% block content %}
+
+<div class="main-container no-sidebar no-padding">
+	<div class="container">
+		<nav class="woocommerce-breadcrumb breadcrumbs">
+			<a href="{% url 'show_index' %}">На главную</a>
+			Авторизация
+		</nav>
+		<div class="form-authentication text-center">
+			<div class="form-register">
+				<h3 class="title">Авторизация</h3>
+				<p>Если у вас еще нет учетной записи, пожалуйста 
+					<a href="{{ signup_url }}">зарегистрируйтесь</a>.
+				</p>
+				<form class="login" method="POST" action="{% url 'account_login' %}">
+					{% csrf_token %}
+
+					{% for error in form.non_field_errors %}
+
+					<p  style="color: red">* {{ error|escape }}</p>
+
+					{% endfor %}
+
+					{% for error in form.login.errors %}
+		            <p  style="color: red">* {{ error|escape }}</p>
+		            {% endfor %}
+					<p>
+						<input type="email" name="login" placeholder="Email адрес" autofocus="autofocus" required id="id_login">
+					</p>
+
+					{% for error in form.password.errors %}
+		            <p  style="color: red">* {{ error|escape }}</p>
+		            {% endfor %}
+
+					<p>
+						<input type="password" name="password" placeholder="Пароль" required id="id_password">
+					</p>
+					<label for="id_remember" class="inline">
+						<input name="remember" id="id_remember" type="checkbox"> Запомнить меня
+					</label>
+					{% if redirect_field_value %}
+					<input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />
+					{% endif %}
+					<button class="button primary" type="submit">Войти</button>
+				</form>
+			</div>
+		</div>
+		<div class="form-authentication-footer">
+			<a href="{% url 'account_reset_password' %}"> Нажмите</a>, если забыли пароль.
+		</div>
+	</div>
+</div>
+
+
+{% endblock %}
+
+{% block magnific_popup %}
+{% endblock %}

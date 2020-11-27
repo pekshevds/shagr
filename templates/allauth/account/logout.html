@@ -1,0 +1,50 @@
+{% extends 'baseapp/index.html' %}
+
+{% load static %}
+
+{% block meta_description %}
+{{ block.super }}
+{% endblock %}
+
+{% block title %}
+{{ block.super }}
+{% endblock %}
+
+{% block header %}
+{{ block.super }}
+{% endblock %}
+
+{% load i18n %}
+
+{% block social %}
+{% endblock %}
+
+
+{% block content %}
+
+<div class="main-container no-sidebar">
+	<div class="container">
+		<nav class="woocommerce-breadcrumb breadcrumbs">
+			<a href="{% url 'show_index' %}">На главную</a>
+			Выйти
+		</nav>
+		<div class="form-authentication text-center">
+			<div class="form-register">
+				<h3 class="title">Вы уверены, что хотите выйти?</h3>
+				<form method="post" action="{% url 'account_logout' %}">
+					{% csrf_token %}
+					{% if redirect_field_value %}
+					<input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}"/>
+					{% endif %}
+					<p></p>
+					<button class="button primary" type="submit">Выйти</button>
+				</form>
+			</div>
+		</div>
+	</div>
+</div>
+
+{% endblock %}
+
+{% block magnific_popup %}
+{% endblock %}

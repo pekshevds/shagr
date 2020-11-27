@@ -1,0 +1,56 @@
+{% extends 'baseapp/index.html' %}
+
+{% load static %}
+
+{% block meta_description %}
+{{ block.super }}
+{% endblock %}
+
+{% block title %}
+{{ block.super }}
+{% endblock %}
+
+
+{% block header %}
+{{ block.super }}
+{% endblock %}
+
+{% load i18n %}
+
+{% block social %}
+{% endblock %}
+
+
+{% block content %}
+
+<div class="main-container no-sidebar">
+	<div class="container">
+		<div class="form-authentication text-center">
+				<div class="form-register">
+					<h1>Подтвердите e-mail адрес.</h1>
+
+					{% if confirmation %}
+
+					<p>Пожалуйста подтвердите, что <a href="mailto:{{ confirmation.email_address.email }}">{{ confirmation.email_address.email }}</a> это адрес элетронной почты пользователя {{ confirmation.email_address.user }}.</p>
+
+					<form method="post" action="{% url 'account_confirm_email' confirmation.key %}">
+						{% csrf_token %}
+						<button type="submit">Подтвердить</button>
+					</form>
+
+					{% else %}
+
+					<p>Срок действия ссылки для подтверждения элетронной почты истек. Пожалуйста <a href="{% url 'account_signup' %}">отправьте новый запрос на подтверждения e-mail</a>.</p>
+
+					{% endif %}
+				</div>
+		</div>
+		<div class="form-authentication-footer">
+		</div>
+	</div>
+</div>
+
+{% endblock %}
+
+{% block magnific_popup %}
+{% endblock %}

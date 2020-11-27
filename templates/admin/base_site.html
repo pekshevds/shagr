@@ -1,0 +1,14 @@
+{% extends "admin/base_site.html" %}
+
+{% load static %}
+
+{% block social %}
+{% endblock %}
+
+{% block title %}{{ title }} | {{ site_title|default:_('NEW TITLE') }}{% endblock %}
+
+{% block branding %}
+<h1 id="site-name"><a href="{% url 'admin:index' %}"><img src="{% static 'images/logos/admin_logo.png' %}" height="100px" /></a></h1>
+{% endblock %}
+
+{% block nav-global %}{% endblock %}

@@ -1,0 +1,174 @@
+{% extends 'baseapp/index.html' %}
+
+{% load static %}
+
+{% block meta_description %}
+{{ block.super }}
+{% endblock %}
+
+{% block title %}
+{{ block.super }}
+{% endblock %}
+
+
+{% block header %}
+{{ block.super }}
+{% endblock %}
+
+{% block social %}
+{% endblock %}
+
+{% block content %}
+
+<div class="main-container">
+	<div class="container">
+		<div class="raw">
+			<div class="col-sm-12 main-content">
+				<nav class="woocommerce-breadcrumb breadcrumbs">
+					<a href="{% url 'show_index' %}">На главную</a>
+					<a href="{% url 'show_profile' %}">Личный кабинет</a>
+				</nav>
+					<div class="row">
+						<div class="col-sm-12">
+							<div class="block-form">
+								<h3 class="form-heading">Личный кабинет</h3>
+								<div class="row">
+									<div class="col-sm-6">
+										<a href="{% url 'account_password_change' %}" class="button primary">Сменить пароль</a>
+										<a href="{% url 'account_logout' %}" class="button">Выйти</a>
+										<p></p>
+										<p>
+											Добро пожаловать! Вы авторизовались как {% if buyer %}{{ buyer.first_name }} {{ buyer.last_name }} {% else %}{{ user }}{% endif %}
+										</p>
+										<p>
+											Ваш Email: {{ user.email }}
+										</p>
+										<p>
+											<a href="{% url 'show_orders' %}">История заказов</a>
+										</p>
+									</div>
+
+									<div class="col-sm-6">
+										
+										{% if buyer %}
+										<form action="{% url 'profile_change' buyer_id=buyer.id %}" method="POST">
+										{% csrf_token %}	
+											<div class="row">
+												<div class="col-sm-6">
+													<span>Имя</span>
+													<p><input type="text" name="input_first_name" placeholder="Имя" value="{{ buyer.first_name }}"></p>
+												</div>
+												<div class="col-sm-6">
+													<span>Фамилия</span>
+													<p><input type="text" name="input_second_name" placeholder="Фамилия" value="{{ buyer.last_name }}"></p>
+												</div>
+											</div>
+											<div class="row">
+												<div class="col-sm-6">
+													<span>Телефон</span>
+													<p><input id="phoneInput" type="text" name="input_phone" placeholder="Телефон" value="{{ buyer.phone }}"></p>
+												</div>
+											</div>
+											<div class="row">
+												<div class="col-sm-6">
+													<span>Нас. пункт</span>
+													<p><input type="text" name="input_locality" placeholder="Нас. пункт" value="{{ buyer.locality }}" required></p>
+												</div>
+												<div class="col-sm-6">
+													<span>Улица</span>
+													<p><input type="text" name="input_street" placeholder="Улица" value="{{ buyer.street }}" required></p>
+												</div>
+											</div>
+											<div class="row">
+												<div class="col-sm-6">
+													<span>Дом</span>
+													<p><input type="text" name="input_house" placeholder="Дом" value="{{ buyer.house }}" required></p>
+												</div>
+												<div class="col-sm-6">
+													<span>Квартира</span>
+													<p><input name="input_apartments" type="text" placeholder="Кв." value="{{ buyer.apartments }}"></p>
+												</div>
+											</div>
+											<div class="row">
+												<div class="col-sm-6">
+													<span>Подъезд</span>
+													<p><input type="text" name="input_porch" placeholder="Подъезд" value="{{ buyer.porch }}"></p>
+												</div>
+												<div class="col-sm-6">
+													<span>Этаж</span>
+													<p><input name="input_floor" type="text" placeholder="Этаж" value="{{ buyer.floor }}"></p>
+												</div>
+											</div>
+											<p><input type="text" value="{{ buyer.address }}"></p>
+
+											<button class="button primary">Сохранить изменения</button>
+
+										</form>
+										{% else %}
+											<form action="{% url 'profile_add' %}" method="POST">
+											{% csrf_token %}	
+											<div class="row">
+												<div class="col-sm-6">
+													<span>Имя</span>
+													<p><input type="text" name="input_first_name" placeholder="Имя" required></p>
+												</div>
+												<div class="col-sm-6">
+													<span>Фамилия</span>
+													<p><input type="text" name="input_second_name" placeholder="Фамилия" required></p>
+												</div>
+											</div>
+											<div class="row">
+												<div class="col-sm-6">
+													<span>Телефон</span>
+													<p><input id="phoneInput" type="text" name="input_phone" placeholder="Телефон"></p>
+												</div>
+											</div>
+											<div class="row">
+												<div class="col-sm-6">
+													<span>Нас. пункт</span>
+													<p><input type="text" name="input_locality" placeholder="Нас. пункт" required></p>
+												</div>
+												<div class="col-sm-6">
+													<span>Улица</span>
+													<p><input type="text" name="input_street" placeholder="Улица" required></p>
+												</div>
+											</div>
+											<div class="row">
+												<div class="col-sm-6">
+													<span>Дом</span>
+													<p><input type="text" name="input_house" placeholder="Дом" required></p>
+												</div>
+												<div class="col-sm-6">
+													<span>Квартира</span>
+													<p><input name="input_apartments" type="text" placeholder="Кв."></p>
+												</div>
+											</div>
+											<div class="row">
+												<div class="col-sm-6">
+													<span>Подъезд</span>
+													<p><input type="text" name="input_porch" placeholder="Подъезд"></p>
+												</div>
+												<div class="col-sm-6">
+													<span>Этаж</span>
+													<p><input name="input_floor" type="text" placeholder="Этаж"></p>
+												</div>
+											</div>
+
+											<button class="button primary">Сохранить изменения</button>
+
+										</form>
+										{% endif %}
+
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+			</div>
+		</div>
+	</div>	
+</div>
+{% endblock %}
+
+{% block magnific_popup %}
+{% endblock %}

@@ -79,7 +79,7 @@ class Property(models.Model):
 
 class Category(models.Model):
     name = models.CharField(max_length=255, verbose_name="Наименование", null=True)
-    parent = models.ForeignKey('Category', verbose_name="Родитель", on_delete=models.PROTECT, blank=True, null=True)
+    parent = models.ForeignKey('Category', verbose_name="Родитель", on_delete=models.SET_NULL, blank=True, null=True)
     picture = models.ImageField(upload_to=get_image_name, verbose_name='Изображение 200х200', default=None, null=True, blank=True)
     slug = models.SlugField(max_length=300, verbose_name='Url', blank=True, db_index=True)
 
@@ -120,7 +120,7 @@ class GoodsPropertyValue(models.Model):
 class Good(models.Model):
     name = models.CharField(max_length=255, verbose_name="Наименование", null=True)
     site_name = models.CharField(max_length=255, verbose_name="Наименование для магазина", null=True, blank=True)
-    art = models.CharField(max_length=25, verbose_name="Артикул", null=True, blank=True)    
+    art = models.CharField(max_length=25, verbose_name="Артикул", null=True, blank=True, default='')    
     full_name = models.TextField(verbose_name="Наименование для магазина (не использовать)", null=True, blank=True)
     description = models.TextField(verbose_name="Описание", null=True, blank=True)
     slug = models.SlugField(max_length=300, verbose_name='Url', blank=True, db_index=True)

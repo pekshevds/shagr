@@ -71,7 +71,12 @@ def parse_categoryes():
 			category.save()
 
 def delete_all_categoryes():
-	Category.objects.all().delete()
+
+    for category in Category.objects.all():
+        category.parent = None
+        category.save()
+
+    Category.objects.all().delete()
 
 def make_all():
 	download_categoryes_from_file()

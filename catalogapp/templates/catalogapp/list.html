@@ -210,28 +210,28 @@
                                                     </div>
                                                     <div class="product-card__image">
                                                         <div class="image image--type--product">
-                                                            <a href="{% url 'show_item' slug=good.slug %}" class="image__body">
+                                                            <a href="{% url 'show_item' slug=good.good.slug %}" class="image__body">
                                                                 <img class="image__tag" src="{% static 'images/products/product-1-245x245.jpg' %}" alt="">
                                                             </a>
                                                         </div>
                                                         
                                                     </div>
                                                     <div class="product-card__info">
-                                                        <div class="product-card__meta"><span class="product-card__meta-title">Артикул:</span> {{ good.art }}</div>
+                                                        <div class="product-card__meta"><span class="product-card__meta-title">Артикул:</span> {{ good.good.art }}</div>
                                                         <div class="product-card__name">
                                                             <div>
                                                                 <div class="product-card__badges">
-																	{% if good.is_sale %}                                                                	
+																	{% if good.good.is_sale %}                                                                	
                                                                     <div class="tag-badge tag-badge--sale">sale</div>
                                                                     {% endif %}
-                                                                    {% if good.is_new %}
+                                                                    {% if good.good.is_new %}
                                                                     <div class="tag-badge tag-badge--new">new</div>
                                                                     {% endif %}
-                                                                    {% if good.is_hot %}
+                                                                    {% if good.good.is_hot %}
                                                                     <div class="tag-badge tag-badge--hot">hot</div>
                                                                     {% endif %}
                                                                 </div>
-                                                                <a href="p{% url 'show_item' slug=good.slug %}">{{ good.name }}</a>
+                                                                <a href="{% url 'show_item' slug=good.good.slug %}">{{ good.good.name }}</a>
                                                             </div>
                                                         </div>
                                                         <div class="product-card__rating">
@@ -248,11 +248,10 @@
                                                         </div>
                                                         <div class="product-card__features">
                                                             <ul>
-                                                                <li>Speed: 750 RPM</li>
-                                                                <li>Power Source: Cordless-Electric</li>
-                                                                <li>Battery Cell Type: Lithium</li>
-                                                                <li>Voltage: 20 Volts</li>
-                                                                <li>Battery Capacity: 2 Ah</li>
+                                                                {% for item in good.properties_and_values %}
+                                                                <li>{{ item.property }}: {{ item.value }}</li>
+                                                                
+                                                                {% endfor %}
                                                             </ul>
                                                         </div>
                                                     </div>
@@ -337,14 +336,14 @@
                                                 </li>
 
                                                 {% else %}
-                                                    <li class="page-item"><a class="page-link" href="?page={{ page.next_page_number }}">{{ page.next_page_number }}</a></li>
+                                                    
                                                     <li class="page-item page-item--dots">
                                                     <div class="pagination__dots"></div>
                                                 </li>
                                                 <li class="page-item"><a class="page-link" href="?page={{ page.paginator.num_pages }}">{{ page.paginator.num_pages }}</a></li>
 
                                                 <li class="page-item">
-                                                    <a class="page-link page-link--with-arrow" href="{{ next_url }}" aria-label="Next">
+                                                    <a class="page-link page-link--with-arrow" href="?page={{ page.next_page_number }}" aria-label="Next">
                                                         <span class="page-link__arrow page-link__arrow--right" aria-hidden="true"><svg width="7" height="11">
                                                                 <path d="M0.3,10.7L0.3,10.7c0.4,0.4,0.9,0.4,1.3,0L7,5.5L1.6,0.3C1.2-0.1,0.7,0,0.3,0.3l0,0c-0.4,0.4-0.4,1,0,1.3l4,3.9l-4,3.9
     C-0.1,9.8-0.1,10.4,0.3,10.7z" />

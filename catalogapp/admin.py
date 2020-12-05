@@ -11,6 +11,8 @@ from .models import Picture
 from .models import PropertySetTemplate
 from .models import Offer
 from .models import Brand
+from .models import Country
+from .models import Review
 
 
 class PictureInline(admin.TabularInline):
@@ -122,3 +124,6 @@ admin.site.register(Good, GoodAdmin)
 admin.site.register(PropertySetTemplate)
 admin.site.register(Offer, OfferAdmin)
 admin.site.register(Brand, BrandAdmin)
+
+admin.site.register(Country)
+admin.site.register(Review)

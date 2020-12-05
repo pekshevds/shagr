@@ -108,6 +108,7 @@ class GoodsPropertyValue(models.Model):
     good = models.ForeignKey('Good', verbose_name="Номенклатура", on_delete=models.CASCADE, null=False)
     property = models.ForeignKey('Property', verbose_name="Свойство", on_delete=models.CASCADE, null=False)
     value = models.ForeignKey('Value', verbose_name="Значение", on_delete=models.CASCADE, null=True, blank=True)
+    is_main = models.BooleanField(verbose_name="Основное", default=True)
 
     def __str__(self):
         return str(self.property) + ': ' + str(self.value)
@@ -135,6 +136,7 @@ class Good(models.Model):
 
     template = models.ForeignKey('PropertySetTemplate', verbose_name="Шаблон набора свойств", on_delete=models.PROTECT, blank=True, null=True)
     brand = models.ForeignKey('Brand', verbose_name="Бренд", on_delete=models.PROTECT, blank=True, null=True)
+    country = models.ForeignKey('Country', verbose_name="Страна", on_delete=models.PROTECT, blank=True, null=True)
     category = models.ForeignKey('Category', verbose_name="Категория", on_delete=models.PROTECT, blank=True, null=True)
     
     category_uid_1с = models.SlugField(max_length=36, verbose_name='Идентификатор категории в 1С', null=True, blank=True)
@@ -221,8 +223,52 @@ class Brand(models.Model):
         verbose_name = 'Бренд'
         verbose_name_plural = 'Бренды'
 
+
+class Country(models.Model):
+    name = models.CharField(max_length=255, verbose_name="Наименование", null=True)    
+    slug = models.SlugField(max_length=300, verbose_name='Url', blank=True, db_index=True)
+
+
+    def __str__(self):
+        return self.name
+
+    def save(self, *args, **kwargs):
+        
+        try:
+            self.slug = slugify(unidecode(self.site_name))  
+        except:
+            pass
+
+        super(Country, self).save(*args, **kwargs)
+
+    class Meta:
+        verbose_name = 'Страна'
+        verbose_name_plural = 'Страны'
+
+
+class Review(models.Model):    
+
+    good = models.ForeignKey('Good', verbose_name="Номенклатура", on_delete=models.PROTECT, blank=False, null=False)
+
+    name = models.CharField(max_length=255, verbose_name="Имя")
+    email = models.EmailField(max_length=254, verbose_name="Email")
+    review = models.TextField(verbose_name="Отзыв")
+    rating = models.PositiveSmallIntegerField(verbose_name="Оценка 1-5", default=5)
+    review_date = models.DateTimeField(auto_now_add=True, verbose_name="Дата отзыва")
+
+    def __str__(self):
+        return self.name
+
+    def save(self, *args, **kwargs):        
+        super(Review, self).save(*args, **kwargs)
+
+    class Meta:
+        verbose_name = 'Отзыв'
+        verbose_name_plural = 'Отзывы'
+
+
 class Offer(models.Model):
-    good = models.ForeignKey('Good', verbose_name="Номенклатура", on_delete=models.PROTECT, blank=True, null=True)
+    good = models.ForeignKey('Good', verbose_name="Номенклатура", on_delete=models.PROTECT, blank=False, null=False)
 
     price = models.DecimalField(verbose_name='Цена', default=0, max_digits=15, decimal_places=2)
     quant = models.DecimalField(verbose_name='Количество', default=0, max_digits=15, decimal_places=3)

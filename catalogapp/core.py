@@ -119,6 +119,14 @@ def get_properties_and_values(good):
     return records
 
 
+def get_main_properties_and_values(good):
+    try:
+        records = GoodsPropertyValue.objects.filter(good=good, is_main=True)[:5]
+    except:
+        return None
+    return records
+
+
 def get_category_goods(category_list):
     try:
         goods = Good.objects.filter(category__in=category_list)
@@ -182,6 +190,22 @@ def get_goods(category=None):
     goods = Good.objects.filter(category=category).order_by('name')
 
     return goods
+
+
+def get_goods_with_main_properties_and_values(category=None):
+
+    items = []
+    goods = Good.objects.filter(category=category).order_by('name')
+    for good in goods:
+        items.append(
+            {
+            'good': good,
+            'images': None,
+            'properties_and_values': get_main_properties_and_values(good),
+            }
+            )
+
+    return items
 
 
 def get_layer(parent=None):

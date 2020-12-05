@@ -213,11 +213,11 @@
 					</tr>
 					<tr>
 						<th>Бренд</th>
-						<td><a href="">Brandix</a></td>
+						<td><a href="">{{ good.brand }}</a></td>
 					</tr>
 					<tr>
 						<th>Страна</th>
-						<td>Japan</td>
+						<td>{{ good.country }}</td>
 					</tr>                                                        
 				</table>
 			</div>
@@ -420,7 +420,7 @@
 										<div class="review__avatar"><img src="{% static 'images/avatars/avatar-1-42x42.jpg' %}" alt=""></div>
 										<div class="review__meta">
 											<div class="review__author">{{ review.name }}</div>
-											<div class="review__date">{{ review.date }}</div>
+											<div class="review__date">{{ review.review_date }}</div>
 										</div>
 										<div class="review__rating">
 											<div class="rating">
@@ -435,7 +435,7 @@
 											</div>
 										</div>
 										<div class="review__content typography">
-											{{ review.content }}
+											{{ review.review }}
 										</div>
 									</div>
 								</div>

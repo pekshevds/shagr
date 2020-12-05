@@ -3,7 +3,7 @@ from rest_framework.views import APIView
 # Create your views here.
 
 from catalogapp.models import Good
-from catalogapp.main import update_good, download_offer
+from catalogapp.core import update_good, download_offer
 from .serializers import GoodSerializer
 
 

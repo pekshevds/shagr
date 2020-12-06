@@ -1,4 +1,5 @@
 from django.shortcuts import render
+from django.shortcuts import redirect
 
 from .core import get_hierarchy_categoryes
 from .core import find_category_by_slug
@@ -7,6 +8,10 @@ from .core import get_childs
 from .core import get_goods
 from .core import get_properties_and_values
 from .core import get_goods_with_main_properties_and_values
+from .core import get_good_pictures
+from .core import add_review
+from .core import get_good_reviews
+
 
 from django.core.paginator import Paginator
 
@@ -53,6 +58,8 @@ def show_item(request, slug):
 	good = find_good_by_slug(slug=slug)
 	childs = get_childs(parent=good.category)
 	properties_and_values = get_properties_and_values(good=good)
+	pictures = get_good_pictures(good=good)
+	reviews = get_good_reviews(good=good)
 
 	context = {
 
@@ -61,6 +68,17 @@ def show_item(request, slug):
 		'childs'				: childs,
 		'good'	    			: good,
 		'properties_and_values'	: properties_and_values,
-
+		'pictures'				: pictures,
+		'reviews'				: reviews,		
 	}
 	return render(request, 'catalogapp/item.html', context)
+
+
+def new_review(request, slug):
+	_author = request.POST["author"]
+	_email = request.POST["email"]
+	_review = request.POST["review"]
+	_rating = request.POST["rating"]	
+
+	add_review(slug=slug, author=_author, email=_email, review=_review, rating=_rating)
+	return redirect(show_item, slug=slug)

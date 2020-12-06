@@ -93,74 +93,25 @@
                 attribute, in which case the width and height will be obtained from the naturalWidth
                 and naturalHeight property of img.image__tag.
             -->
-            <a class="image image--type--product" href="{% static 'images/products/product-2-700x700.jpg' %}" target="_blank" data-width="700" data-height="700">
+            {% for picture in pictures %}
+            <a class="image image--type--product" href="{{ picture.image.url }}" target="_blank" data-width="700" data-height="700">
             	<div class="image__body">
-            		<img class="image__tag" src="{% static 'images/products/product-2-500x500.jpg' %}" alt="">
+            		<img class="image__tag" src="{{ picture.image.url }}" alt="">
             	</div>
             </a>
-                                                <!--
-                The data-width and data-height attributes must contain the size of a larger version
-                of the product image.
-
-                If you do not know the image size, you can remove the data-width and data-height
-                attribute, in which case the width and height will be obtained from the naturalWidth
-                and naturalHeight property of img.image__tag.
-            -->
-            <a class="image image--type--product" href="{% static 'images/products/product-1-700x700.jpg' %}" target="_blank" data-width="700" data-height="700">
-            	<div class="image__body">
-            		<img class="image__tag" src="{% static 'images/products/product-1-500x500.jpg' %}" alt="">
-            	</div>
-            </a>
-                                                <!--
-                The data-width and data-height attributes must contain the size of a larger version
-                of the product image.
-
-                If you do not know the image size, you can remove the data-width and data-height
-                attribute, in which case the width and height will be obtained from the naturalWidth
-                and naturalHeight property of img.image__tag.
-            -->
-            <a class="image image--type--product" href="{% static 'images/products/product-3-700x700.jpg' %}" target="_blank" data-width="700" data-height="700">
-            	<div class="image__body">
-            		<img class="image__tag" src="{% static 'images/products/product-3-500x500.jpg' %}" alt="">
-            	</div>
-            </a>
-                                                <!--
-                The data-width and data-height attributes must contain the size of a larger version
-                of the product image.
-
-                If you do not know the image size, you can remove the data-width and data-height
-                attribute, in which case the width and height will be obtained from the naturalWidth
-                and naturalHeight property of img.image__tag.
-            -->
-            <a class="image image--type--product" href="{% static 'images/products/product-4-700x700.jpg' %}" target="_blank" data-width="700" data-height="700">
-            	<div class="image__body">
-            		<img class="image__tag" src="{% static 'images/products/product-4-500x500.jpg' %}" alt="">
-            	</div>
-            </a>
+            {% endfor %}
         </div>
     </div>
     <div class="product-gallery__thumbnails">
     	<div class="owl-carousel">
+    		{% for picture in pictures %}
     		<div class="product-gallery__thumbnails-item image image--type--product">
     			<div class="image__body">
-    				<img class="image__tag" src="{% static 'images/products/product-2-70x70.jpg' %}" alt="">
+    				<img class="image__tag" src="{{ picture.image.url }}" alt="">
     			</div>
     		</div>
-    		<div class="product-gallery__thumbnails-item image image--type--product">
-    			<div class="image__body">
-    				<img class="image__tag" src="{% static 'images/products/product-1-70x70.jpg' %}" alt="">
-    			</div>
-    		</div>
-    		<div class="product-gallery__thumbnails-item image image--type--product">
-    			<div class="image__body">
-    				<img class="image__tag" src="{% static 'images/products/product-3-70x70.jpg' %}" alt="">
-    			</div>
-    		</div>
-    		<div class="product-gallery__thumbnails-item image image--type--product">
-    			<div class="image__body">
-    				<img class="image__tag" src="{% static 'images/products/product-4-70x70.jpg' %}" alt="">
-    			</div>
-    		</div>
+    		{% endfor %}
+    		
     	</div>
     </div>
 </div>
@@ -419,18 +370,44 @@
 									<div class="review__body">
 										<div class="review__avatar"><img src="{% static 'images/avatars/avatar-1-42x42.jpg' %}" alt=""></div>
 										<div class="review__meta">
-											<div class="review__author">{{ review.name }}</div>
+											<div class="review__author">{{ review.author }}</div>
 											<div class="review__date">{{ review.review_date }}</div>
 										</div>
 										<div class="review__rating">
 											<div class="rating">
 												<div class="rating__body">
 													
+													{% if review.rating == 1 %}
+													<div class="rating__star rating__star--active"></div>
+													<div class="rating__star"></div>
+													<div class="rating__star"></div>
+													<div class="rating__star"></div>
+													<div class="rating__star"></div>													
+													{% elif review.rating == 2 %}
+													<div class="rating__star rating__star--active"></div>
+													<div class="rating__star rating__star--active"></div>
+													<div class="rating__star"></div>
+													<div class="rating__star"></div>
+													<div class="rating__star"></div>
+													{% elif review.rating == 3 %}
+													<div class="rating__star rating__star--active"></div>
+													<div class="rating__star rating__star--active"></div>
+													<div class="rating__star rating__star--active"></div>
+													<div class="rating__star"></div>
+													<div class="rating__star"></div>
+													{% elif review.rating == 4 %}
 													<div class="rating__star rating__star--active"></div>
 													<div class="rating__star rating__star--active"></div>
 													<div class="rating__star rating__star--active"></div>
 													<div class="rating__star rating__star--active"></div>
 													<div class="rating__star"></div>
+													{% elif review.rating == 5 %}
+													<div class="rating__star rating__star--active"></div>
+													<div class="rating__star rating__star--active"></div>
+													<div class="rating__star rating__star--active"></div>
+													<div class="rating__star rating__star--active"></div>
+													<div class="rating__star rating__star--active"></div>
+													{% endif %}
 												</div>
 											</div>
 										</div>
@@ -481,14 +458,15 @@
 				{% endif %}
 			</div>
 		</div>
-		<form class="reviews-view__form">
+		<form class="reviews-view__form" method="post" action="{% url 'new_review' slug=good.slug %}">
+			{% csrf_token %}
 			<h3 class="reviews-view__header">Написать отзыв</h3>
 			<div class="row">
 				<div class="col-xxl-12 col-xl-10 col-12">
 					<div class="form-row">
 						<div class="form-group col-md-4">
 							<label for="review-stars">Оценка</label>
-							<select id="review-stars" class="form-control">
+							<select id="review-stars" name="rating" class="form-control">
 								<option>5</option>
 								<option>4</option>
 								<option>3</option>
@@ -498,16 +476,16 @@
 						</div>
 						<div class="form-group col-md-4">
 							<label for="review-author">Ваше Имя</label>
-							<input type="text" class="form-control" id="review-author" placeholder="Ваше Имя">
+							<input type="text" class="form-control" id="review-author" name="author" placeholder="Ваше Имя">
 						</div>
 						<div class="form-group col-md-4">
 							<label for="review-email">Email</label>
-							<input type="text" class="form-control" id="review-email" placeholder="Email">
+							<input type="text" class="form-control" id="review-email" name="email" placeholder="Email">
 						</div>
 					</div>
 					<div class="form-group">
 						<label for="review-text">Ваш отзыв</label>
-						<textarea class="form-control" id="review-text" rows="6"></textarea>
+						<textarea class="form-control" id="review-text" name="review" rows="6"></textarea>
 					</div>
 					<div class="form-group mb-0 mt-4">
 						<button type="submit" class="btn btn-primary">Опубликовать</button>

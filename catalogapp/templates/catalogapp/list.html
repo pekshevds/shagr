@@ -214,7 +214,11 @@
                 <div class="product-card__image">
                     <div class="image image--type--product">
                         <a href="{% url 'show_item' slug=object.good.slug %}" class="image__body">
+                            {% if object.picture %}
+                            <img class="image__tag" src="{{ object.picture.image.url }}" alt="">
+                            {% else %}
                             <img class="image__tag" src="{% static 'images/products/product-1-245x245.jpg' %}" alt="">
+                            {% endif %}
                         </a>
                     </div>
 

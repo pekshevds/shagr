@@ -184,8 +184,8 @@ class Picture(models.Model):
     title = models.CharField(max_length=150, verbose_name='Наименование', blank=True)
     slug = models.SlugField(max_length=36, verbose_name='Url', blank=True, db_index=True)
     good = models.ForeignKey('Good', verbose_name='Номенклатура', on_delete=models.CASCADE)
-    images = models.ImageField(upload_to=get_image_name, verbose_name='Изображение 370x220', default=None, null=True, blank=True)
-    main_image = models.BooleanField(verbose_name='Основная картинка', default=False)
+    image = models.ImageField(upload_to=get_image_name, verbose_name='Изображение 500x500', default=None, null=True, blank=True)
+    is_main = models.BooleanField(verbose_name='Основная картинка', default=False)
 
     def __str__(self):
         return self.slug
@@ -250,14 +250,14 @@ class Review(models.Model):
 
     good = models.ForeignKey('Good', verbose_name="Номенклатура", on_delete=models.PROTECT, blank=False, null=False)
 
-    name = models.CharField(max_length=255, verbose_name="Имя")
+    author = models.CharField(max_length=255, verbose_name="Имя")
     email = models.EmailField(max_length=254, verbose_name="Email")
     review = models.TextField(verbose_name="Отзыв")
     rating = models.PositiveSmallIntegerField(verbose_name="Оценка 1-5", default=5)
     review_date = models.DateTimeField(auto_now_add=True, verbose_name="Дата отзыва")
 
     def __str__(self):
-        return self.name
+        return self.author + " " + self.email
 
     def save(self, *args, **kwargs):        
         super(Review, self).save(*args, **kwargs)

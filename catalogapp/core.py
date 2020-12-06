@@ -1,7 +1,9 @@
 from .models import Good
+from .models import Picture
 from .models import Offer
 from .models import GoodsPropertyValue
 from .models import Category
+from .models import Review
 
 
 # universal
@@ -118,6 +120,19 @@ def get_properties_and_values(good):
         return None
     return records
 
+def get_good_pictures(good):
+    try:
+        records = Picture.objects.filter(good=good)
+    except:
+        return None
+    return records
+
+def get_main_picture_of_good(good):
+    try:
+        records = Picture.objects.filter(good=good, is_main=True)[:1]
+    except:
+        return None    
+    return records[0]
 
 def get_main_properties_and_values(good):
     try:
@@ -192,15 +207,16 @@ def get_goods(category=None):
     return goods
 
 
+
 def get_goods_with_main_properties_and_values(category=None):
 
     items = []
-    goods = Good.objects.filter(category=category).order_by('name')
+    goods = get_goods(category=category)
     for good in goods:
         items.append(
             {
             'good': good,
-            'images': None,
+            'picture': get_main_picture_of_good(good),
             'properties_and_values': get_main_properties_and_values(good),
             }
             )
@@ -227,6 +243,21 @@ def get_hierarchy_categoryes():
     c0 = get_layer()
     return c0
 
+def add_review(slug, rating, author, email, review):
+    good = find_good_by_slug(slug)
+    if good:
+        try:
+            new_review = Review.objects.create(good=good, author=author, email=email, review=review, rating=rating)
+        except:
+            return False        
+    else:
+        return False
+    return True
 
-
+def get_good_reviews(good):
+    try:
+        reviews = Review.objects.filter(good=good).order_by('review_date')
+    except:
+        return None
+    return reviews
 

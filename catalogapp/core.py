@@ -5,7 +5,7 @@ from .models import GoodsPropertyValue
 from .models import Category
 from .models import Review
 
-
+from django.db.models import Avg, Max, Min, Sum
 # universal
 def find_good_by_uid_1c(uid_1c):
     try:
@@ -26,20 +26,22 @@ def find_category_by_name(name):
 
 
 def find_category_by_slug(slug):
+
     parents = Category.objects.filter(slug=slug)
 
     parent = None
-    
     if parents:
+        
         parent = parents[0]
     return parent
 
 def find_good_by_slug(slug):
+
     goods = Good.objects.filter(slug=slug)
 
-    good = None
-    
+    good = None    
     if goods:
+       
         good = goods[0]
     return good
 
@@ -53,11 +55,10 @@ def create_category(name, uid_1c='', parent_uid_1c=''):
         return category
 
     try:
-
-        category = Category.objects.create(name=name, uid_1c=uid_1c, parent_uid_1c=parent_uid_1c)    
-
+        category = Category.objects.create(name=name, uid_1c=uid_1c, parent_uid_1c=parent_uid_1c)
     except:
         return None
+
     return category
 
 # goods
@@ -118,21 +119,32 @@ def get_properties_and_values(good):
         records = GoodsPropertyValue.objects.filter(good=good)
     except:
         return None
-    return records
+
+    if records:
+        return records
+
+    return None
 
 def get_good_pictures(good):
     try:
         records = Picture.objects.filter(good=good)
     except:
         return None
-    return records
+    if records:
+        return records
+
+    return None
 
 def get_main_picture_of_good(good):
     try:
         records = Picture.objects.filter(good=good, is_main=True)[:1]
     except:
-        return None    
-    return records[0]
+        return None 
+
+    if records:   
+        return records[0]
+
+    return None
 
 def get_main_properties_and_values(good):
     try:
@@ -147,39 +159,43 @@ def get_category_goods(category_list):
         goods = Good.objects.filter(category__in=category_list)
     except:
         return None
-    return goods
+
+    if goods:        
+        return goods
+
+    return None
 
 
 # offers
 def download_offer(uid_1c, price=0, quant=0):
     good = find_good_by_uid_1c(uid_1c)
 
-    if good is None:
-        return None
+    if good:
+        try:
+            offer = create_offer(good=good, price=price, quant=quant)
+        except:
+            return None
 
-    try:
-        offer = create_offer(good=good, price=price, quant=quant)
-    except:
-        return None
-    return offer
+        return offer    
+    return None
 
 
 def create_offer(good, price=0, quant=0):
-    if good is None:
-        return None
     
-    try:
-        offer = Offer.objects.create(good=good, price=price, quant=quant)
-    except:
-        return None
-    return offer
+    if good:
+        try:
+            offer = Offer.objects.create(good=good, price=price, quant=quant)
+        except:
+            return None
+        return offer
+    return None
 
 
 def get_last_offer(good):
     try:
         offer = Offer.objects.filter(good=good).order_by('-date')[:0]
     except:
-        return None
+        return None    
     return offer
 
 
@@ -218,6 +234,7 @@ def get_goods_with_main_properties_and_values(category=None):
             'good': good,
             'picture': get_main_picture_of_good(good),
             'properties_and_values': get_main_properties_and_values(good),
+            'rating': get_rating_of_good(good),            
             }
             )
 
@@ -243,6 +260,7 @@ def get_hierarchy_categoryes():
     c0 = get_layer()
     return c0
 
+
 def add_review(slug, rating, author, email, review):
     good = find_good_by_slug(slug)
     if good:
@@ -254,6 +272,7 @@ def add_review(slug, rating, author, email, review):
         return False
     return True
 
+
 def get_good_reviews(good):
     try:
         reviews = Review.objects.filter(good=good).order_by('review_date')
@@ -261,3 +280,19 @@ def get_good_reviews(good):
         return None
     return reviews
 
+
+def get_rating_of_good(good):
+    result = {}
+    reviews_count = 0
+    reting = 0
+
+    reviews = get_good_reviews(good=good)
+    if reviews:
+        reviews_count = len(reviews)
+        ratint_sum = reviews.aggregate(ratint_sum=Sum('rating'))['ratint_sum']
+        reting = round(ratint_sum / reviews_count)
+        
+    result['reviews_count'] = reviews_count
+    result['reting'] = reting
+    
+    return result

@@ -11,6 +11,7 @@ from .core import get_goods_with_main_properties_and_values
 from .core import get_good_pictures
 from .core import add_review
 from .core import get_good_reviews
+from .core import get_rating_of_good
 
 
 from django.core.paginator import Paginator
@@ -60,7 +61,7 @@ def show_item(request, slug):
 	properties_and_values = get_properties_and_values(good=good)
 	pictures = get_good_pictures(good=good)
 	reviews = get_good_reviews(good=good)
-
+	rating = get_rating_of_good(good=good)
 	context = {
 
 		'categories'			: get_hierarchy_categoryes(),
@@ -69,16 +70,36 @@ def show_item(request, slug):
 		'good'	    			: good,
 		'properties_and_values'	: properties_and_values,
 		'pictures'				: pictures,
-		'reviews'				: reviews,		
+		'reviews'				: reviews,
+		'rating'				: rating,
 	}
 	return render(request, 'catalogapp/item.html', context)
 
 
 def new_review(request, slug):
-	_author = request.POST["author"]
-	_email = request.POST["email"]
-	_review = request.POST["review"]
-	_rating = request.POST["rating"]	
+	try:
+		
+		add_review(slug=slug, 
+					author=request.POST["author"], 
+					email=request.POST["email"], 
+					review=request.POST["review"], 
+					rating=request.POST["rating"])
+	except:
+		pass
 
-	add_review(slug=slug, author=_author, email=_email, review=_review, rating=_rating)
 	return redirect(show_item, slug=slug)
+
+def add_to_card(request, slug):
+
+	try:
+		quant = request.POST['quant']
+	except:
+		quant = 1
+	
+	good = find_good_by_slug(slug=slug)
+	if good:
+		print(good, ' - ', str(quant))
+		parent = good.category
+		# return request.META.get('HTTP_REFERER')
+		return redirect(show_list, slug=parent.slug)
+	return redirect(show_catalog)

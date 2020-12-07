@@ -87,7 +87,7 @@ def new_review(request, slug):
 	except:
 		pass
 
-	return redirect(show_item, slug=slug)
+	return redirect(request.META['HTTP_REFERER'])
 
 def add_to_card(request, slug):
 
@@ -98,6 +98,12 @@ def add_to_card(request, slug):
 	
 	good = find_good_by_slug(slug=slug)
 	if good:
-		print(good, ' - ', str(quant))
 		parent = good.category
-	return request.META['HTTP_REFERER']
+	return redirect(request.META['HTTP_REFERER'])
+
+def add_to_wishlist(request, slug):
+	
+	good = find_good_by_slug(slug=slug)
+	if good:
+		parent = good.category
+	return redirect(request.META['HTTP_REFERER'])

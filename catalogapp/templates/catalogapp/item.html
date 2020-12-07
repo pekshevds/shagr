@@ -235,7 +235,7 @@
 			</div>
 			<div class="product__actions-divider"></div>
 		</form>
-		<form class="product__actions" method="post" action="">
+		<form class="product__actions" method="post" action="{% url 'add_to_wishlist' slug=good.slug %}">
 			{% csrf_token %}
 			<button class="product__actions-item product__actions-item--wishlist" type="submit">
 				<svg width="16" height="16">

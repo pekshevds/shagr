@@ -197,7 +197,7 @@
                             M3,13h3v2H2c-0.6,0-1-0.4-1-1v-4h2V13z" />
                         </svg>
                     </button>
-                    <form method="post" action="">
+                    <form method="post" action="{% url 'add_to_wishlist' slug=object.good.slug %}">
                         {% csrf_token %}
                     <button class="product-card__action product-card__action--wishlist" type="submit" aria-label="Add to wish list">
                         <svg width="16" height="16">

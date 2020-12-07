@@ -1,0 +1,172 @@
+    {% extends 'baseapp/index.html' %}
+
+
+    {% load static %}
+
+    {% block body %}
+    <div class="block-header block-header--has-breadcrumb block-header--has-title">
+        <div class="container">
+            <div class="block-header__body">
+                <nav class="breadcrumb block-header__breadcrumb" aria-label="breadcrumb">
+                    <ol class="breadcrumb__list">
+                        <li class="breadcrumb__spaceship-safe-area" role="presentation"></li>
+                        <li class="breadcrumb__item breadcrumb__item--parent breadcrumb__item--first">
+                            <a href="{% url 'show_index' %}" class="breadcrumb__item-link">Главная</a>
+                        </li>
+                        <li class="breadcrumb__item breadcrumb__item--parent breadcrumb__item--first">
+                            <a href="{% url 'show_catalog' %}" class="breadcrumb__item-link">Каталог</a>
+                        </li>
+                        {% if parent %}
+                        {% if parent.parent %}
+                        <li class="breadcrumb__item breadcrumb__item--parent">
+                            <a href="{% if parent.parent.slug %}{% url 'show_list' slug=parent.parent.slug %}{% endif %}" class="breadcrumb__item-link">{{ parent.parent }}</a>
+                        </li>
+                        {% endif %}
+                        <li class="breadcrumb__item breadcrumb__item--current breadcrumb__item--last" aria-current="page">
+                            <span class="breadcrumb__item-link">{{ parent }}</span>
+                        </li>
+                        {% endif %}
+
+                        <li class="breadcrumb__title-safe-area" role="presentation"></li>
+                    </ol>
+                </nav>
+                <h1 class="block-header__title">
+                    Избранное
+                </h1>
+            </div>
+        </div>
+    </div>
+
+    <div class="block block-split block-split--has-sidebar">
+        <div class="container">
+            <div class="block-split__row row no-gutters">
+                <div class="block-split__item block-split__item-sidebar col-auto">
+                    <div class="card widget widget-categories-list">
+                        <div class="widget-categories-list__body" data-collapse data-collapse-opened-class="widget-categories-list--open">
+                            <ul class="widget-categories-list__root">
+
+                                <li class="widget-categories-list__root-item" data-collapse-item>
+                                    <a href="{% if parent.slug %}{% url 'show_list' slug=parent.slug %}{% endif %}" class="widget-categories-list__root-link">
+                                        {% if parent %}
+                                        {{ parent }}
+                                        {% else %}
+                                        Категории
+                                        {% endif %}
+                                    </a>
+                                    <ul class="widget-categories-list__child">
+                                        {% for category in childs %}
+                                        <li class="widget-categories-list__child-item">
+                                            <a href="{% if category.slug %}{% url 'show_list' slug=category.slug %}{% endif %}" class="widget-categories-list__child-link">{{ category }}</a>
+                                        </li>
+                                        {% endfor %}
+                                    </ul>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+
+
+                <div class="block-split__item block-split__item-content col-auto">
+                    <div class="block">
+                        <div class="categories-list categories-list--layout--columns-3-sidebar">
+
+
+
+
+
+                            <!-- Правая часть -->
+                            <div class="block">
+                                <div class="container container--max--xl">
+                                    <div class="wishlist">
+                                        <table class="wishlist__table">
+                                            <thead class="wishlist__head">
+                                                <tr class="wishlist__row wishlist__row--head">
+                                                    <th class="wishlist__column wishlist__column--head wishlist__column--image">Изображение</th>
+                                                    <th class="wishlist__column wishlist__column--head wishlist__column--product">Товар</th>
+                                                    <th class="wishlist__column wishlist__column--head wishlist__column--stock">Состояние на складе</th>
+                                                    <th class="wishlist__column wishlist__column--head wishlist__column--price">Цена</th>
+                                                    <th class="wishlist__column wishlist__column--head wishlist__column--button"></th>
+                                                    <th class="wishlist__column wishlist__column--head wishlist__column--remove"></th>
+                                                </tr>
+                                            </thead>
+                                            <tbody class="wishlist__body">
+                                                {% for object in page.object_list %}
+                                                <tr class="wishlist__row wishlist__row--body">
+                                                    <td class="wishlist__column wishlist__column--body wishlist__column--image">
+                                                        <div class="image image--type--product">
+                                                            <a href="{% url 'show_item' slug=object.good.slug %}" class="image__body">
+                                                                {% if object.picture %}
+                            <img class="image__tag" src="{{ object.picture.image.url }}" alt="">
+                            {% else %}
+                            <img class="image__tag" src="{% static 'images/products/product-1-160x160.jpg' %}" alt="">
+                            {% endif %}
+
+                                                            </a>
+                                                        </div>
+                                                    </td>
+                                                    <td class="wishlist__column wishlist__column--body wishlist__column--product">
+                                                        <div class="wishlist__product-name">
+                                                            <a href="{% url 'show_item' slug=object.good.slug %}">{{ object.good.name }}</a>
+                                                        </div>
+                                                        <div class="wishlist__product-rating">
+                                                            <div class="wishlist__product-rating-stars">
+                                                                <div class="rating">
+                                                                    <div class="rating__body">
+                                                                        <div class="rating__star rating__star--active"></div>
+                                                                        <div class="rating__star rating__star--active"></div>
+                                                                        <div class="rating__star rating__star--active"></div>
+                                                                        <div class="rating__star rating__star--active"></div>
+                                                                        <div class="rating__star"></div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="wishlist__product-rating-title">3 reviews</div>
+                                                        </div>
+                                                    </td>
+                                                    <td class="wishlist__column wishlist__column--body wishlist__column--stock">
+                                                        <div class="status-badge status-badge--style--success status-badge--has-text">
+                                                            <div class="status-badge__body">
+                                                                <div class="status-badge__text">In Stock</div>
+                                                            </div>
+                                                        </div>
+                                                    </td>
+                                                    <td class="wishlist__column wishlist__column--body wishlist__column--price">
+                                                        $19.00
+                                                    </td>
+                                                    <td class="wishlist__column wishlist__column--body wishlist__column--button">
+                                                        <button type="button" class="btn btn-sm btn-primary">Add to cart</button>
+                                                    </td>
+                                                    <td class="wishlist__column wishlist__column--body wishlist__column--remove">
+                                                        <button type="button" class="wishlist__remove btn btn-sm btn-muted btn-icon">
+                                                            <svg width="12" height="12">
+                                                                <path d="M10.8,10.8L10.8,10.8c-0.4,0.4-1,0.4-1.4,0L6,7.4l-3.4,3.4c-0.4,0.4-1,0.4-1.4,0l0,0c-0.4-0.4-0.4-1,0-1.4L4.6,6L1.2,2.6
+                                                                c-0.4-0.4-0.4-1,0-1.4l0,0c0.4-0.4,1-0.4,1.4,0L6,4.6l3.4-3.4c0.4-0.4,1-0.4,1.4,0l0,0c0.4,0.4,0.4,1,0,1.4L7.4,6l3.4,3.4
+                                                                C11.2,9.8,11.2,10.4,10.8,10.8z" />
+                                                            </svg>
+                                                        </button>
+                                                    </td>
+                                                </tr>
+                                                {% endfor %}
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                            <!-- Конец правой части -->
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+    <div class="block-space block-space--layout--before-footer"></div>
+    {% endblock %}
+

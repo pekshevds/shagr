@@ -100,6 +100,4 @@ def add_to_card(request, slug):
 	if good:
 		print(good, ' - ', str(quant))
 		parent = good.category
-		# return request.META.get('HTTP_REFERER')
-		return redirect(show_list, slug=parent.slug)
-	return redirect(show_catalog)
+	return request.META['HTTP_REFERER']

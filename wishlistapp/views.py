@@ -8,7 +8,7 @@ def show_wishlist(request):
 	context = {
 	'categories'			: get_hierarchy_categoryes(),
 	'parent'				: None,
-	'childs'				: childs,
+	'childs'				: childs,	
 
 	}
 	return render(request, 'wishlistapp/wishlist.html', context)

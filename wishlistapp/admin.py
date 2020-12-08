@@ -1,11 +1,11 @@
 from django.contrib import admin
-from .models import Item
+from .models import WishList
 # Register your models here.
-class ItemAdmin(admin.ModelAdmin):
+class WishListAdmin(admin.ModelAdmin):
 	list_display = (
-					'buyer', 
-					'good',
+					'user',					
 					)
-
-admin.site.register(Item, ItemAdmin)
+	list_filter = ( 'user',)
+	
+admin.site.register(WishList, WishListAdmin)
 

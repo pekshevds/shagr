@@ -218,65 +218,71 @@
 							z" />
 						</svg>
 					</span>
+					<span class="indicator__counter">3</span>
 				</a>
 			</div>
 			<div class="indicator indicator--trigger--click">
-				<a href="account-login.html" class="indicator__button">
+				<a href="{% url 'account_login' %}" class="indicator__button">
 					<span class="indicator__icon">
 						<svg width="32" height="32">
 							<path d="M16,18C9.4,18,4,23.4,4,30H2c0-6.2,4-11.5,9.6-13.3C9.4,15.3,8,12.8,8,10c0-4.4,3.6-8,8-8s8,3.6,8,8c0,2.8-1.5,5.3-3.6,6.7
 							C26,18.5,30,23.8,30,30h-2C28,23.4,22.6,18,16,18z M22,10c0-3.3-2.7-6-6-6s-6,2.7-6,6s2.7,6,6,6S22,13.3,22,10z" />
 						</svg>
 					</span>
-					<span class="indicator__title">Hello, Log In</span>
-					<span class="indicator__value">My Account</span>
+					{% if not user.is_authenticated %}
+					<span class="indicator__title">Войти</span>
+					<span class="indicator__value">Мой профиль</span>
+					{% else %}
+					<span class="indicator__title">Привет</span>
+					<span class="indicator__value">{{ user }}</span>
+					{% endif %}
 				</a>
 				<div class="indicator__content">
 					<div class="account-menu">
+						{% if not user.is_authenticated %}
 						<form class="account-menu__form">
 							<div class="account-menu__form-title">
-								Log In to Your Account
+								Введите учетные данные
 							</div>
 							<div class="form-group">
-								<label for="header-signin-email" class="sr-only">Email address</label>
-								<input id="header-signin-email" type="email" class="form-control form-control-sm" placeholder="Email address">
+								<label for="header-signin-email" class="sr-only">Email</label>
+								<input id="header-signin-email" type="email" class="form-control form-control-sm" placeholder="Email">
 							</div>
 							<div class="form-group">
-								<label for="header-signin-password" class="sr-only">Password</label>
+								<label for="header-signin-password" class="sr-only">Пароль</label>
 								<div class="account-menu__form-forgot">
 									<input id="header-signin-password" type="password" class="form-control form-control-sm" placeholder="Password">
-									<a href="" class="account-menu__form-forgot-link">Forgot?</a>
+									<a href="" class="account-menu__form-forgot-link">Забыли?</a>
 								</div>
 							</div>
 							<div class="form-group account-menu__form-button">
-								<button type="submit" class="btn btn-primary btn-sm">Login</button>
+								<button type="submit" class="btn btn-primary btn-sm">Войти</button>
 							</div>
 							<div class="account-menu__form-link">
-								<a href="account-login.html">Create An Account</a>
+								<a href="{% url 'account_login' %}">Создать профиль</a>
 							</div>
 						</form>
+						{% else %}
 						<div class="account-menu__divider"></div>
 						<a href="" class="account-menu__user">
 							<div class="account-menu__user-avatar">
 								<img src="{% static 'images/avatars/avatar-4.jpg' %}" alt="">
 							</div>
 							<div class="account-menu__user-info">
-								<div class="account-menu__user-name">Ryan Ford</div>
+								<div class="account-menu__user-name">{{ user }}</div>
 								<div class="account-menu__user-email">red-parts@example.com</div>
 							</div>
 						</a>
 						<div class="account-menu__divider"></div>
 						<ul class="account-menu__links">
-							<li><a href="account-dashboard.html">Dashboard</a></li>
-							<li><a href="account-dashboard.html">Garage</a></li>
-							<li><a href="account-profile.html">Edit Profile</a></li>
-							<li><a href="account-orders.html">Order History</a></li>
-							<li><a href="account-addresses.html">Addresses</a></li>
+							<li><a href="{% url 'show_profile' %}">Изменить профиль</a></li>
+							<li><a href="account-orders.html">Мои заказы</a></li>					
 						</ul>
 						<div class="account-menu__divider"></div>
 						<ul class="account-menu__links">
-							<li><a href="account-login.html">Logout</a></li>
+							<li><a href="{% url 'account_logout' %}">Выйти</a></li>
 						</ul>
+						{% endif %}
 					</div>
 				</div>
 			</div>
@@ -295,63 +301,7 @@
 					<span class="indicator__title">Shopping Cart</span>
 					<span class="indicator__value">$250.00</span>
 				</a>
-				<div class="indicator__content">
-					<div class="dropcart">
-						<ul class="dropcart__list">
-							<li class="dropcart__item">
-								<div class="dropcart__item-image image image--type--product">
-									<a class="image__body" href="product-full.html">
-										<img class="image__tag" src=" {% static 'images/products/product-4-70x70.jpg' %}" alt="">
-									</a>
-								</div>
-								<div class="dropcart__item-info">
-									<div class="dropcart__item-name">
-										<a href="product-full.html">Glossy Gray 19" Aluminium Wheel AR-19</a>
-									</div>
-									<ul class="dropcart__item-features">
-										<li>Color: Yellow</li>
-										<li>Material: Aluminium</li>
-									</ul>
-									<div class="dropcart__item-meta">
-										<div class="dropcart__item-quantity">2</div>
-										<div class="dropcart__item-price">$699.00</div>
-									</div>
-								</div>
-								<button type="button" class="dropcart__item-remove"><svg width="10" height="10">
-									<path d="M8.8,8.8L8.8,8.8c-0.4,0.4-1,0.4-1.4,0L5,6.4L2.6,8.8c-0.4,0.4-1,0.4-1.4,0l0,0c-0.4-0.4-0.4-1,0-1.4L3.6,5L1.2,2.6
-									c-0.4-0.4-0.4-1,0-1.4l0,0c0.4-0.4,1-0.4,1.4,0L5,3.6l2.4-2.4c0.4-0.4,1-0.4,1.4,0l0,0c0.4,0.4,0.4,1,0,1.4L6.4,5l2.4,2.4
-									C9.2,7.8,9.2,8.4,8.8,8.8z" />
-								</svg>
-							</button>
-						</li>
-						<li class="dropcart__divider" role="presentation"></li>
-					</ul>
-					<div class="dropcart__totals">
-						<table>
-							<tr>
-								<th>Subtotal</th>
-								<td>$699.00</td>
-							</tr>
-							<tr>
-								<th>Shipping</th>
-								<td>$25.00</td>
-							</tr>
-							<tr>
-								<th>Tax</th>
-								<td>$0.00</td>
-							</tr>
-							<tr>
-								<th>Total</th>
-								<td>$724.00</td>
-							</tr>
-						</table>
-					</div>
-					<div class="dropcart__actions">
-						<a href="cart.html" class="btn btn-secondary">View Cart</a>
-						<a href="checkout.html" class="btn btn-primary">Checkout</a>
-					</div>
-				</div>
-			</div>
+				
 		</div>
 	</div>
 </div>

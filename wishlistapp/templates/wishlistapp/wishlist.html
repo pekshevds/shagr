@@ -92,12 +92,12 @@
                                                 </tr>
                                             </thead>
                                             <tbody class="wishlist__body">
-                                                {% for object in page.object_list %}
+                                                {% for item in wishlist.items %}
                                                 <tr class="wishlist__row wishlist__row--body">
                                                     <td class="wishlist__column wishlist__column--body wishlist__column--image">
                                                         <div class="image image--type--product">
-                                                            <a href="{% url 'show_item' slug=object.good.slug %}" class="image__body">
-                                                                {% if object.picture %}
+                                                            <a href="{% url 'show_item' slug=item.good.slug %}" class="image__body">
+                                                                {% if item.picture %}
                             <img class="image__tag" src="{{ object.picture.image.url }}" alt="">
                             {% else %}
                             <img class="image__tag" src="{% static 'images/products/product-1-160x160.jpg' %}" alt="">
@@ -108,7 +108,7 @@
                                                     </td>
                                                     <td class="wishlist__column wishlist__column--body wishlist__column--product">
                                                         <div class="wishlist__product-name">
-                                                            <a href="{% url 'show_item' slug=object.good.slug %}">{{ object.good.name }}</a>
+                                                            <a href="{% url 'show_item' slug=item.good.slug %}">{{ item.good.name }}</a>
                                                         </div>
                                                         <div class="wishlist__product-rating">
                                                             <div class="wishlist__product-rating-stars">

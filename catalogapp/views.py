@@ -14,6 +14,13 @@ from .core import get_good_reviews
 from .core import get_rating_of_good
 
 
+from wishlistapp.core import get_wishlist_on_user
+from wishlistapp.core import get_wishlist_on_id
+from wishlistapp.core import add_to_wishlist_on_user
+from wishlistapp.core import add_to_wishlist_on_id
+
+
+
 from django.core.paginator import Paginator
 
 def render_list(request, parent):
@@ -105,5 +112,12 @@ def add_to_wishlist(request, slug):
 	
 	good = find_good_by_slug(slug=slug)
 	if good:
-		parent = good.category
+		if request.user.is_authenticated:	
+			wishlist = get_wishlist_on_user(request.user)
+			add_to_wishlist_on_user(request.user, good)
+		else:			
+			wishlist = get_wishlist_on_id(request.session.get('wishlist_id'))
+			add_to_wishlist_on_id(request.session.get('wishlist_id'), good)
+		request.session['wishlist_id'] = wishlist['wishlist'].id
+
 	return redirect(request.META['HTTP_REFERER'])

@@ -270,10 +270,20 @@ class Review(models.Model):
 class Offer(models.Model):
     good = models.ForeignKey('Good', verbose_name="Номенклатура", on_delete=models.PROTECT, blank=False, null=False)
 
-    price = models.DecimalField(verbose_name='Цена', default=0, max_digits=15, decimal_places=2)
-    quant = models.DecimalField(verbose_name='Количество', default=0, max_digits=15, decimal_places=3)
-    date = models.DateTimeField(verbose_name='Период', auto_now=False, auto_now_add=True)
+    price = models.DecimalField(verbose_name='Цена', default=0, max_digits=15, decimal_places=2)    
+    date = models.DateField(verbose_name='Период')
 
     class Meta:
         verbose_name = 'Предложение'
         verbose_name_plural = 'Предложения'
+
+
+class State(models.Model):
+    good = models.ForeignKey('Good', verbose_name="Номенклатура", on_delete=models.PROTECT, blank=False, null=False)
+    
+    quant = models.DecimalField(verbose_name='Количество', default=0, max_digits=15, decimal_places=3)
+    date = models.DateField(verbose_name='Период')
+
+    class Meta:
+        verbose_name = 'Состояние'
+        verbose_name_plural = 'Состояния'

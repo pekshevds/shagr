@@ -167,12 +167,12 @@ def get_category_goods(category_list):
 
 
 # offers
-def download_offer(uid_1c, price=0, quant=0):
+def download_offer(date, uid_1c, price=0):
     good = find_good_by_uid_1c(uid_1c)
 
     if good:
         try:
-            offer = create_offer(good=good, price=price, quant=quant)
+            offer = create_offer(date=date, good=good, price=price)
         except:
             return None
 
@@ -180,15 +180,22 @@ def download_offer(uid_1c, price=0, quant=0):
     return None
 
 
-def create_offer(good, price=0, quant=0):
+def create_offer(date, good, price=0):
     
     if good:
+
         try:
-            offer = Offer.objects.create(good=good, price=price, quant=quant)
+            Offer.objects.filter(date=date, good=good).delete()
         except:
-            return None
-        return offer
-    return None
+            return False
+
+        try:
+            Offer.objects.create(date=date, good=good, price=price)
+        except:
+            return False
+
+        return True
+    return False
 
 
 def get_last_offer(good):

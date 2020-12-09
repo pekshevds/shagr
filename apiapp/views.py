@@ -51,9 +51,9 @@ class UploadOffersView(APIView):
 
         try:
             for offer in offers:                
-                download_offer(uid_1c=offer['uid_1c'],
-                             price=offer['price'],
-                             quant=offer['quant'])
+                download_offer(date=offer['date'],
+                                uid_1c=offer['uid_1c'],
+                             price=offer['price'])
         except:
             return Response({"success": "error"})
 

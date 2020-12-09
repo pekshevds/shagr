@@ -221,7 +221,7 @@
 			</div>
 		</div>
 
-		<form class="product__actions" method="post" action="{% url 'add_to_card' slug=good.slug %}">
+		<form class="product__actions" method="post" action="{% url 'add_to_cart' slug=good.slug %}">
 			{% csrf_token %}
 			<div class="product__actions-item product__actions-item--quantity">
 				<div class="input-number">

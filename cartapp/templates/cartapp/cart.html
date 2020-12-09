@@ -31,7 +31,7 @@
                     </ol>
                 </nav>
                 <h1 class="block-header__title">
-                    Избранное
+                    Корзина
                 </h1>
             </div>
         </div>
@@ -86,13 +86,14 @@
                                                     <th class="wishlist__column wishlist__column--head wishlist__column--image">Изображение</th>
                                                     <th class="wishlist__column wishlist__column--head wishlist__column--product">Товар</th>
                                                     <th class="wishlist__column wishlist__column--head wishlist__column--stock">Состояние на складе</th>
+                                                    <th class="wishlist__column wishlist__column--head wishlist__column--price">Количество</th>
                                                     <th class="wishlist__column wishlist__column--head wishlist__column--price">Цена</th>
-                                                    <th class="wishlist__column wishlist__column--head wishlist__column--button"></th>
+                                                    <th class="wishlist__column wishlist__column--head wishlist__column--price">Сумма</th>
                                                     <th class="wishlist__column wishlist__column--head wishlist__column--remove"></th>
                                                 </tr>
                                             </thead>
                                             <tbody class="wishlist__body">
-                                                {% for item in wishlist %}
+                                                {% for item in cart %}
                                                 <tr class="wishlist__row wishlist__row--body">
                                                     <td class="wishlist__column wishlist__column--body wishlist__column--image">
                                                         <div class="image image--type--product">
@@ -165,16 +166,16 @@
                                                         </div>
                                                     </td>
                                                     <td class="wishlist__column wishlist__column--body wishlist__column--price">
-                                                        $19.00
+                                                        {{ item.quant }}
                                                     </td>
-                                                    <td class="wishlist__column wishlist__column--body wishlist__column--button">
-                                                        <form method="post" action="{% url 'add_to_cart' slug=item.good.slug %}">
-                                                            {% csrf_token %}
-                                                            <button type="submit" class="btn btn-sm btn-primary">В корзину</button>
-                                                        </form>                                                        
+                                                    <td class="wishlist__column wishlist__column--body wishlist__column--price">
+                                                        {{ item.price }}
                                                     </td>
+                                                    <td class="wishlist__column wishlist__column--body wishlist__column--price">
+                                                        {{ item.sum }}
+                                                    </td>                                                    
                                                     <td class="wishlist__column wishlist__column--body wishlist__column--remove">
-                                                        <form method="post" action="{% url 'del_from_wishlist' slug=item.good.slug %}">
+                                                        <form method="post" action="{% url 'del_from_cart' slug=item.good.slug %}">
                                                             {% csrf_token %}
                                                         <button type="submit" class="wishlist__remove btn btn-sm btn-muted btn-icon">
                                                             <svg width="12" height="12">

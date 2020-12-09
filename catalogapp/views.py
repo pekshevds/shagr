@@ -14,6 +14,8 @@ from .core import get_good_reviews
 from .core import get_rating_of_good
 
 from wishlistapp.core import get_count_wishlist
+from cartapp.core import get_count_cart
+from cartapp.core import get_sum_cart
 
 from django.core.paginator import Paginator
 
@@ -36,6 +38,8 @@ def render_list(request, parent):
 
 		'categories'			: get_hierarchy_categoryes(),
 		'wishlist_count'		: get_count_wishlist(request),
+		'cart_count'			: get_count_cart(request),
+		'cart_sum'				: get_sum_cart(request),
 		'parent'				: parent,
 		'childs'				: childs,
 		'goods_count'			: len(goods),
@@ -67,6 +71,9 @@ def show_item(request, slug):
 	context = {
 
 		'categories'			: get_hierarchy_categoryes(),
+		'wishlist_count'		: get_count_wishlist(request),
+		'cart_count'			: get_count_cart(request),
+		'cart_sum'				: get_sum_cart(request),
 		'parent'				: good.category,
 		'childs'				: childs,
 		'good'	    			: good,

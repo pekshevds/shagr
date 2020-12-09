@@ -290,7 +290,7 @@
                     </ul>
                 </div>
             </div>
-            <form class="product-card__footer" method="post" action="{% url 'add_to_card' slug=object.good.slug %}">
+            <form class="product-card__footer" method="post" action="{% url 'add_to_cart' slug=object.good.slug %}">
                 {% csrf_token %}
                 <div class="product-card__prices">
                     <div class="product-card__price product-card__price--current">$19.00</div>

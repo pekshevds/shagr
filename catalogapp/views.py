@@ -7,19 +7,13 @@ from .core import find_good_by_slug
 from .core import get_childs
 from .core import get_goods
 from .core import get_properties_and_values
-from .core import get_goods_with_main_properties_and_values
+from .core import get_goods_with_main_properties_and_values_on_category
 from .core import get_good_pictures
 from .core import add_review
 from .core import get_good_reviews
 from .core import get_rating_of_good
 
-
-from wishlistapp.core import get_wishlist_on_user
-from wishlistapp.core import get_wishlist_on_id
-from wishlistapp.core import add_to_wishlist_on_user
-from wishlistapp.core import add_to_wishlist_on_id
-
-
+from wishlistapp.core import get_count_wishlist
 
 from django.core.paginator import Paginator
 
@@ -28,7 +22,7 @@ def render_list(request, parent):
 	goods_count = 15
 
 	childs = get_childs(parent=parent)
-	goods = get_goods_with_main_properties_and_values(category=parent)
+	goods = get_goods_with_main_properties_and_values_on_category(category=parent)
 	
 
 	page_number = request.GET.get('page', 1)
@@ -41,6 +35,7 @@ def render_list(request, parent):
 	context = {
 
 		'categories'			: get_hierarchy_categoryes(),
+		'wishlist_count'		: get_count_wishlist(request),
 		'parent'				: parent,
 		'childs'				: childs,
 		'goods_count'			: len(goods),
@@ -96,28 +91,3 @@ def new_review(request, slug):
 
 	return redirect(request.META['HTTP_REFERER'])
 
-def add_to_card(request, slug):
-
-	try:
-		quant = request.POST['quant']
-	except:
-		quant = 1
-	
-	good = find_good_by_slug(slug=slug)
-	if good:
-		parent = good.category
-	return redirect(request.META['HTTP_REFERER'])
-
-def add_to_wishlist(request, slug):
-	
-	good = find_good_by_slug(slug=slug)
-	if good:
-		if request.user.is_authenticated:	
-			wishlist = get_wishlist_on_user(request.user)
-			add_to_wishlist_on_user(request.user, good)
-		else:			
-			wishlist = get_wishlist_on_id(request.session.get('wishlist_id'))
-			add_to_wishlist_on_id(request.session.get('wishlist_id'), good)
-		request.session['wishlist_id'] = wishlist['wishlist'].id
-
-	return redirect(request.META['HTTP_REFERER'])

@@ -140,37 +140,37 @@
 			<div class="product__rating-stars">
 				<div class="rating">
 					<div class="rating__body">
-						{% if rating.reting == 0 %}
+						{% if rating.rating == 0 %}
 						<div class="rating__star"></div>
 						<div class="rating__star"></div>
 						<div class="rating__star"></div>
 						<div class="rating__star"></div>
 						<div class="rating__star"></div>
-						{% elif rating.reting == 1 %}
+						{% elif rating.rating == 1 %}
 						<div class="rating__star rating__star--active"></div>
 						<div class="rating__star"></div>
 						<div class="rating__star"></div>
 						<div class="rating__star"></div>
 						<div class="rating__star"></div>
-						{% elif rating.reting == 2 %}
+						{% elif rating.rating == 2 %}
 						<div class="rating__star rating__star--active"></div>
 						<div class="rating__star rating__star--active"></div>
 						<div class="rating__star"></div>
 						<div class="rating__star"></div>
 						<div class="rating__star"></div>
-						{% elif rating.reting == 3 %}
+						{% elif rating.rating == 3 %}
 						<div class="rating__star rating__star--active"></div>
 						<div class="rating__star rating__star--active"></div>
 						<div class="rating__star rating__star--active"></div>
 						<div class="rating__star"></div>
 						<div class="rating__star"></div>
-						{% elif rating.reting == 4 %}
+						{% elif rating.rating == 4 %}
 						<div class="rating__star rating__star--active"></div>
 						<div class="rating__star rating__star--active"></div>
 						<div class="rating__star rating__star--active"></div>
 						<div class="rating__star rating__star--active"></div>
 						<div class="rating__star"></div>
-						{% elif rating.reting == 5 %}
+						{% elif rating.rating == 5 %}
 						<div class="rating__star rating__star--active"></div>
 						<div class="rating__star rating__star--active"></div>
 						<div class="rating__star rating__star--active"></div>
@@ -180,7 +180,7 @@
 					</div>
 				</div>
 			</div>
-			<div class="product__rating-label"><a href="">{{ rating.reting }} в {{ reviews_count }} отзывах</a></div>
+			<div class="product__rating-label"><a href="">{{ rating.rating }} в {{ rating.reviews_count }} отзывах</a></div>
 		</div>	
 	</div>
 </div>

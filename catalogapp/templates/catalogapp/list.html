@@ -240,37 +240,37 @@
                    <div class="product-card__rating">
                     <div class="rating product-card__rating-stars">
                         <div class="rating__body">
-                            {% if object.rating.reting == 0 %}
+                            {% if object.rating.rating == 0 %}
                             <div class="rating__star"></div>
                             <div class="rating__star"></div>
                             <div class="rating__star"></div>
                             <div class="rating__star"></div>
                             <div class="rating__star"></div>
-                            {% elif object.rating.reting == 1 %}
+                            {% elif object.rating.rating == 1 %}
                             <div class="rating__star rating__star--active"></div>
                             <div class="rating__star"></div>
                             <div class="rating__star"></div>
                             <div class="rating__star"></div>
                             <div class="rating__star"></div>
-                            {% elif object.rating.reting == 2 %}
+                            {% elif object.rating.rating == 2 %}
                             <div class="rating__star rating__star--active"></div>
                             <div class="rating__star rating__star--active"></div>
                             <div class="rating__star"></div>
                             <div class="rating__star"></div>
                             <div class="rating__star"></div>
-                            {% elif object.rating.reting == 3 %}
+                            {% elif object.rating.rating == 3 %}
                             <div class="rating__star rating__star--active"></div>
                             <div class="rating__star rating__star--active"></div>
                             <div class="rating__star rating__star--active"></div>
                             <div class="rating__star"></div>
                             <div class="rating__star"></div>
-                            {% elif object.rating.reting == 4 %}
+                            {% elif object.rating.rating == 4 %}
                             <div class="rating__star rating__star--active"></div>
                             <div class="rating__star rating__star--active"></div>
                             <div class="rating__star rating__star--active"></div>
                             <div class="rating__star rating__star--active"></div>
                             <div class="rating__star"></div>
-                            {% elif object.rating.reting == 5 %}
+                            {% elif object.rating.rating == 5 %}
                             <div class="rating__star rating__star--active"></div>
                             <div class="rating__star rating__star--active"></div>
                             <div class="rating__star rating__star--active"></div>
@@ -279,7 +279,7 @@
                             {% endif %}                            
                         </div>
                     </div>
-                    <div class="product-card__rating-label">{{ object.rating.reting }} в {{ object.rating.reviews_count }} отзывах</div>
+                    <div class="product-card__rating-label">{{ object.rating.rating }} в {{ object.rating.reviews_count }} отзывах</div>
                 </div>
                 <div class="product-card__features">
                     <ul>

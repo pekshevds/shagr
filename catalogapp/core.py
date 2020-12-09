@@ -224,10 +224,15 @@ def get_goods(category=None):
 
 
 
-def get_goods_with_main_properties_and_values(category=None):
+def get_goods_with_main_properties_and_values_on_category(category=None):
 
-    items = []
     goods = get_goods(category=category)
+    return get_goods_with_main_properties_and_values(goods)
+
+
+def get_goods_with_main_properties_and_values(goods):
+
+    items = []    
     for good in goods:
         items.append(
             {
@@ -284,15 +289,15 @@ def get_good_reviews(good):
 def get_rating_of_good(good):
     result = {}
     reviews_count = 0
-    reting = 0
+    rating = 0
 
     reviews = get_good_reviews(good=good)
     if reviews:
         reviews_count = len(reviews)
         ratint_sum = reviews.aggregate(ratint_sum=Sum('rating'))['ratint_sum']
-        reting = round(ratint_sum / reviews_count)
+        rating = round(ratint_sum / reviews_count)
         
     result['reviews_count'] = reviews_count
-    result['reting'] = reting
+    result['rating'] = rating
     
     return result

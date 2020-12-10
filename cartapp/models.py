@@ -16,6 +16,9 @@ class CartItem(models.Model):
 	good = models.ForeignKey(Good, verbose_name="Товар", on_delete=models.PROTECT)
 	quant = models.DecimalField(verbose_name='Количество', default=1, max_digits=15, decimal_places=3)
     
+	def __str__(self):
+		return self.good.name
+
 	class Meta:
 		verbose_name = 'Элементы корзины'
 		verbose_name_plural = 'Элемент корзины'

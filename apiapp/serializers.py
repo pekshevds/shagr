@@ -9,3 +9,5 @@ class GoodSerializer(serializers.Serializer):
     description = serializers.CharField()
     full_name = serializers.CharField()
     category_uid_1с = serializers.CharField(max_length=36)
+    price = serializers.DecimalField(default=0, max_digits=15, decimal_places=2)
+    quant = serializers.DecimalField(default=0, max_digits=15, decimal_places=3)

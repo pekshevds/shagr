@@ -141,6 +141,9 @@ class Good(models.Model):
     
     category_uid_1с = models.SlugField(max_length=36, verbose_name='Идентификатор категории в 1С', null=True, blank=True)
 
+    price = models.DecimalField(verbose_name='Цена', default=0, max_digits=15, decimal_places=2)
+    quant = models.DecimalField(verbose_name='Количество', default=0, max_digits=15, decimal_places=3)
+
     def __str__(self):
         return self.name
 
@@ -265,25 +268,3 @@ class Review(models.Model):
     class Meta:
         verbose_name = 'Отзыв'
         verbose_name_plural = 'Отзывы'
-
-
-class Offer(models.Model):
-    good = models.ForeignKey('Good', verbose_name="Номенклатура", on_delete=models.PROTECT, blank=False, null=False)
-
-    price = models.DecimalField(verbose_name='Цена', default=0, max_digits=15, decimal_places=2)    
-    date = models.DateField(verbose_name='Период')
-
-    class Meta:
-        verbose_name = 'Предложение'
-        verbose_name_plural = 'Предложения'
-
-
-class State(models.Model):
-    good = models.ForeignKey('Good', verbose_name="Номенклатура", on_delete=models.PROTECT, blank=False, null=False)
-    
-    quant = models.DecimalField(verbose_name='Количество', default=0, max_digits=15, decimal_places=3)
-    date = models.DateField(verbose_name='Период')
-
-    class Meta:
-        verbose_name = 'Состояние'
-        verbose_name_plural = 'Состояния'

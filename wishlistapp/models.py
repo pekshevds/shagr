@@ -15,6 +15,9 @@ class WishListItem(models.Model):
 	wishlist = models.ForeignKey(WishList, verbose_name="Избранное", on_delete=models.CASCADE)
 	good = models.ForeignKey(Good, verbose_name="Товар", on_delete=models.PROTECT)
     
+	def __str__(self):
+		return self.good.name
+
 	class Meta:
 		verbose_name = 'Записи избранного'
 		verbose_name_plural = 'Запись избранного'

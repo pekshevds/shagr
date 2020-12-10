@@ -9,8 +9,6 @@ from .models import Value
 from .models import GoodsPropertyValue
 from .models import Picture
 from .models import PropertySetTemplate
-from .models import Offer
-from .models import State
 from .models import Brand
 from .models import Country
 from .models import Review
@@ -103,37 +101,25 @@ class GoodAdmin(admin.ModelAdmin):
     exclude = ('uid_1c', 'full_name')
 
 
-
-class OfferAdmin(admin.ModelAdmin):
-    list_display = (
-        'date',
-        'good',
-        'price',
-    )
-    list_filter = ( 'date',)
-    readonly_fields = ('good',)
-
-class StateAdmin(admin.ModelAdmin):
-    list_display = (
-        'date',
-        'good',        
-        'quant',
-    )
-    list_filter = ( 'date',)
-    readonly_fields = ('good',)
-
 class BrandAdmin(admin.ModelAdmin):
     list_display = (
         'name',        
     )
 
 
+class ReviewAdmin(admin.ModelAdmin):
+    list_display = (
+        'author', 
+        'good', 
+                
+    )
+    list_filter = ( 'author',)    
+
+
 admin.site.register(Property, PropertyAdmin)
 admin.site.register(Category, CategoryAdmin)
 admin.site.register(Good, GoodAdmin)
 admin.site.register(PropertySetTemplate)
-admin.site.register(Offer, OfferAdmin)
-admin.site.register(State, StateAdmin)
 admin.site.register(Brand, BrandAdmin)
 admin.site.register(Country)
-admin.site.register(Review)
+admin.site.register(Review, ReviewAdmin)

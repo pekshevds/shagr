@@ -3,7 +3,7 @@ from rest_framework.views import APIView
 # Create your views here.
 
 from catalogapp.models import Good
-from catalogapp.core import update_good, download_offer
+from catalogapp.core import update_good
 from .serializers import GoodSerializer
 
 
@@ -32,28 +32,9 @@ class UploadGoodsView(APIView):
                             name=good['name'],
                             art=good['art'],
                             description=good['description'],
-                            is_service=good['is_service'] == "True",)
-                            #category=good['category'],)
-        except:
-            return Response({"success": "error"})
-
-        return Response({"success": "ok"})
-
-
-# upload_offers/
-class UploadOffersView(APIView):
-    def post(self, request):
-
-        offers = request.data.get('offers')
-
-        if offers is None:
-            return Response({"success": "offers list is none"})
-
-        try:
-            for offer in offers:                
-                download_offer(date=offer['date'],
-                                uid_1c=offer['uid_1c'],
-                             price=offer['price'])
+                            is_service=good['is_service'] == "True",
+                            price=good['price'],
+                            quant=good['quant'])
         except:
             return Response({"success": "error"})
 

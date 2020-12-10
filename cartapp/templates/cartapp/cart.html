@@ -109,7 +109,20 @@
                                                     </td>
                                                     <td class="wishlist__column wishlist__column--body wishlist__column--product">
                                                         <div class="wishlist__product-name">
-                                                            <a href="{% url 'show_item' slug=item.good.slug %}">{{ item.good.name }}</a>
+                                                            <div>
+                                                                <div class="product-card__badges">
+                                                                 {% if item.good.is_sale %}                                                                 
+                                                                 <div class="tag-badge tag-badge--sale">sale</div>
+                                                                 {% endif %}
+                                                                 {% if item.good.is_new %}
+                                                                 <div class="tag-badge tag-badge--new">new</div>
+                                                                 {% endif %}
+                                                                 {% if item.good.is_hot %}
+                                                                 <div class="tag-badge tag-badge--hot">hot</div>
+                                                                 {% endif %}
+                                                             </div>
+                                                             <a href="{% url 'show_item' slug=item.good.slug %}">{{ item.good.name }}</a>
+                                                         </div>
                                                         </div>
                                                         <div class="wishlist__product-rating">
                                                             <div class="wishlist__product-rating-stars">
@@ -161,7 +174,7 @@
                                                     <td class="wishlist__column wishlist__column--body wishlist__column--stock">
                                                         <div class="status-badge status-badge--style--success status-badge--has-text">
                                                             <div class="status-badge__body">
-                                                                <div class="status-badge__text">Очень много</div>
+                                                                <div class="status-badge__text">{{ item.good.quant }}</div>
                                                             </div>
                                                         </div>
                                                     </td>

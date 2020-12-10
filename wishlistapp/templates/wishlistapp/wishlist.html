@@ -108,74 +108,88 @@
                                                     </td>
                                                     <td class="wishlist__column wishlist__column--body wishlist__column--product">
                                                         <div class="wishlist__product-name">
-                                                            <a href="{% url 'show_item' slug=item.good.slug %}">{{ item.good.name }}</a>
-                                                        </div>
-                                                        <div class="wishlist__product-rating">
-                                                            <div class="wishlist__product-rating-stars">
-                                                                <div class="rating">
-                                                                    <div class="rating__body">
-                                                                        {% if item.rating.rating == 0 %}
-                                                                        <div class="rating__star"></div>
-                                                                        <div class="rating__star"></div>
-                                                                        <div class="rating__star"></div>
-                                                                        <div class="rating__star"></div>
-                                                                        <div class="rating__star"></div>
-                                                                        {% elif item.rating.rating == 1 %}
-                                                                        <div class="rating__star rating__star--active"></div>
-                                                                        <div class="rating__star"></div>
-                                                                        <div class="rating__star"></div>
-                                                                        <div class="rating__star"></div>
-                                                                        <div class="rating__star"></div>
-                                                                        {% elif item.rating.rating == 2 %}
-                                                                        <div class="rating__star rating__star--active"></div>
-                                                                        <div class="rating__star rating__star--active"></div>
-                                                                        <div class="rating__star"></div>
-                                                                        <div class="rating__star"></div>
-                                                                        <div class="rating__star"></div>
-                                                                        {% elif item.rating.rating == 3 %}
-                                                                        <div class="rating__star rating__star--active"></div>
-                                                                        <div class="rating__star rating__star--active"></div>
-                                                                        <div class="rating__star rating__star--active"></div>
-                                                                        <div class="rating__star"></div>
-                                                                        <div class="rating__star"></div>
-                                                                        {% elif item.rating.rating == 4 %}
-                                                                        <div class="rating__star rating__star--active"></div>
-                                                                        <div class="rating__star rating__star--active"></div>
-                                                                        <div class="rating__star rating__star--active"></div>
-                                                                        <div class="rating__star rating__star--active"></div>
-                                                                        <div class="rating__star"></div>
-                                                                        {% elif item.rating.rating == 5 %}
-                                                                        <div class="rating__star rating__star--active"></div>
-                                                                        <div class="rating__star rating__star--active"></div>
-                                                                        <div class="rating__star rating__star--active"></div>
-                                                                        <div class="rating__star rating__star--active"></div>
-                                                                        <div class="rating__star rating__star--active"></div>
-                                                                        {% endif %}
-                                                                    </div>
+                                                            
+                                                            <div>
+                                                                <div class="product-card__badges">
+                                                                 {% if item.good.is_sale %}                                                                 
+                                                                 <div class="tag-badge tag-badge--sale">sale</div>
+                                                                 {% endif %}
+                                                                 {% if item.good.is_new %}
+                                                                 <div class="tag-badge tag-badge--new">new</div>
+                                                                 {% endif %}
+                                                                 {% if item.good.is_hot %}
+                                                                 <div class="tag-badge tag-badge--hot">hot</div>
+                                                                 {% endif %}
+                                                             </div>
+                                                             <a href="{% url 'show_item' slug=item.good.slug %}">{{ item.good.name }}</a>
+                                                         </div>
+                                                     </div>
+                                                     <div class="wishlist__product-rating">
+                                                        <div class="wishlist__product-rating-stars">
+                                                            <div class="rating">
+                                                                <div class="rating__body">
+                                                                    {% if item.rating.rating == 0 %}
+                                                                    <div class="rating__star"></div>
+                                                                    <div class="rating__star"></div>
+                                                                    <div class="rating__star"></div>
+                                                                    <div class="rating__star"></div>
+                                                                    <div class="rating__star"></div>
+                                                                    {% elif item.rating.rating == 1 %}
+                                                                    <div class="rating__star rating__star--active"></div>
+                                                                    <div class="rating__star"></div>
+                                                                    <div class="rating__star"></div>
+                                                                    <div class="rating__star"></div>
+                                                                    <div class="rating__star"></div>
+                                                                    {% elif item.rating.rating == 2 %}
+                                                                    <div class="rating__star rating__star--active"></div>
+                                                                    <div class="rating__star rating__star--active"></div>
+                                                                    <div class="rating__star"></div>
+                                                                    <div class="rating__star"></div>
+                                                                    <div class="rating__star"></div>
+                                                                    {% elif item.rating.rating == 3 %}
+                                                                    <div class="rating__star rating__star--active"></div>
+                                                                    <div class="rating__star rating__star--active"></div>
+                                                                    <div class="rating__star rating__star--active"></div>
+                                                                    <div class="rating__star"></div>
+                                                                    <div class="rating__star"></div>
+                                                                    {% elif item.rating.rating == 4 %}
+                                                                    <div class="rating__star rating__star--active"></div>
+                                                                    <div class="rating__star rating__star--active"></div>
+                                                                    <div class="rating__star rating__star--active"></div>
+                                                                    <div class="rating__star rating__star--active"></div>
+                                                                    <div class="rating__star"></div>
+                                                                    {% elif item.rating.rating == 5 %}
+                                                                    <div class="rating__star rating__star--active"></div>
+                                                                    <div class="rating__star rating__star--active"></div>
+                                                                    <div class="rating__star rating__star--active"></div>
+                                                                    <div class="rating__star rating__star--active"></div>
+                                                                    <div class="rating__star rating__star--active"></div>
+                                                                    {% endif %}
                                                                 </div>
                                                             </div>
-                                                            <div class="wishlist__product-rating-title">{{ item.rating.reviews_count }} отзывов</div>
                                                         </div>
-                                                    </td>
-                                                    <td class="wishlist__column wishlist__column--body wishlist__column--stock">
-                                                        <div class="status-badge status-badge--style--success status-badge--has-text">
-                                                            <div class="status-badge__body">
-                                                                <div class="status-badge__text">Очень много</div>
-                                                            </div>
+                                                        <div class="wishlist__product-rating-title">{{ item.rating.reviews_count }} отзывов</div>
+                                                    </div>
+                                                </td>
+                                                <td class="wishlist__column wishlist__column--body wishlist__column--stock">
+                                                    <div class="status-badge status-badge--style--success status-badge--has-text">
+                                                        <div class="status-badge__body">
+                                                            <div class="status-badge__text">{{ item.good.quant }}</div>
                                                         </div>
-                                                    </td>
-                                                    <td class="wishlist__column wishlist__column--body wishlist__column--price">
-                                                        $19.00
-                                                    </td>
-                                                    <td class="wishlist__column wishlist__column--body wishlist__column--button">
-                                                        <form method="post" action="{% url 'add_to_cart' slug=item.good.slug %}">
-                                                            {% csrf_token %}
-                                                            <button type="submit" class="btn btn-sm btn-primary">В корзину</button>
-                                                        </form>                                                        
-                                                    </td>
-                                                    <td class="wishlist__column wishlist__column--body wishlist__column--remove">
-                                                        <form method="post" action="{% url 'del_from_wishlist' slug=item.good.slug %}">
-                                                            {% csrf_token %}
+                                                    </div>
+                                                </td>
+                                                <td class="wishlist__column wishlist__column--body wishlist__column--price">
+                                                    {{ item.good.price }}
+                                                </td>
+                                                <td class="wishlist__column wishlist__column--body wishlist__column--button">
+                                                    <form method="post" action="{% url 'add_to_cart' slug=item.good.slug %}">
+                                                        {% csrf_token %}
+                                                        <button type="submit" class="btn btn-sm btn-primary">В корзину</button>
+                                                    </form>                                                        
+                                                </td>
+                                                <td class="wishlist__column wishlist__column--body wishlist__column--remove">
+                                                    <form method="post" action="{% url 'del_from_wishlist' slug=item.good.slug %}">
+                                                        {% csrf_token %}
                                                         <button type="submit" class="wishlist__remove btn btn-sm btn-muted btn-icon">
                                                             <svg width="12" height="12">
                                                                 <path d="M10.8,10.8L10.8,10.8c-0.4,0.4-1,0.4-1.4,0L6,7.4l-3.4,3.4c-0.4,0.4-1,0.4-1.4,0l0,0c-0.4-0.4-0.4-1,0-1.4L4.6,6L1.2,2.6
@@ -183,28 +197,28 @@
                                                                 C11.2,9.8,11.2,10.4,10.8,10.8z" />
                                                             </svg>
                                                         </button>
-                                                        </form>
-                                                    </td>
-                                                </tr>
-                                                {% endfor %}
-                                            </tbody>
-                                        </table>
-                                    </div>
+                                                    </form>
+                                                </td>
+                                            </tr>
+                                            {% endfor %}
+                                        </tbody>
+                                    </table>
                                 </div>
                             </div>
-
-
-                            <!-- Конец правой части -->
-
                         </div>
+
+
+                        <!-- Конец правой части -->
+
                     </div>
                 </div>
             </div>
         </div>
     </div>
+</div>
 
 
 
-    <div class="block-space block-space--layout--before-footer"></div>
-    {% endblock %}
+<div class="block-space block-space--layout--before-footer"></div>
+{% endblock %}
 

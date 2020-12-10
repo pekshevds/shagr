@@ -1,6 +1,5 @@
 from .models import Good
 from .models import Picture
-from .models import Offer
 from .models import GoodsPropertyValue
 from .models import Category
 from .models import Review
@@ -35,6 +34,7 @@ def find_category_by_slug(slug):
         parent = parents[0]
     return parent
 
+
 def find_good_by_slug(slug):
 
     goods = Good.objects.filter(slug=slug)
@@ -61,11 +61,13 @@ def create_category(name, uid_1c='', parent_uid_1c=''):
 
     return category
 
+
 # goods
 def create_good(uid_1c, name,
                 art='', code_1c='',
                 description='', is_sale=False,
-                is_new=False, is_hot=False, is_service=False):#, category=''):
+                is_new=False, is_hot=False, is_service=False,
+                price=0, quant=0):#, category=''):
 
     good = find_good_by_uid_1c(uid_1c)
     if not good is None:
@@ -76,7 +78,8 @@ def create_good(uid_1c, name,
         good = Good.objects.create(uid_1c=uid_1c, name=name,
                                    art=art, code_1c=code_1c,
                                    description=description, is_sale=is_sale,
-                                   is_new=is_new, is_hot=is_hot, is_service=is_service,)# category=create_category(name=category))
+                                   is_new=is_new, is_hot=is_hot, is_service=is_service,
+                                   price=price, quant=quant)# category=create_category(name=category))
         # good.save()
 
     except:
@@ -87,14 +90,16 @@ def create_good(uid_1c, name,
 def update_good(uid_1c, name, art='',
                 code_1c='', description='',
                 is_sale=False, is_new=False,
-                is_hot=False, is_service=False):#, category=''):
+                is_hot=False, is_service=False,
+                price=0, quant=0):#, category=''):
 
     good = find_good_by_uid_1c(uid_1c)
     if good is None:
         return create_good(uid_1c=uid_1c, name=name,
                            art=art, code_1c=code_1c,
                            description=description, is_sale=is_sale,
-                           is_new=True, is_hot=is_hot, is_service=is_service)#, category=category)
+                           is_new=True, is_hot=is_hot, is_service=is_service,
+                           price=price, quant=quant)#, category=category)
 
     try:
 
@@ -106,6 +111,8 @@ def update_good(uid_1c, name, art='',
         good.is_new = is_new
         good.is_hot = is_hot
         good.is_service = is_service
+        good.price = price
+        good.quant = quant
         #good.category = create_category(name=category)
         good.save()
 
@@ -135,6 +142,7 @@ def get_good_pictures(good):
 
     return None
 
+
 def get_main_picture_of_good(good):
     try:
         records = Picture.objects.filter(good=good, is_main=True)[:1]
@@ -145,6 +153,7 @@ def get_main_picture_of_good(good):
         return records[0]
 
     return None
+
 
 def get_main_properties_and_values(good):
     try:
@@ -164,52 +173,6 @@ def get_category_goods(category_list):
         return goods
 
     return None
-
-
-# offers
-def download_offer(date, uid_1c, price=0):
-    good = find_good_by_uid_1c(uid_1c)
-
-    if good:
-        try:
-            offer = create_offer(date=date, good=good, price=price)
-        except:
-            return None
-
-        return offer    
-    return None
-
-
-def create_offer(date, good, price=0):
-    
-    if good:
-
-        try:
-            Offer.objects.filter(date=date, good=good).delete()
-        except:
-            return False
-
-        try:
-            Offer.objects.create(date=date, good=good, price=price)
-        except:
-            return False
-
-        return True
-    return False
-
-
-def get_last_offer(good):
-    try:
-        offer = Offer.objects.filter(good=good).order_by('-date')[:0]
-    except:
-        return None    
-    return offer
-
-
-
-
-
-
 
 
 

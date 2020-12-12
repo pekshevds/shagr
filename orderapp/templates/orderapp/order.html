@@ -1,0 +1,93 @@
+    {% extends 'baseapp/index.html' %}
+
+
+    {% load static %}
+
+    {% block body %}
+    <div class="block-header block-header--has-breadcrumb block-header--has-title">
+        <div class="container">
+            <div class="block-header__body">
+                <nav class="breadcrumb block-header__breadcrumb" aria-label="breadcrumb">
+                    <ol class="breadcrumb__list">
+                        <li class="breadcrumb__spaceship-safe-area" role="presentation"></li>
+                        <li class="breadcrumb__item breadcrumb__item--parent breadcrumb__item--first">
+                            <a href="{% url 'show_index' %}" class="breadcrumb__item-link">Главная</a>
+                        </li>
+                        <li class="breadcrumb__item breadcrumb__item--parent breadcrumb__item--first">
+                            <a href="{% url 'show_catalog' %}" class="breadcrumb__item-link">Каталог</a>
+                        </li>
+                        {% if parent %}
+                        {% if parent.parent %}
+                        <li class="breadcrumb__item breadcrumb__item--parent">
+                            <a href="{% if parent.parent.slug %}{% url 'show_list' slug=parent.parent.slug %}{% endif %}" class="breadcrumb__item-link">{{ parent.parent }}</a>
+                        </li>
+                        {% endif %}
+                        <li class="breadcrumb__item breadcrumb__item--current breadcrumb__item--last" aria-current="page">
+                            <span class="breadcrumb__item-link">{{ parent }}</span>
+                        </li>
+                        {% endif %}
+
+                        <li class="breadcrumb__title-safe-area" role="presentation"></li>
+                    </ol>
+                </nav>
+                <h1 class="block-header__title">
+                    Заказ {{ order.order }}
+                </h1>
+            </div>
+        </div>
+    </div>
+
+    <div class="block block-split block-split--has-sidebar">
+        <div class="container">
+            <div class="block-split__row row no-gutters">
+                <div class="block-split__item block-split__item-sidebar col-auto">
+                    <div class="card widget widget-categories-list">
+                        <div class="widget-categories-list__body" data-collapse data-collapse-opened-class="widget-categories-list--open">
+                            <ul class="widget-categories-list__root">
+
+                                <li class="widget-categories-list__root-item" data-collapse-item>
+                                    <a href="{% if parent.slug %}{% url 'show_list' slug=parent.slug %}{% endif %}" class="widget-categories-list__root-link">
+                                        {% if parent %}
+                                        {{ parent }}
+                                        {% else %}
+                                        Заказы
+                                        {% endif %}
+                                    </a>
+                                    <ul class="widget-categories-list__child">
+                                        {% for category in childs %}
+                                        <li class="widget-categories-list__child-item">
+                                            <a href="{% if category.slug %}{% url 'show_list' slug=category.slug %}{% endif %}" class="widget-categories-list__child-link">{{ category }}</a>
+                                        </li>
+                                        {% endfor %}
+                                    </ul>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+
+
+                <div class="block-split__item block-split__item-content col-auto">
+                    <div class="block">
+                        <div class="categories-list categories-list--layout--columns-3-sidebar">
+
+
+                            <!-- Правая часть -->
+                            {% for item in order.items %}
+                            {{ item.good }}
+                            {% endfor %}
+                            <!-- Конец правой части -->
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+    <div class="block-space block-space--layout--before-footer"></div>
+    {% endblock %}
+

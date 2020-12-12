@@ -1,0 +1,165 @@
+    {% extends 'baseapp/index.html' %}
+
+
+    {% load static %}
+
+    {% block body %}
+    <div class="block-header block-header--has-breadcrumb block-header--has-title">
+        <div class="container">
+            <div class="block-header__body">
+                <nav class="breadcrumb block-header__breadcrumb" aria-label="breadcrumb">
+                    <ol class="breadcrumb__list">
+                        <li class="breadcrumb__spaceship-safe-area" role="presentation"></li>
+                        <li class="breadcrumb__item breadcrumb__item--parent breadcrumb__item--first">
+                            <a href="{% url 'show_index' %}" class="breadcrumb__item-link">Главная</a>
+                        </li>
+                        <li class="breadcrumb__item breadcrumb__item--parent breadcrumb__item--first">
+                            <a href="{% url 'show_catalog' %}" class="breadcrumb__item-link">Каталог</a>
+                        </li>
+                        {% if parent %}
+                        {% if parent.parent %}
+                        <li class="breadcrumb__item breadcrumb__item--parent">
+                            <a href="{% if parent.parent.slug %}{% url 'show_list' slug=parent.parent.slug %}{% endif %}" class="breadcrumb__item-link">{{ parent.parent }}</a>
+                        </li>
+                        {% endif %}
+                        <li class="breadcrumb__item breadcrumb__item--current breadcrumb__item--last" aria-current="page">
+                            <span class="breadcrumb__item-link">{{ parent }}</span>
+                        </li>
+                        {% endif %}
+
+                        <li class="breadcrumb__title-safe-area" role="presentation"></li>
+                    </ol>
+                </nav>
+                <h1 class="block-header__title">
+                    Заказы
+                </h1>
+            </div>
+        </div>
+    </div>
+
+    <div class="block block-split block-split--has-sidebar">
+        <div class="container">
+            <div class="block-split__row row no-gutters">
+                <div class="block-split__item block-split__item-sidebar col-auto">
+                    <div class="card widget widget-categories-list">
+                        <div class="widget-categories-list__body" data-collapse data-collapse-opened-class="widget-categories-list--open">
+                            <ul class="widget-categories-list__root">
+
+                                <li class="widget-categories-list__root-item" data-collapse-item>
+                                    <a href="{% if parent.slug %}{% url 'show_list' slug=parent.slug %}{% endif %}" class="widget-categories-list__root-link">
+                                        {% if parent %}
+                                        {{ parent }}
+                                        {% else %}
+                                        Заказы
+                                        {% endif %}
+                                    </a>
+                                    <ul class="widget-categories-list__child">
+                                        {% for category in childs %}
+                                        <li class="widget-categories-list__child-item">
+                                            <a href="{% if category.slug %}{% url 'show_list' slug=category.slug %}{% endif %}" class="widget-categories-list__child-link">{{ category }}</a>
+                                        </li>
+                                        {% endfor %}
+                                    </ul>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+
+
+                <div class="block-split__item block-split__item-content col-auto">
+                    <div class="block">
+                        <div class="categories-list categories-list--layout--columns-3-sidebar">
+
+
+
+
+
+                            <!-- Правая часть -->
+                            <div class="block">
+                                <div class="container container--max--xl">
+                                    <div class="card">
+                                <div class="card-header">
+                                    <h5>Исторя заказов</h5>
+                                </div>
+                                <div class="card-divider"></div>
+                                <div class="card-table">
+                                    <div class="table-responsive-sm">
+                                        <table>
+                                            <thead>
+                                                <tr>
+                                                    <th>Заказ</th>
+                                                    <th>Дата</th>
+                                                    <th>Состояние</th>
+                                                    <th>Сумма заказа</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+
+                                                {% for order in orders %}
+                                                <tr>
+                                                    <td><a href="{% url 'show_order' id=order.id %}">{{ order }}</a></td>
+                                                    <td>{{ order.date }}</td>
+                                                    <td>{{ order.status }}</td>
+                                                    <td>{{ order.total }}</td>
+                                                </tr>
+                                                {% endfor %}
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                                <div class="card-divider"></div>
+                                <div class="card-footer">
+                                    <ul class="pagination">
+                                        <li class="page-item disabled">
+                                            <a class="page-link page-link--with-arrow" href="" aria-label="Previous">
+                                                <span class="page-link__arrow page-link__arrow--left" aria-hidden="true"><svg width="7" height="11">
+                                                        <path d="M6.7,0.3L6.7,0.3c-0.4-0.4-0.9-0.4-1.3,0L0,5.5l5.4,5.2c0.4,0.4,0.9,0.3,1.3,0l0,0c0.4-0.4,0.4-1,0-1.3l-4-3.9l4-3.9C7.1,1.2,7.1,0.6,6.7,0.3z" />
+                                                    </svg>
+                                                </span>
+                                            </a>
+                                        </li>
+                                        <li class="page-item"><a class="page-link" href="#">1</a></li>
+                                        <li class="page-item active" aria-current="page">
+                                            <span class="page-link">
+                                                2
+                                                <span class="sr-only">(current)</span>
+                                            </span>
+                                        </li>
+                                        <li class="page-item"><a class="page-link" href="#">3</a></li>
+                                        <li class="page-item"><a class="page-link" href="#">4</a></li>
+                                        <li class="page-item page-item--dots">
+                                            <div class="pagination__dots"></div>
+                                        </li>
+                                        <li class="page-item"><a class="page-link" href="#">9</a></li>
+                                        <li class="page-item">
+                                            <a class="page-link page-link--with-arrow" href="" aria-label="Next">
+                                                <span class="page-link__arrow page-link__arrow--right" aria-hidden="true"><svg width="7" height="11">
+                                                        <path d="M0.3,10.7L0.3,10.7c0.4,0.4,0.9,0.4,1.3,0L7,5.5L1.6,0.3C1.2-0.1,0.7,0,0.3,0.3l0,0c-0.4,0.4-0.4,1,0,1.3l4,3.9l-4,3.9
+    C-0.1,9.8-0.1,10.4,0.3,10.7z" />
+                                                    </svg>
+                                                </span>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                                </div>
+                            </div>
+
+
+                            <!-- Конец правой части -->
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+    <div class="block-space block-space--layout--before-footer"></div>
+    {% endblock %}
+

@@ -90,3 +90,14 @@ def exec_save(request):
 
 			return True
 	return False
+
+def get_buyer(request):
+
+	buyer = None
+	if request.user.is_authenticated:
+		try:
+			buyer = Buyer.objects.get(user=request.user)
+		except:
+			buyer = None
+			
+	return buyer

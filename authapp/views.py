@@ -40,7 +40,7 @@ def account_show(request):
 
 def account_save(request):
 
-	if exec_save(request):	
-		return render(request, 'authapp/account.html', get_context(request))
-
+	if exec_save(request):
+		return redirect('show_index')
+		
 	return redirect(request.META['HTTP_REFERER'])

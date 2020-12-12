@@ -50,6 +50,7 @@ INSTALLED_APPS = [
     'authapp',
     'cartapp',
     'wishlistapp',
+    'orderapp',
 ]
 
 MIDDLEWARE = [

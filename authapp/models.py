@@ -1,6 +1,5 @@
 from django.db import models
 
-from django.conf import settings
 from django.contrib.auth.models import User
 
 
@@ -31,7 +30,7 @@ class Buyer(models.Model):
 
 	def save(self, *args, **kwargs):
 
-		self.address = "{}, {} ул., д. {}, кв. {}, подъезд {}, этаж {}".format(self.locality, self.street, self.house, self.apartments, self.porch, self.floor)
+		self.address = "{}, {}, д. {}, кв. {}, подъезд {}, этаж {}".format(self.locality, self.street, self.house, self.apartments, self.porch, self.floor)
 		
 		super(Buyer, self).save(*args, **kwargs)
 

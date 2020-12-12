@@ -25,60 +25,59 @@
                                 
                                 <div class="form-group">
                                     <label for="signup-first-name">Имя</label>
-                                    <input id="signup-first-name" type="text" name="first_name" class="form-control" placeholder="Имя">
+                                    <input id="signup-first-name" type="text" name="first_name" class="form-control" placeholder="Имя" value="{{ buyer.first_name }}">
                                 </div>
 
                                 <div class="form-group">
                                     <label for="signup-last-name">Фамилия</label>
-                                    <input id="signup-last-name" type="text" name="last_name" class="form-control" placeholder="Фамилия">
+                                    <input id="signup-last-name" type="text" name="last_name" class="form-control" placeholder="Фамилия" value="{{ buyer.last_name }}">
                                 </div>
 
                                 <div class="form-group">
                                     <label for="signup-phone">Телефон</label>
-                                    <input id="signup-phone" type="text" name="phone" class="form-control" placeholder="Телефон">
-                                </div>
-
-                                <div class="form-group">
-                                    <label for="signup-address">Адрес</label>
-                                    <input id="signup-address" type="text" name="address" class="form-control" placeholder="Адрес">
-                                </div>
+                                    <input id="signup-phone" type="tel" name="phone" class="form-control" placeholder="Телефон" value="{{ buyer.phone }}">
+                                </div>                                
 
                                 <div class="form-group">
                                     <label for="signup-email">Адрес электронной почты</label>
-                                    <input id="signup-email" type="email" name="email" class="form-control" placeholder="Email">
+                                    <input id="signup-email" type="email" name="email" class="form-control" placeholder="Email" value="{{ buyer.email }}">
                                 </div>
                                 
                                 <div class="form-group">
                                     <label for="signup-locality">Нас. пункт</label>
-                                    <input id="signup-locality" type="text" name="locality" class="form-control" placeholder="Нас. пункт">
+                                    <input id="signup-locality" type="text" name="locality" class="form-control" placeholder="Нас. пункт" value="{{ buyer.locality }}">
                                 </div>
 
                                 <div class="form-group">
                                     <label for="signup-street">Улица</label>
-                                    <input id="signup-street" type="text" name="street" class="form-control" placeholder="Улица">
+                                    <input id="signup-street" type="text" name="street" class="form-control" placeholder="Улица" value="{{ buyer.street }}">
                                 </div>
 
                                 <div class="form-group">
                                     <label for="signup-house">Дом</label>
-                                    <input id="signup-house" type="text" name="house" class="form-control" placeholder="Дом">
+                                    <input id="signup-house" type="text" name="house" class="form-control" placeholder="Дом" value="{{ buyer.house }}">
                                 </div>
 
                                 <div class="form-group">
                                     <label for="signup-porch">Подъезд</label>
-                                    <input id="signup-porch" type="text" name="porch" class="form-control" placeholder="Подъезд">
+                                    <input id="signup-porch" type="text" name="porch" class="form-control" placeholder="Подъезд" value="{{ buyer.porch }}">
                                 </div>
 
                                 <div class="form-group">
                                     <label for="signup-floor">Этаж</label>
-                                    <input id="signup-floor" type="text" name="floor" class="form-control" placeholder="Этаж">
+                                    <input id="signup-floor" type="text" name="floor" class="form-control" placeholder="Этаж" value="{{ buyer.floor }}">
                                 </div>
 
                                 <div class="form-group">
                                     <label for="signup-apartments">Квартира</label>
-                                    <input id="signup-apartments" type="text" name="apartments" class="form-control" placeholder="Квартира">
+                                    <input id="signup-apartments" type="text" name="apartments" class="form-control" placeholder="Квартира" value="{{ buyer.apartments }}">
                                 </div>
                                
-
+                                <div class="form-group">
+                                    <label for="signup-address">Адрес</label>
+                                    <input id="signup-address" type="text" name="address" class="form-control" placeholder="Адрес" value="{{ buyer.address }}">
+                                </div>
+                                
                                 <div class="form-group mb-0">
                                     <button type="submit" class="btn btn-primary mt-3">Сохранить</button>
                                 </div>

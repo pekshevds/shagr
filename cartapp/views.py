@@ -1,4 +1,5 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render
+from django.shortcuts import redirect
 
 from catalogapp.core import find_good_by_slug
 

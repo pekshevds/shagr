@@ -1,9 +1,9 @@
 from django.db import models
-# from smart_selects.db_fields import ChainedForeignKey
-import uuid
+
 from django.template.defaultfilters import slugify
 from unidecode import unidecode
 
+import uuid
 
 def get_uuid4():
     return str(uuid.uuid4())
@@ -16,7 +16,6 @@ def get_uuid():
 def get_image_name(instance, filename):
     new_name = ('%s' + '.' + filename.split('.')[-1]) % instance.slug
     return new_name
-
 
 # Create your models here.
 
@@ -153,7 +152,7 @@ class Good(models.Model):
         if not self.site_name:
             self.site_name = self.name
 
-        if self.uid_1c == "":
+        if not self.uid_1c:
             self.uid_1c = get_uuid4()
 
         try:
@@ -257,7 +256,7 @@ class Review(models.Model):
     email = models.EmailField(max_length=254, verbose_name="Email")
     review = models.TextField(verbose_name="Отзыв")
     rating = models.PositiveSmallIntegerField(verbose_name="Оценка 1-5", default=5)
-    review_date = models.DateTimeField(auto_now_add=True, verbose_name="Дата отзыва")
+    review_date = models.DateTimeField(verbose_name="Дата отзыва", auto_now_add=True)
 
     def __str__(self):
         return self.author + " " + self.email

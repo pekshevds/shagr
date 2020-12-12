@@ -6,6 +6,7 @@ from catalogapp.core import get_main_picture_of_good
 from catalogapp.core import get_rating_of_good
 
 def get_wishlist(request):
+	
 	if request.user.is_authenticated:
 		wishlist = get_wishlist_by_user(request.user)
 	else:
@@ -82,6 +83,7 @@ def get_wishlistitems(wishlist):
 	return items
 
 def get_wishlist_by_user(user):
+
 	try:
 		wishlist = WishList.objects.get(user=user)
 	except:
@@ -98,12 +100,13 @@ def get_wishlist_by_user(user):
 
 
 def get_wishlist_by_id(id):
+
 	try:
 		wishlist = WishList.objects.get(id=id)
 	except:
 		wishlist = WishList.objects.create()
 
-	titems = get_wishlistitems(wishlist)
+	items = get_wishlistitems(wishlist)
 
 	
 	return {

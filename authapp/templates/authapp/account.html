@@ -1,0 +1,98 @@
+{% extends 'baseapp/index.html' %}
+
+
+{% load static %}
+
+
+<!-- Мегаменю -->
+{% block body %}
+
+
+
+<!-- site__body -->
+<div class="site__body">
+    <div class="block-space block-space--layout--after-header"></div>
+    <div class="block">
+        <div class="container container--max--lg">
+            <div class="row">
+
+                <div class="col-md-6 d-flex mt-4 mt-md-0">
+                    <div class="card flex-grow-1 mb-0 ml-0 ml-lg-3 mr-0 mr-lg-4">
+                        <div class="card-body card-body--padding--2">
+                            <h3 class="card-title">Мой профиль</h3>
+                            <form method="post" action="{% url 'account_save' %}">
+                                {% csrf_token %}
+                                
+                                <div class="form-group">
+                                    <label for="signup-first-name">Имя</label>
+                                    <input id="signup-first-name" type="text" name="first_name" class="form-control" placeholder="Имя">
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="signup-last-name">Фамилия</label>
+                                    <input id="signup-last-name" type="text" name="last_name" class="form-control" placeholder="Фамилия">
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="signup-phone">Телефон</label>
+                                    <input id="signup-phone" type="text" name="phone" class="form-control" placeholder="Телефон">
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="signup-address">Адрес</label>
+                                    <input id="signup-address" type="text" name="address" class="form-control" placeholder="Адрес">
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="signup-email">Адрес электронной почты</label>
+                                    <input id="signup-email" type="email" name="email" class="form-control" placeholder="Email">
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label for="signup-locality">Нас. пункт</label>
+                                    <input id="signup-locality" type="text" name="locality" class="form-control" placeholder="Нас. пункт">
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="signup-street">Улица</label>
+                                    <input id="signup-street" type="text" name="street" class="form-control" placeholder="Улица">
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="signup-house">Дом</label>
+                                    <input id="signup-house" type="text" name="house" class="form-control" placeholder="Дом">
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="signup-porch">Подъезд</label>
+                                    <input id="signup-porch" type="text" name="porch" class="form-control" placeholder="Подъезд">
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="signup-floor">Этаж</label>
+                                    <input id="signup-floor" type="text" name="floor" class="form-control" placeholder="Этаж">
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="signup-apartments">Квартира</label>
+                                    <input id="signup-apartments" type="text" name="apartments" class="form-control" placeholder="Квартира">
+                                </div>
+                               
+
+                                <div class="form-group mb-0">
+                                    <button type="submit" class="btn btn-primary mt-3">Сохранить</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+
+
+            </div>
+        </div>
+    </div>
+    <div class="block-space block-space--layout--before-footer"></div>
+</div>
+<!-- site__body / end -->
+
+{% endblock %}

@@ -1,0 +1,53 @@
+{% extends 'baseapp/index.html' %}
+
+
+{% load static %}
+
+
+<!-- Мегаменю -->
+{% block body %}
+
+<!-- site__body -->
+<div class="site__body">
+    <div class="block-space block-space--layout--after-header"></div>
+    <div class="block">
+        <div class="container container--max--lg">
+            <div class="row">
+
+                <div class="col-md-6 d-flex mt-4 mt-md-0">
+                    <div class="card flex-grow-1 mb-0 ml-0 ml-lg-3 mr-0 mr-lg-4">
+                        <div class="card-body card-body--padding--2">
+                            <h3 class="card-title">Регистрация</h3>
+                            <form method="post" action="{% url 'account_reg' %}">
+                                {% csrf_token %}
+                                <div class="form-group">
+                                    <label for="signup-name">Логин</label>
+                                    <input id="signup-name" type="text" name="username" class="form-control" placeholder="Логин">
+                                </div>
+                                <div class="form-group">
+                                    <label for="signup-email">Адрес электронной почты</label>
+                                    <input id="signup-email" type="email" name="email" class="form-control" placeholder="Email">
+                                </div>
+                                <div class="form-group">
+                                    <label for="signup-password">Пароль</label>
+                                    <input id="signup-password" type="password" name="password" class="form-control" placeholder="Пароль">
+                                </div>
+                                <div class="form-group">
+                                    <label for="signup-confirm">Повторите пароль</label>
+                                    <input id="signup-confirm" type="password" name="confirm" class="form-control" placeholder="Подтверждение">
+                                </div>
+                                <div class="form-group mb-0">
+                                    <button type="submit" class="btn btn-primary mt-3">Регистрация</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="block-space block-space--layout--before-footer"></div>
+</div>
+<!-- site__body / end -->
+
+{% endblock %}

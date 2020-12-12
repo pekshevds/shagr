@@ -44,9 +44,9 @@ INSTALLED_APPS = [
     'catalogapp',
     'rest_framework',
     'apiapp',
-    'allauth',
-    'allauth.account',
-    'allauth.socialaccount',
+    # 'allauth',
+    # 'allauth.account',
+    # 'allauth.socialaccount',
     'authapp',
     'cartapp',
     'wishlistapp',
@@ -115,12 +115,12 @@ AUTH_PASSWORD_VALIDATORS = [
 ]
 
 
-AUTHENTICATION_BACKENDS = [
+# AUTHENTICATION_BACKENDS = [
 
-    'django.contrib.auth.backends.ModelBackend',
-    'allauth.account.auth_backends.AuthenticationBackend',
+#     'django.contrib.auth.backends.ModelBackend',
+#     'allauth.account.auth_backends.AuthenticationBackend',
     
-]
+# ]
 
 
 # Internationalization

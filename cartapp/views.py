@@ -1,35 +1,17 @@
 from django.shortcuts import render, redirect
 
-from wishlistapp.core import get_wishlist
-
-
-from catalogapp.core import get_hierarchy_categoryes
-from catalogapp.core import get_childs
 from catalogapp.core import find_good_by_slug
 
 from .core import get_cart
 from .core import add_to_cart
 from .core import del_from_cart
 
+from shagr.core import get_context
 
 # Create your views here.
 def show_cart(request):
-	
-	cart = get_cart(request)
-	wishlist = get_wishlist(request)
-
-	childs = get_childs(parent=None)
-
-	context = {
-	'categories'			: get_hierarchy_categoryes(),
-	'parent'				: None,
-	'childs'				: childs,	
-	'cart'					: cart['items'],
-	'cart_quant'			: cart['cart_quant'],
-	'wishlist_count'		: wishlist['wishlist_count'],
-	'cart_sum'				: cart['cart_sum'],
-	}
-	return render(request, 'cartapp/cart.html', context)
+		
+	return render(request, 'cartapp/cart.html', get_context(request))
 
 
 def add_good_to_cart(request, slug):

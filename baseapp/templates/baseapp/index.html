@@ -222,7 +222,7 @@
 				</a>
 			</div>
 			<div class="indicator indicator--trigger--click">
-				<a href="{% url 'account_login' %}" class="indicator__button">
+				<a href="" class="indicator__button">
 					<span class="indicator__icon">
 						<svg width="32" height="32">
 							<path d="M16,18C9.4,18,4,23.4,4,30H2c0-6.2,4-11.5,9.6-13.3C9.4,15.3,8,12.8,8,10c0-4.4,3.6-8,8-8s8,3.6,8,8c0,2.8-1.5,5.3-3.6,6.7
@@ -240,18 +240,20 @@
 				<div class="indicator__content">
 					<div class="account-menu">
 						{% if not user.is_authenticated %}
-						<form class="account-menu__form">
+						<form class="account-menu__form" method="post" action="{% url 'account_login' %}">
+							{% csrf_token %}
 							<div class="account-menu__form-title">
 								Введите учетные данные
 							</div>
 							<div class="form-group">
-								<label for="header-signin-email" class="sr-only">Email</label>
-								<input id="header-signin-email" type="email" class="form-control form-control-sm" placeholder="Email">
+								
+								<label for="header-signin-text" class="sr-only">Логин</label>
+								<input id="header-signin-text" type="text" name="username" class="form-control form-control-sm" placeholder="Имя пользователя">
 							</div>
 							<div class="form-group">
 								<label for="header-signin-password" class="sr-only">Пароль</label>
 								<div class="account-menu__form-forgot">
-									<input id="header-signin-password" type="password" class="form-control form-control-sm" placeholder="Password">
+									<input id="header-signin-password" type="password" name="password" class="form-control form-control-sm" placeholder="Пароль">
 									<a href="" class="account-menu__form-forgot-link">Забыли?</a>
 								</div>
 							</div>
@@ -259,23 +261,23 @@
 								<button type="submit" class="btn btn-primary btn-sm">Войти</button>
 							</div>
 							<div class="account-menu__form-link">
-								<a href="{% url 'account_login' %}">Создать профиль</a>
+								<a href="{% url 'show_registration_form' %}">Создать профиль</a>
 							</div>
 						</form>
 						{% else %}
 						<div class="account-menu__divider"></div>
-						<a href="" class="account-menu__user">
+						<a href="{% url 'account_show' %}" class="account-menu__user">
 							<div class="account-menu__user-avatar">
 								<img src="{% static 'images/avatars/avatar-4.jpg' %}" alt="">
 							</div>
 							<div class="account-menu__user-info">
 								<div class="account-menu__user-name">{{ user }}</div>
-								<div class="account-menu__user-email">red-parts@example.com</div>
+								<div class="account-menu__user-email">{{ user.email }}</div>
 							</div>
 						</a>
 						<div class="account-menu__divider"></div>
 						<ul class="account-menu__links">
-							<li><a href="{% url 'show_profile' %}">Изменить профиль</a></li>
+							<li><a href="{% url 'account_show' %}">Изменить профиль</a></li>
 							<li><a href="account-orders.html">Мои заказы</a></li>					
 						</ul>
 						<div class="account-menu__divider"></div>

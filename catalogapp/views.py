@@ -17,6 +17,8 @@ from .core import get_rating_of_good
 from wishlistapp.core import get_wishlist
 from cartapp.core import get_cart
 
+from shagr.core import get_context
+
 from django.core.paginator import Paginator
 
 def render_list(request, parent):
@@ -33,22 +35,14 @@ def render_list(request, parent):
 	is_paginated = page.has_other_pages()
 	
 
-	cart = get_cart(request)
-	wishlist = get_wishlist(request)
-
-	context = {
-
-		'categories'			: get_hierarchy_categoryes(),
-		'wishlist_count'		: wishlist['wishlist_count'],
-		'cart_quant'			: cart['cart_quant'],
-		'cart_sum'				: cart['cart_sum'],
-		'parent'				: parent,
-		'childs'				: childs,
-		'goods_count'			: len(goods),
-		'page'					: page,
-		'is_paginated'			: is_paginated,	
-
-	}	
+	context = get_context(request)
+	
+	context['parent'] = parent
+	context['childs'] = childs
+	context['goods_count'] = len(goods)
+	context['page'] = page
+	context['is_paginated'] = is_paginated
+	
 	return render(request, 'catalogapp/list.html', context)
 
 
@@ -71,23 +65,16 @@ def show_item(request, slug):
 	reviews = get_good_reviews(good=good)
 	rating = get_rating_of_good(good=good)
 
-	cart = get_cart(request)
-	wishlist = get_wishlist(request)
+	context = get_context(request)
 
-	context = {
-
-		'categories'			: get_hierarchy_categoryes(),
-		'wishlist_count'		: wishlist['wishlist_count'],
-		'cart_quant'			: cart['cart_quant'],
-		'cart_sum'				: cart['cart_sum'],
-		'parent'				: good.category,
-		'childs'				: childs,
-		'good'	    			: good,
-		'properties_and_values'	: properties_and_values,
-		'pictures'				: pictures,
-		'reviews'				: reviews,
-		'rating'				: rating,
-	}
+	context['parent'] = good.category
+	context['childs'] = childs
+	context['good'] = good
+	context['properties_and_values'] = properties_and_values
+	context['pictures'] = pictures
+	context['reviews'] = reviews
+	context['rating'] = rating
+	
 	return render(request, 'catalogapp/item.html', context)
 
 

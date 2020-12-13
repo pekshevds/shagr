@@ -85,46 +85,52 @@
                                                 <tr class="wishlist__row wishlist__row--head">
                                                     <th class="wishlist__column wishlist__column--head wishlist__column--image">Изображение</th>
                                                     <th class="wishlist__column wishlist__column--head wishlist__column--product">Товар</th>
-                                                    <th class="wishlist__column wishlist__column--head wishlist__column--stock">Состояние на складе</th>
+                                                    <th class="wishlist__column wishlist__column--head wishlist__column--stock">Остаток</th>
                                                     <th class="wishlist__column wishlist__column--head wishlist__column--price">Количество</th>
                                                     <th class="wishlist__column wishlist__column--head wishlist__column--price">Цена</th>
                                                     <th class="wishlist__column wishlist__column--head wishlist__column--price">Сумма</th>
+                                                    <th class="wishlist__column wishlist__column--head wishlist__column--button"><div class="order-header__actions">
+                                        <a href="{% url 'clear_cart' %}" class="btn btn-xs btn-secondary">Очистить</a>
+                                    </div></th>
                                                     <th class="wishlist__column wishlist__column--head wishlist__column--remove"></th>
                                                 </tr>
                                             </thead>
                                             <tbody class="wishlist__body">
                                                 {% for item in cart.items %}
                                                 <tr class="wishlist__row wishlist__row--body">
-                                                    <td class="wishlist__column wishlist__column--body wishlist__column--image">
-                                                        <div class="image image--type--product">
-                                                            <a href="{% url 'show_item' slug=item.good.slug %}" class="image__body">
-                                                                {% if item.picture %}
-                                                                <img class="image__tag" src="{{ item.picture.image.url }}" alt="">
-                                                                {% else %}
-                                                                <img class="image__tag" src="{% static 'images/products/product-1-160x160.jpg' %}" alt="">
-                                                                {% endif %}
 
-                                                            </a>
-                                                        </div>
-                                                    </td>
-                                                    <td class="wishlist__column wishlist__column--body wishlist__column--product">
-                                                        <div class="wishlist__product-name">
-                                                            <div>
-                                                                <div class="product-card__badges">
-                                                                 {% if item.good.is_sale %}                                                                 
-                                                                 <div class="tag-badge tag-badge--sale">sale</div>
-                                                                 {% endif %}
-                                                                 {% if item.good.is_new %}
-                                                                 <div class="tag-badge tag-badge--new">new</div>
-                                                                 {% endif %}
-                                                                 {% if item.good.is_hot %}
-                                                                 <div class="tag-badge tag-badge--hot">hot</div>
-                                                                 {% endif %}
-                                                             </div>
-                                                             <a href="{% url 'show_item' slug=item.good.slug %}">{{ item.good.name }}</a>
-                                                         </div>
-                                                        </div>
-                                                        <div class="wishlist__product-rating">
+                                                    <form method="post" action="{% url 'add_to_order' slug=item.good.slug %}">
+                                                        {% csrf_token %}
+                                                        <td class="wishlist__column wishlist__column--body wishlist__column--image">
+                                                            <div class="image image--type--product">
+                                                                <a href="{% url 'show_item' slug=item.good.slug %}" class="image__body">
+                                                                    {% if item.picture %}
+                                                                    <img class="image__tag" src="{{ item.picture.image.url }}" alt="">
+                                                                    {% else %}
+                                                                    <img class="image__tag" src="{% static 'images/products/product-1-160x160.jpg' %}" alt="">
+                                                                    {% endif %}
+
+                                                                </a>
+                                                            </div>
+                                                        </td>
+                                                        <td class="wishlist__column wishlist__column--body wishlist__column--product">
+                                                            <div class="wishlist__product-name">
+                                                                <div>
+                                                                    <div class="product-card__badges">
+                                                                       {% if item.good.is_sale %}                                                                 
+                                                                       <div class="tag-badge tag-badge--sale">sale</div>
+                                                                       {% endif %}
+                                                                       {% if item.good.is_new %}
+                                                                       <div class="tag-badge tag-badge--new">new</div>
+                                                                       {% endif %}
+                                                                       {% if item.good.is_hot %}
+                                                                       <div class="tag-badge tag-badge--hot">hot</div>
+                                                                       {% endif %}
+                                                                   </div>
+                                                                   <a href="{% url 'show_item' slug=item.good.slug %}">{{ item.good.name }}</a>
+                                                               </div>
+                                                           </div>
+                                                           <div class="wishlist__product-rating">
                                                             <div class="wishlist__product-rating-stars">
                                                                 <div class="rating">
                                                                     <div class="rating__body">
@@ -179,17 +185,31 @@
                                                         </div>
                                                     </td>
                                                     <td class="wishlist__column wishlist__column--body wishlist__column--price">
-                                                        {{ item.quant }}
+                                                        <div class="input-number">
+                                                            <input class="input-number__input form-control form-control-lg" type="number" name="quant" min="1" value="{{ item.quant }}">
+                                                            <div class="input-number__add"></div>
+                                                            <div class="input-number__sub"></div>
+                                                        </div>
                                                     </td>
                                                     <td class="wishlist__column wishlist__column--body wishlist__column--price">
-                                                        {{ item.price }}
+                                                        <div class="form-group">    
+                                                            <input id="signup-price" type="text" name="price" class="form-control" placeholder="Цена" value="{{ item.price }}" disabled>
+                                                        </div>
                                                     </td>
                                                     <td class="wishlist__column wishlist__column--body wishlist__column--price">
-                                                        {{ item.sum }}
-                                                    </td>                                                    
-                                                    <td class="wishlist__column wishlist__column--body wishlist__column--remove">
-                                                        <form method="post" action="{% url 'del_from_cart' slug=item.good.slug %}">
-                                                            {% csrf_token %}
+                                                        <div class="form-group">    
+                                                            <input id="signup-sum" type="text" name="sum" class="form-control" placeholder="Сумма" value="{{ item.sum }}" disabled>
+                                                        </div>
+                                                    </td>
+                                                    <td class="wishlist__column wishlist__column--body wishlist__column--button">
+
+
+                                                        <button type="submit" class="btn btn-sm btn-primary">В заказ</button>
+                                                    </form>                                                        
+                                                </td>                                               
+                                                <td class="wishlist__column wishlist__column--body wishlist__column--remove">
+                                                    <form method="post" action="{% url 'del_from_cart' slug=item.good.slug %}">
+                                                        {% csrf_token %}
                                                         <button type="submit" class="wishlist__remove btn btn-sm btn-muted btn-icon">
                                                             <svg width="12" height="12">
                                                                 <path d="M10.8,10.8L10.8,10.8c-0.4,0.4-1,0.4-1.4,0L6,7.4l-3.4,3.4c-0.4,0.4-1,0.4-1.4,0l0,0c-0.4-0.4-0.4-1,0-1.4L4.6,6L1.2,2.6
@@ -197,28 +217,46 @@
                                                                 C11.2,9.8,11.2,10.4,10.8,10.8z" />
                                                             </svg>
                                                         </button>
-                                                        </form>
-                                                    </td>
-                                                </tr>
-                                                {% endfor %}
-                                            </tbody>
-                                        </table>
+                                                    </form>
+                                                </td>
+                                            </tr>
+                                            {% endfor %}
+                                        </tbody>
+                                        <thead class="wishlist__head">
+                                                <tr class="wishlist__row wishlist__row--head">
+                                                    <th class="wishlist__column wishlist__column--head wishlist__column--image"></th>
+                                                    <th class="wishlist__column wishlist__column--head wishlist__column--product"></th>
+                                                    <th class="wishlist__column wishlist__column--head wishlist__column--stock"></th>
+                                                    <th class="wishlist__column wishlist__column--head wishlist__column--price"></th>
+                                                    <th class="wishlist__column wishlist__column--head wishlist__column--price"></th>
+                                                    <th class="wishlist__column wishlist__column--head wishlist__column--price">
+                                                        
+                                                    </th>
+                                                    <th class="wishlist__column wishlist__column--head wishlist__column--button">
+                                                        <div class="order-header__actions">
+                                        <a href="{% url 'clear_cart' %}" class="btn btn-xs btn-secondary">Очистить</a>
                                     </div>
+                                                    </th>
+                                                    <th class="wishlist__column wishlist__column--head wishlist__column--remove"></th>
+                                                </tr>
+                                            </thead>
+                                    </table>
                                 </div>
                             </div>
-
-
-                            <!-- Конец правой части -->
-
                         </div>
+
+
+                        <!-- Конец правой части -->
+
                     </div>
                 </div>
             </div>
         </div>
     </div>
+</div>
 
 
 
-    <div class="block-space block-space--layout--before-footer"></div>
-    {% endblock %}
+<div class="block-space block-space--layout--before-footer"></div>
+{% endblock %}
 

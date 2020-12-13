@@ -5,6 +5,7 @@ from catalogapp.core import find_good_by_slug
 from .core import get_wishlist
 from .core import add_to_wishlist
 from .core import del_from_wishlist
+from .core import clear_wishlist
 
 from shagr.core import get_context
 
@@ -20,7 +21,7 @@ def add_good_to_wishlist(request, slug):
 	if good:
 		
 		wishlist = get_wishlist(request)
-		add_to_wishlist(wishlist, good)		
+		add_to_wishlist(wishlist['wishlist'], good)		
 
 	return redirect(request.META['HTTP_REFERER'])
 
@@ -30,6 +31,13 @@ def del_good_from_wishlist(request, slug):
 	if good:
 
 		wishlist = get_wishlist(request)
-		del_from_wishlist(wishlist, good)		
+		del_from_wishlist(wishlist['wishlist'], good)		
+
+	return redirect(request.META['HTTP_REFERER'])
+
+def clear_current_wishlist(request):
+	
+	wishlist = get_wishlist(request)
+	clear_wishlist(wishlist['wishlist'])		
 
 	return redirect(request.META['HTTP_REFERER'])

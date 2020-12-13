@@ -143,6 +143,12 @@ class Good(models.Model):
     price = models.DecimalField(verbose_name='Цена', default=0, max_digits=15, decimal_places=2)
     quant = models.DecimalField(verbose_name='Количество', default=0, max_digits=15, decimal_places=3)
 
+    width = models.DecimalField(verbose_name='Ширина, см', default=0, max_digits=15, decimal_places=1)
+    height = models.DecimalField(verbose_name='Высота, см', default=0, max_digits=15, decimal_places=1)
+    depth = models.DecimalField(verbose_name='Глубина, см', default=0, max_digits=15, decimal_places=1)
+    weight = models.DecimalField(verbose_name='Вес, кг', default=0, max_digits=15, decimal_places=3)
+    volume = models.DecimalField(verbose_name='Объем, м3', default=0, max_digits=15, decimal_places=5)
+
     def __str__(self):
         return self.name
 
@@ -159,6 +165,10 @@ class Good(models.Model):
             self.slug = slugify(unidecode(self.site_name))  
         except:
             pass
+
+        volume = self.width/10 * self.height/10 * self.depth/10
+        if self.volume == 0:
+            self.volume = volume
 
         super(Good, self).save(*args, **kwargs)
 

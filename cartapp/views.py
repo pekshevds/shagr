@@ -6,6 +6,7 @@ from catalogapp.core import find_good_by_slug
 from .core import get_cart
 from .core import add_to_cart
 from .core import del_from_cart
+from .core import clear_cart
 
 from shagr.core import get_context
 
@@ -21,7 +22,7 @@ def add_good_to_cart(request, slug):
 	if good:
 
 		cart = get_cart(request)
-		add_to_cart(cart, good, quant=quant)		
+		add_to_cart(cart['cart'], good, quant=quant)		
 
 	return redirect(request.META['HTTP_REFERER'])
 	
@@ -32,6 +33,13 @@ def del_good_from_cart(request, slug):
 	if good:
 
 		cart = get_cart(request)
-		del_from_cart(cart, good)		
+		del_from_cart(cart['cart'], good)		
+
+	return redirect(request.META['HTTP_REFERER'])
+
+def clear_current_cart(request):
+	
+	cart = get_cart(request)
+	clear_cart(cart['cart'])		
 
 	return redirect(request.META['HTTP_REFERER'])

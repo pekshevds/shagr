@@ -28,10 +28,12 @@ class UserForm(forms.Form):
 class BuyerForm(forms.Form):
 
 	first_name  = forms.CharField(max_length = 150, required=False)
+	middle_name = forms.CharField(max_length = 150, required=False)
 	last_name  	= forms.CharField(max_length = 150, required=False)
 	phone  		= forms.CharField(max_length = 150, required=False)
 	address  	= forms.CharField(max_length = 1024, required=False)
 	email  		= forms.CharField(max_length = 30, required=False)
+	zipcode		= forms.CharField(max_length = 30, required=False)
 	locality  	= forms.CharField(max_length = 20, required=False)
 	street  	= forms.CharField(max_length = 30, required=False)
 	house  		= forms.CharField(max_length = 10, required=False)

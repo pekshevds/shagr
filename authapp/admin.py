@@ -2,13 +2,16 @@ from django.contrib import admin
 from .models import Buyer
 
 class BuyerAdmin(admin.ModelAdmin):
-	list_display = (
-					'user', 
+	list_display = (			
+					'last_name',		 
 					'first_name',
-					'last_name',
+					'middle_name',					
 					'phone',
 					'address',
+					'user',
 					)
+	
+search_fields = ('last_name',)
 
 admin.site.register(Buyer, BuyerAdmin)
 

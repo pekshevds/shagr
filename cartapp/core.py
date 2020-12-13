@@ -21,13 +21,28 @@ def get_cart(request):
 
 def add_to_cart(cart, good, quant=1):
 
-	items = CartItem.objects.create(cart=cart['cart'], good=good, quant=quant)	
+	items = CartItem.objects.filter(cart=cart, good=good)
+	if items:
+
+		item = items[0]
+		item.quant = item.quant + quant
+		item.save()
+	else:
+		items = CartItem.objects.create(cart=cart, good=good, quant=quant)	
 
 
 def del_from_cart(cart, good):
 	
 	try:
-		CartItem.objects.filter(cart=cart['cart'], good=good).delete()
+		CartItem.objects.filter(cart=cart, good=good).delete()
+	except:
+		return False
+	return True
+
+def clear_cart(cart):
+	
+	try:
+		CartItem.objects.filter(cart=cart).delete()
 	except:
 		return False
 	return True
@@ -36,7 +51,7 @@ def del_from_cart(cart, good):
 def in_cart(cart, good):
 
 	try:
-		records = CartItem.objects.filter(cart=cart['cart'], good=good)
+		records = CartItem.objects.filter(cart=cart, good=good)
 	except:
 		return False
 

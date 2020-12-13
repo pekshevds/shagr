@@ -19,18 +19,27 @@ def get_wishlist(request):
 def add_to_wishlist(wishlist, good):
 			
 	try:
-		items = WishListItem.objects.filter(wishlist=wishlist['wishlist'], good=good)
+		items = WishListItem.objects.filter(wishlist=wishlist, good=good)
 	except:
-		items = WishListItem.objects.create(wishlist=wishlist['wishlist'], good=good)
+		items = WishListItem.objects.create(wishlist=wishlist, good=good)
 
 	if not items:
-		items = WishListItem.objects.create(wishlist=wishlist['wishlist'], good=good)	
+		items = WishListItem.objects.create(wishlist=wishlist, good=good)	
 
 
 def del_from_wishlist(wishlist, good):
 	
 	try:
-		WishListItem.objects.filter(wishlist=wishlist['wishlist'], good=good).delete()
+		WishListItem.objects.filter(wishlist=wishlist, good=good).delete()
+	except:
+		return False
+	return True
+
+
+def clear_wishlist(wishlist):
+	
+	try:
+		WishListItem.objects.filter(wishlist=wishlist).delete()
 	except:
 		return False
 	return True
@@ -39,7 +48,7 @@ def del_from_wishlist(wishlist, good):
 def in_wishlist(wishlist, good):
 	
 	try:
-		records = WishListItem.objects.filter(wishlist=wishlist['wishlist'], good=good)
+		records = WishListItem.objects.filter(wishlist=wishlist, good=good)
 	except:
 		return False
 
@@ -50,7 +59,7 @@ def in_wishlist(wishlist, good):
 def get_count_wishlist(wishlist):
 	
 	try:
-		records = WishListItem.objects.filter(wishlist=wishlist['wishlist'])
+		records = WishListItem.objects.filter(wishlist=wishlist)
 	except:
 		return 0
 

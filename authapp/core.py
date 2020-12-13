@@ -76,6 +76,7 @@ def exec_save(request):
 			buyer.phone  		= buyerForm.cleaned_data['phone']
 			buyer.address  		= buyerForm.cleaned_data['address']
 			buyer.email  		= buyerForm.cleaned_data['email']
+			buyer.zipcode		= buyerForm.cleaned_data['zipcode']
 			buyer.locality  	= buyerForm.cleaned_data['locality']
 			buyer.street  		= buyerForm.cleaned_data['street']
 			buyer.house  		= buyerForm.cleaned_data['house']

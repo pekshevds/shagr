@@ -85,9 +85,14 @@
                                                 <tr class="wishlist__row wishlist__row--head">
                                                     <th class="wishlist__column wishlist__column--head wishlist__column--image">Изображение</th>
                                                     <th class="wishlist__column wishlist__column--head wishlist__column--product">Товар</th>
-                                                    <th class="wishlist__column wishlist__column--head wishlist__column--stock">Состояние на складе</th>
+                                                    <th class="wishlist__column wishlist__column--head wishlist__column--stock">Остаток</th>
                                                     <th class="wishlist__column wishlist__column--head wishlist__column--price">Цена</th>
-                                                    <th class="wishlist__column wishlist__column--head wishlist__column--button"></th>
+                                                    <th class="wishlist__column wishlist__column--head wishlist__column--button">
+
+                                                    <div class="order-header__actions">
+                                        <a href="{% url 'clear_wishlist' %}" class="btn btn-xs btn-secondary">Очистить</a>
+                                    </div>
+                                                    </th>
                                                     <th class="wishlist__column wishlist__column--head wishlist__column--remove"></th>
                                                 </tr>
                                             </thead>
@@ -202,6 +207,18 @@
                                             </tr>
                                             {% endfor %}
                                         </tbody>
+                                        <thead class="wishlist__head">
+                                                <tr class="wishlist__row wishlist__row--head">
+                                                    <th class="wishlist__column wishlist__column--head wishlist__column--image"></th>
+                                                    <th class="wishlist__column wishlist__column--head wishlist__column--product"></th>
+                                                    <th class="wishlist__column wishlist__column--head wishlist__column--stock"></th>
+                                                    <th class="wishlist__column wishlist__column--head wishlist__column--price"></th>
+                                                    <th class="wishlist__column wishlist__column--head wishlist__column--button"><div class="order-header__actions">
+                                        <a href="{% url 'clear_wishlist' %}" class="btn btn-xs btn-secondary">Очистить</a>
+                                    </div></th>
+                                                    <th class="wishlist__column wishlist__column--head wishlist__column--remove"></th>
+                                                </tr>
+                                            </thead>
                                     </table>
                                 </div>
                             </div>

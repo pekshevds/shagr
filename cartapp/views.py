@@ -1,3 +1,5 @@
+from decimal import Decimal
+
 from django.shortcuts import render
 from django.shortcuts import redirect
 
@@ -18,7 +20,7 @@ def show_cart(request):
 
 def add_good_to_cart(request, slug):
 	good = find_good_by_slug(slug=slug)
-	quant = request.POST.get('quant', 1)
+	quant = Decimal(request.POST.get('quant', 1))
 	if good:
 
 		cart = get_cart(request)

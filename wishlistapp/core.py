@@ -56,6 +56,7 @@ def in_wishlist(wishlist, good):
 		return True
 	return False
 
+
 def get_count_wishlist(wishlist):
 	
 	try:
@@ -65,6 +66,7 @@ def get_count_wishlist(wishlist):
 
 	if records:
 		return len(records)
+
 	return 0
 
 def get_wishlistitems(wishlist):
@@ -91,12 +93,8 @@ def get_wishlistitems(wishlist):
 
 	return items
 
-def get_wishlist_by_user(user):
 
-	try:
-		wishlist = WishList.objects.get(user=user)
-	except:
-		wishlist = WishList.objects.create(user=user)
+def init_wishlist(wishlist):
 
 	items = get_wishlistitems(wishlist)
 
@@ -106,6 +104,16 @@ def get_wishlist_by_user(user):
 		'items': items,
 		'wishlist_count': len(items),
 	}
+
+
+def get_wishlist_by_user(user):
+
+	try:
+		wishlist = WishList.objects.get(user=user)
+	except:
+		wishlist = WishList.objects.create(user=user)
+
+	return init_wishlist(wishlist)
 
 
 def get_wishlist_by_id(id):
@@ -115,11 +123,4 @@ def get_wishlist_by_id(id):
 	except:
 		wishlist = WishList.objects.create()
 
-	items = get_wishlistitems(wishlist)
-
-	
-	return {
-		'wishlist': wishlist,
-		'items': items,
-		'wishlist_count': len(items),
-	}
+	return init_wishlist(wishlist)

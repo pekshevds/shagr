@@ -1,3 +1,4 @@
+from decimal import Decimal
 from django.db.models import Avg, Max, Min, Count, Sum
 
 from catalogapp.models import Good
@@ -76,7 +77,7 @@ def get_cartitems(cart):
 		for item in records:
 			
 			good = Good.objects.get(id=item['good'])
-			quant = int(item['quant'])
+			quant = Decimal((item['quant']))
 
 			items.append({
 				'good'	: 	good,
@@ -90,11 +91,7 @@ def get_cartitems(cart):
 	return items
 
 
-def get_cart_by_user(user):
-	try:
-		cart = Cart.objects.get(user=user)
-	except:
-		cart = Cart.objects.create(user=user)
+def init_cart(cart):
 
 	cart_sum = 0
 	cart_quant = 0
@@ -112,6 +109,15 @@ def get_cart_by_user(user):
 		'cart_quant': cart_quant,
 	}
 
+def get_cart_by_user(user):
+	try:
+		cart = Cart.objects.get(user=user)
+	except:
+		cart = Cart.objects.create(user=user)
+
+	return init_cart(cart)
+	
+
 
 def get_cart_by_id(id):
 	try:
@@ -119,16 +125,4 @@ def get_cart_by_id(id):
 	except:
 		cart = Cart.objects.create()	
 
-	cart_sum = 0
-	cart_quant = 0
-
-	items = get_cartitems(cart)
-	for item in items:
-		cart_sum = cart_sum + item['sum']
-
-	return {
-		'cart'		: cart,
-		'items'		: items,
-		'cart_sum'	: cart_sum,
-		'cart_quant': cart_quant,
-	}
+	return init_cart(cart)

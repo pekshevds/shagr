@@ -1,3 +1,5 @@
+from decimal import Decimal
+
 from .models import Order
 from .models import OrderItem
 
@@ -43,7 +45,18 @@ def get_order(id):
 	return context
 
 def del_from_order(id):
-	OrderItem.objects.filter(id=id).delete()
+	try:
+		item = OrderItem.objects.get(id=id)
+	except:
+		return False
+
+	order = item.order
+	
+	item.delete()
+	order.save()
+	return True
+
+	
 
 def reprice_order(order):
 	
@@ -69,9 +82,9 @@ def add_to_order(request, slug):
 	good = find_good_by_slug(slug=slug)
 	
 	if good and request.method == 'POST':
-		quant = float(request.POST.get('quant', 1))
-		price = float(request.POST.get('price', 0))
-		total = float(request.POST.get('total', 0))
+		quant = Decimal(request.POST.get('quant', 1))
+		price = Decimal(request.POST.get('price', 0))
+		total = Decimal(request.POST.get('total', 0))
 
 		order = get_current_order(request)
 		items = OrderItem.objects.filter(order=order, good=good)		
@@ -82,4 +95,6 @@ def add_to_order(request, slug):
 			item.save()
 		else:
 			items = OrderItem.objects.create(order=order, good=good, quant=quant)
+
+		order.save()
 

@@ -1,3 +1,4 @@
+from decimal import Decimal
 from django.db import models
 
 
@@ -93,9 +94,9 @@ class OrderItem(models.Model):
 		if self.order.payment_status == DEFAULT_PAYMENT_STATUS and self.order.delivery_status == DEFAULT_DELIVERY_STATUS:
 			self.price = self.good.price
 
-		self.total = self.price * self.quant
-		self.weight = self.good.weight * self.quant
-		self.volume = self.good.volume * self.quant
+		self.total = self.price * Decimal(self.quant)
+		self.weight = self.good.weight * Decimal(self.quant)
+		self.volume = self.good.volume * Decimal(self.quant)
 
 		super(OrderItem, self).save(*args, **kwargs)
 

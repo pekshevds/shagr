@@ -10,7 +10,7 @@ urlpatterns = [
     path('catalog/', include('catalogapp.urls')),
     path('api/', include('apiapp.urls')),
     path('accounts/', include('authapp.urls')),
-    path('wistlist/', include('wishlistapp.urls')),
+    path('wishlist/', include('wishlistapp.urls')),
     path('cart/', include('cartapp.urls')),
     path('orders/', include('orderapp.urls')),
     path('admin/', admin.site.urls),

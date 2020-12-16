@@ -26,7 +26,7 @@ DELIVERY_STATUSES = (
 
 class Order(models.Model):
 		
-	buyer = models.ForeignKey(Buyer, verbose_name="Покупатель", on_delete=models.PROTECT)
+	buyer = models.ForeignKey(Buyer, verbose_name="Покупатель", on_delete=models.PROTECT, null=True, blank=True)
 	date = models.DateTimeField(verbose_name="Дата", auto_now_add=True)
 	total = models.DecimalField(verbose_name="Сумма заказа", default=0, max_digits=15, decimal_places=2)
 	comment = models.CharField(max_length=1024, verbose_name="Комментарий", null=True, blank=True)
@@ -40,7 +40,7 @@ class Order(models.Model):
 	volume = models.DecimalField(verbose_name='Объем, м3', default=0, max_digits=15, decimal_places=5)
 
 	def __str__(self):
-		return str(self.id) + ' от ' + self.date.strftime("%m.%d.%Y")
+		return str(self.id) + ' от ' + self.date.strftime("%d.%m.%Y")
 
 	def save(self, *args, **kwargs):
 		

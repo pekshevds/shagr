@@ -84,6 +84,16 @@
                                         <table class="wishlist__table">
                                             <thead class="wishlist__head">
                                                 <tr class="wishlist__row wishlist__row--head">
+                                                    <th class="wishlist__column wishlist__column--head wishlist__column--image">
+                                                        <a href="{% url 'show_orders' %} " class="breadcrumb__item-link">История</a></th>
+                                                    <th class="wishlist__column wishlist__column--head wishlist__column--product"></th>
+                                                    <th class="wishlist__column wishlist__column--head wishlist__column--stock"></th>
+                                                    <th class="wishlist__column wishlist__column--head wishlist__column--price"></th>
+                                                    <th class="wishlist__column wishlist__column--head wishlist__column--price"></th>
+                                                    <th class="wishlist__column wishlist__column--head wishlist__column--price"></th>
+                                                    <th class="wishlist__column wishlist__column--head wishlist__column--remove"></th>
+                                                </tr>
+                                                <tr class="wishlist__row wishlist__row--head">
                                                     <th class="wishlist__column wishlist__column--head wishlist__column--image">Изображение</th>
                                                     <th class="wishlist__column wishlist__column--head wishlist__column--product">Товар</th>
                                                     <th class="wishlist__column wishlist__column--head wishlist__column--stock">Остаток</th>
@@ -91,7 +101,6 @@
                                                     <th class="wishlist__column wishlist__column--head wishlist__column--price">Цена</th>
                                                     <th class="wishlist__column wishlist__column--head wishlist__column--price">Сумма</th>
                                                     <th class="wishlist__column wishlist__column--head wishlist__column--remove"></th>
-                                                    <th class="wishlist__column wishlist__column--head wishlist__column--remove"><button type="submit" class="btn btn-sm btn-primary">Обновить цены</button></th>
                                                 </tr>
                                             </thead>
                                             <tbody class="wishlist__body">
@@ -190,7 +199,7 @@
                                                     {{ item.total }}
                                                 </td>                                                    
                                                 <td class="wishlist__column wishlist__column--body wishlist__column--remove">
-                                                    <form method="post" action="{% url 'del_from_order' id=item.id %}">
+                                                    <!-- <form method="post" action="{% url 'del_from_order' id=item.id %}">
                                                         {% csrf_token %}
                                                         <button type="submit" class="wishlist__remove btn btn-sm btn-muted btn-icon">
                                                             <svg width="12" height="12">
@@ -199,7 +208,7 @@
                                                                 C11.2,9.8,11.2,10.4,10.8,10.8z" />
                                                             </svg>
                                                         </button>
-                                                    </form>
+                                                    </form> -->
                                                 </td>
                                             </tr>
                                             {% endfor %}
@@ -210,10 +219,26 @@
                                                     <th class="wishlist__column wishlist__column--head wishlist__column--product"></th>
                                                     <th class="wishlist__column wishlist__column--head wishlist__column--stock"></th>
                                                     <th class="wishlist__column wishlist__column--head wishlist__column--price"></th>
-                                                    <th class="wishlist__column wishlist__column--head wishlist__column--price"></th>
-                                                    <th class="wishlist__column wishlist__column--head wishlist__column--price"></th>
+                                                    <th class="wishlist__column wishlist__column--head wishlist__column--price">Итого:</th>
+                                                    <th class="wishlist__column wishlist__column--head wishlist__column--price">{{ order.order.total }}</th>
                                                     <th class="wishlist__column wishlist__column--head wishlist__column--remove"></th>
-                                                    <th class="wishlist__column wishlist__column--head wishlist__column--remove"><button type="submit" class="btn btn-sm btn-primary">Обновить цены</button></th>
+                                                </tr>
+
+                                                <tr class="wishlist__row wishlist__row--head">
+                                                    <th class="wishlist__column wishlist__column--head wishlist__column--image"></th>
+                                                    <th class="wishlist__column wishlist__column--head wishlist__column--product"></th>
+                                                    <th class="wishlist__column wishlist__column--head wishlist__column--stock"></th>
+                                                    <th class="wishlist__column wishlist__column--head wishlist__column--price"></th>
+                                                    <th class="wishlist__column wishlist__column--head wishlist__column--price"></th>
+                                                    <th class="wishlist__column wishlist__column--head wishlist__column--price">
+                                                        {% if order.order.payment_status == 'NP' %}
+                                                        <form method="post" action="{% url 'pay_for_order' id=order.order.id %}">
+                                                        {% csrf_token %}
+                                                        <button type="submit" class="btn btn-sm btn-primary">Оплатить</button>
+                                                        </form>
+                                                        {% endif %}
+                                                    </th>
+                                                    <th class="wishlist__column wishlist__column--head wishlist__column--remove"></th>
                                                 </tr>
                                             </thead>
                                     </table>

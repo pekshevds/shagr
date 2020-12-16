@@ -9,10 +9,14 @@ from catalogapp.core import find_good_by_slug
 
 from authapp.core import get_buyer
 
+from cartapp.core import get_cart
+from cartapp.core import get_cartitems
+
 
 def get_orders(buyer):
 
-	return Order.objects.filter(buyer=buyer)
+	return Order.objects.filter(buyer=buyer).order_by('-date')
+
 
 def get_order(id):
 	
@@ -44,6 +48,7 @@ def get_order(id):
 
 	return context
 
+
 def del_from_order(id):
 	try:
 		item = OrderItem.objects.get(id=id)
@@ -57,7 +62,6 @@ def del_from_order(id):
 	return True
 
 	
-
 def reprice_order(order):
 	
 	items = OrderItem.objects.filter(order=order)
@@ -98,3 +102,31 @@ def add_to_order(request, slug):
 
 		order.save()
 
+
+def create_order_from_cart(request):
+
+	cart = get_cart(request)
+	
+	buyer = get_buyer(request)
+	order = Order.objects.create(buyer=buyer)
+
+	cartitems = cart['items']
+	if cartitems:
+		for item in cartitems:
+			OrderItem.objects.create(order=order, good=item['good'], quant=item['quant'])	
+	
+		order.save()
+		return order
+	return None
+
+
+def change_payment_status_of_order(id, payment_status='AP'):
+	try:
+		order = Order.objects.get(id=id)
+	except:
+		return False	
+	
+	order.payment_status = payment_status
+	order.delivery_status = 'GT'
+	order.save()
+	return True

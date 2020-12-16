@@ -8,8 +8,9 @@ from .core import get_orders
 from .core import get_order
 from .core import del_from_order
 from .core import add_to_order
+from .core import create_order_from_cart
+from .core import change_payment_status_of_order
 
-# Create your views here.
 
 def show_orders(request):
 
@@ -17,6 +18,15 @@ def show_orders(request):
 	if request.user.is_authenticated:
 		context['orders'] = get_orders(context['buyer'])
 	return render(request, 'orderapp/orders.html', context)
+
+
+def send_cart_to_order(request):
+
+	order = create_order_from_cart(request)	
+	if order:
+		return redirect('show_order', id=order.id)
+
+	return redirect(request.META['HTTP_REFERER'])
 
 
 def show_order(request, id):
@@ -28,11 +38,19 @@ def show_order(request, id):
 	return render(request, 'orderapp/order.html', context)
 
 
+def pay_for_order(request, id):
+
+	change_payment_status_of_order(id)
+	return redirect(request.META['HTTP_REFERER'])
+
+
 def del_good_from_order(request, id):
 	
 	if request.user.is_authenticated:
 		del_from_order(id)
+
 	return redirect(request.META['HTTP_REFERER'])
+
 
 def add_good_to_order(request, slug):
 	

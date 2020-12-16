@@ -99,7 +99,7 @@
                                                 {% for item in cart.items %}
                                                 <tr class="wishlist__row wishlist__row--body">
 
-                                                    <form method="post" action="{% url 'add_to_order' slug=item.good.slug %}">
+                                                    <form method="post" action="{% url 'insert_to_cart' slug=item.good.slug %}">
                                                         {% csrf_token %}
                                                         <td class="wishlist__column wishlist__column--body wishlist__column--image">
                                                             <div class="image image--type--product">
@@ -204,7 +204,7 @@
                                                     <td class="wishlist__column wishlist__column--body wishlist__column--button">
 
 
-                                                        <button type="submit" class="btn btn-sm btn-primary">В заказ</button>
+                                                        <button type="submit" class="btn btn-sm btn-primary">Сохранить</button>
                                                     </form>                                                        
                                                 </td>                                               
                                                 <td class="wishlist__column wishlist__column--body wishlist__column--remove">
@@ -228,14 +228,13 @@
                                                     <th class="wishlist__column wishlist__column--head wishlist__column--product"></th>
                                                     <th class="wishlist__column wishlist__column--head wishlist__column--stock"></th>
                                                     <th class="wishlist__column wishlist__column--head wishlist__column--price"></th>
-                                                    <th class="wishlist__column wishlist__column--head wishlist__column--price"></th>
-                                                    <th class="wishlist__column wishlist__column--head wishlist__column--price">
-                                                        
-                                                    </th>
+                                                    <th class="wishlist__column wishlist__column--head wishlist__column--price">ИТОГО:</th>
+                                                    <th class="wishlist__column wishlist__column--head wishlist__column--price">{{ cart.cart_sum }}</th>
                                                     <th class="wishlist__column wishlist__column--head wishlist__column--button">
-                                                        <div class="order-header__actions">
-                                        <a href="{% url 'clear_cart' %}" class="btn btn-xs btn-secondary">Очистить</a>
-                                    </div>
+                                                        <form method="post" action="{% url 'send_cart_to_order' %}">
+                                                        {% csrf_token %}
+                                                        <button type="submit" class="btn btn-sm btn-primary">Заказать</button>
+                                                        </form>
                                                     </th>
                                                     <th class="wishlist__column wishlist__column--head wishlist__column--remove"></th>
                                                 </tr>

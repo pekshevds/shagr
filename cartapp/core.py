@@ -32,6 +32,12 @@ def add_to_cart(cart, good, quant=1):
 		items = CartItem.objects.create(cart=cart, good=good, quant=quant)	
 
 
+def insert_to_cart(cart, good, quant=1):
+
+	CartItem.objects.filter(cart=cart, good=good).delete()	
+	CartItem.objects.create(cart=cart, good=good, quant=quant)
+
+
 def del_from_cart(cart, good):
 	
 	try:
@@ -39,6 +45,7 @@ def del_from_cart(cart, good):
 	except:
 		return False
 	return True
+
 
 def clear_cart(cart):
 	

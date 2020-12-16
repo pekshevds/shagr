@@ -7,6 +7,7 @@ from catalogapp.core import find_good_by_slug
 
 from .core import get_cart
 from .core import add_to_cart
+from .core import insert_to_cart
 from .core import del_from_cart
 from .core import clear_cart
 
@@ -19,12 +20,25 @@ def show_cart(request):
 
 
 def add_good_to_cart(request, slug):
+	
 	good = find_good_by_slug(slug=slug)
 	quant = Decimal(request.POST.get('quant', 1))
 	if good:
 
 		cart = get_cart(request)
 		add_to_cart(cart['cart'], good, quant=quant)		
+
+	return redirect(request.META['HTTP_REFERER'])
+
+
+def insert_good_to_cart(request, slug):
+
+	good = find_good_by_slug(slug=slug)
+	quant = Decimal(request.POST.get('quant', 1))
+	if good:
+
+		cart = get_cart(request)
+		insert_to_cart(cart['cart'], good, quant=quant)		
 
 	return redirect(request.META['HTTP_REFERER'])
 	

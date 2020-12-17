@@ -109,9 +109,8 @@ class BrandAdmin(admin.ModelAdmin):
 
 class ReviewAdmin(admin.ModelAdmin):
     list_display = (
-        'user', 
-        'good', 
-                
+        'good',
+        'user',                 
     )
     list_filter = ( 'user',)
 

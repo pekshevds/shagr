@@ -109,11 +109,11 @@ class BrandAdmin(admin.ModelAdmin):
 
 class ReviewAdmin(admin.ModelAdmin):
     list_display = (
-        'author', 
+        'user', 
         'good', 
                 
     )
-    list_filter = ( 'author',)    
+    list_filter = ( 'user',)
 
 
 admin.site.register(Property, PropertyAdmin)

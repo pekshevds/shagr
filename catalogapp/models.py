@@ -1,4 +1,5 @@
 from django.db import models
+from django.contrib.auth.models import User
 
 from django.template.defaultfilters import slugify
 from unidecode import unidecode
@@ -260,16 +261,15 @@ class Country(models.Model):
 
 class Review(models.Model):    
 
+    user = models.ForeignKey(User, verbose_name="Пользователь", on_delete=models.PROTECT, blank=False, null=False)
     good = models.ForeignKey('Good', verbose_name="Номенклатура", on_delete=models.PROTECT, blank=False, null=False)
 
-    author = models.CharField(max_length=255, verbose_name="Имя")
-    email = models.EmailField(max_length=254, verbose_name="Email")
     review = models.TextField(verbose_name="Отзыв")
     rating = models.PositiveSmallIntegerField(verbose_name="Оценка 1-5", default=5)
     review_date = models.DateTimeField(verbose_name="Дата отзыва", auto_now_add=True)
 
     def __str__(self):
-        return self.author + " " + self.email
+        return self.user.first_name + " " + self.user.email
 
     def save(self, *args, **kwargs):        
         super(Review, self).save(*args, **kwargs)

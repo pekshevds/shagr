@@ -79,15 +79,16 @@ def show_item(request, slug):
 
 
 def new_review(request, slug):
-	try:
-		
-		add_review(slug=slug, 
-					author=request.POST["author"], 
-					email=request.POST["email"], 
-					review=request.POST["review"], 
-					rating=request.POST["rating"])
-	except:
-		pass
+
+	if request.user.is_authenticated:
+		try:
+			
+			add_review(user=request.user,
+				slug=slug,				
+				review=request.POST.get("review", ""),
+				rating=request.POST.get("rating", 5))
+		except:			
+			pass
 
 	return redirect(request.META['HTTP_REFERER'])
 

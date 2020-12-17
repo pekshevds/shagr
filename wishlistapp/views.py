@@ -11,33 +11,37 @@ from shagr.core import get_context
 
 # Create your views here.
 def show_wishlist(request):
-		
-	return render(request, 'wishlistapp/wishlist.html', get_context(request))
+	if request.user.is_authenticated:	
+		return render(request, 'wishlistapp/wishlist.html', get_context(request))
+	return redirect(request.META['HTTP_REFERER'])
 
 
 def add_good_to_wishlist(request, slug):
 	
-	good = find_good_by_slug(slug=slug)
-	if good:
+	if request.user.is_authenticated:
+		good = find_good_by_slug(slug=slug)
+		if good:
 		
-		wishlist = get_wishlist(request)
-		add_to_wishlist(wishlist['wishlist'], good)		
+			wishlist = get_wishlist(request)
+			add_to_wishlist(wishlist['wishlist'], good)		
 
 	return redirect(request.META['HTTP_REFERER'])
 
 def del_good_from_wishlist(request, slug):
 	
-	good = find_good_by_slug(slug=slug)
-	if good:
+	if request.user.is_authenticated:
+		good = find_good_by_slug(slug=slug)
+		if good:
 
-		wishlist = get_wishlist(request)
-		del_from_wishlist(wishlist['wishlist'], good)		
+			wishlist = get_wishlist(request)
+			del_from_wishlist(wishlist['wishlist'], good)		
 
 	return redirect(request.META['HTTP_REFERER'])
 
 def clear_current_wishlist(request):
 	
-	wishlist = get_wishlist(request)
-	clear_wishlist(wishlist['wishlist'])		
+	if request.user.is_authenticated:
+		wishlist = get_wishlist(request)
+		clear_wishlist(wishlist['wishlist'])		
 
 	return redirect(request.META['HTTP_REFERER'])

@@ -29,7 +29,7 @@ def account_login(request):
 def account_logout(request):
 
 	exec_logout(request)
-	return redirect(request.META['HTTP_REFERER'])
+	return redirect('show_index')
 
 def account_show(request):
 

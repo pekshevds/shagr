@@ -85,7 +85,9 @@
                                             <thead class="wishlist__head">
                                                 <tr class="wishlist__row wishlist__row--head">
                                                     <th class="wishlist__column wishlist__column--head wishlist__column--image">
+                                                        {% if user.is_authenticated %}
                                                         <a href="{% url 'show_orders' %} " class="breadcrumb__item-link">История</a></th>
+                                                        {% endif %}
                                                     <th class="wishlist__column wishlist__column--head wishlist__column--product"></th>
                                                     <th class="wishlist__column wishlist__column--head wishlist__column--stock"></th>
                                                     <th class="wishlist__column wishlist__column--head wishlist__column--price"></th>

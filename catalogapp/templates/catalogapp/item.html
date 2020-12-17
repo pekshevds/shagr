@@ -235,6 +235,7 @@
 			</div>
 			<div class="product__actions-divider"></div>
 		</form>
+		{% if user.is_authenticated %}					
 		<form class="product__actions" method="post" action="{% url 'add_to_wishlist' slug=good.slug %}">
 			{% csrf_token %}
 			<button class="product__actions-item product__actions-item--wishlist" type="submit">
@@ -245,6 +246,7 @@
 				<span>В избранное</span>
 			</button>			
 		</form>
+		{% endif %}
 		<div class="product__tags-and-share-links">
 			<div class="product__tags tags tags--sm">
 				<div class="tags__list">
@@ -473,6 +475,7 @@
 						
 			</div>
 		</div>
+		{% if user.is_authenticated %}
 		<form class="reviews-view__form" method="post" action="{% url 'new_review' slug=good.slug %}">
 			{% csrf_token %}
 			<h3 class="reviews-view__header">Написать отзыв</h3>
@@ -491,12 +494,8 @@
 						</div>
 						<div class="form-group col-md-4">
 							<label for="review-author">Ваше Имя</label>
-							<input type="text" class="form-control" id="review-author" name="author" placeholder="Ваше Имя">
-						</div>
-						<div class="form-group col-md-4">
-							<label for="review-email">Email</label>
-							<input type="text" class="form-control" id="review-email" name="email" placeholder="Email">
-						</div>
+							<input type="text" class="form-control" id="review-author" placeholder="Пользователь" disabled value="{{ user.username }}">
+						</div>						
 					</div>
 					<div class="form-group">
 						<label for="review-text">Ваш отзыв</label>
@@ -508,6 +507,7 @@
 				</div>
 			</div>
 		</form>
+		{% endif %}
 	</div>
 </div>
 <div class="product-tabs__pane" id="product-tab-analogs">

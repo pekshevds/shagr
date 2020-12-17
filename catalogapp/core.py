@@ -236,11 +236,11 @@ def get_hierarchy_categoryes():
     return c0
 
 
-def add_review(slug, rating, author, email, review):
+def add_review(user, slug, rating, review):
     good = find_good_by_slug(slug)
     if good:
         try:
-            new_review = Review.objects.create(good=good, author=author, email=email, review=review, rating=rating)
+            new_review = Review.objects.create(user=user, good=good, review=review, rating=rating)
         except:
             return False        
     else:

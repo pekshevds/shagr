@@ -32,9 +32,8 @@ def send_cart_to_order(request):
 def show_order(request, id):
 
 	context = get_context(request)
-	
-	if request.user.is_authenticated:
-		context['order'] = get_order(id)
+		
+	context['order'] = get_order(id)
 	return render(request, 'orderapp/order.html', context)
 
 
@@ -46,16 +45,12 @@ def pay_for_order(request, id):
 
 def del_good_from_order(request, id):
 	
-	if request.user.is_authenticated:
-		del_from_order(id)
-
+	del_from_order(id)
 	return redirect(request.META['HTTP_REFERER'])
 
 
 def add_good_to_order(request, slug):
 	
-	if request.user.is_authenticated:
-		add_to_order(request, slug)
-
+	add_to_order(request, slug)
 	return redirect(request.META['HTTP_REFERER'])
 

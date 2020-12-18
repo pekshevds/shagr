@@ -20,13 +20,13 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # See https://docs.djangoproject.com/en/2.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = '%s)1y^@2=jk&54(w!ji8n@y4+a@@huadr@+#^5j6o-rev)g2a1'
+SECRET_KEY = config('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = config('DEBUG', cast=bool)
 
 #ALLOWED_HOSTS = []
-ALLOWED_HOSTS = ['vecuadorose.ru', 'www.vecuadorose.ru', 'localhost']
+ALLOWED_HOSTS = ['shagr.ru', 'www.shagr.ru', 'localhost']
 
 # Application definition
 
@@ -37,7 +37,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-
+    'django_cleanup.apps.CleanupConfig',
     'django.contrib.sites',
 
     'baseapp',
@@ -92,7 +92,7 @@ WSGI_APPLICATION = 'shagr.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'NAME': os.path.join(BASE_DIR, config('DB_NAME')),
     }
 }
 
@@ -127,7 +127,7 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/2.2/topics/i18n/
 
-LANGUAGE_CODE = 'ru-ru'
+LANGUAGE_CODE = 'ru-RU'
 
 TIME_ZONE = 'Europe/Moscow'
 
@@ -149,9 +149,6 @@ MEDIA_URL = '/media/'
 
 
 
-
-
-
 # tunning
 SITE_ID = 1
 
@@ -159,9 +156,9 @@ ACCOUNT_EMAIL_REQUIRED =True
 ACCOUNT_AUTHENTICATION_METHOD='email'
 ACCOUNT_EMAIL_VERIFICATION='mandatory'
 
-EMAIL_HOST = 'smtp.gmail.com'
-EMAIL_HOST_USER = 'pekshev.ds@gmail.com'
-EMAIL_HOST_PASSWORD = 'gthtcnhtkrf'
+EMAIL_HOST = 'mail.hosting.reg.ru'
+EMAIL_HOST_USER = config('MAIL_USER')
+EMAIL_HOST_PASSWORD = config('MAIL_PASSWORD')
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
-DEFAULT_FROM_EMAIL = 'Денис'
+DEFAULT_FROM_EMAIL = config('MAIL_USER')

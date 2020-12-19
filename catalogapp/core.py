@@ -114,8 +114,7 @@ def update_good(uid_1c, name, art='',
         
     else:
 
-        try:
-
+        try:            
             good.name = name
             good.code_1c = code_1c
             good.art = art
@@ -127,10 +126,10 @@ def update_good(uid_1c, name, art='',
             good.price = price
             good.quant = quant
             good.category_uid_1с = category_uid_1с
-            good.category = find_category_by_uid_1c(category_uid_1с=good.category_uid_1с)
+            good.category = find_category_by_uid_1c(uid_1c=good.category_uid_1с)
             good.save()
 
-        except:
+        except:            
             return good
     return good
 

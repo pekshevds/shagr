@@ -3,7 +3,13 @@ from rest_framework.views import APIView
 # Create your views here.
 
 from catalogapp.models import Good
+from catalogapp.models import Category
 from catalogapp.core import update_good
+from catalogapp.core import update_category
+
+from catalogapp.tests import parse_categoryes
+from catalogapp.tests import parse_goods
+
 from .serializers import GoodSerializer
 
 
@@ -34,7 +40,32 @@ class UploadGoodsView(APIView):
                             description=good['description'],
                             is_service=good['is_service'] == "True",
                             price=good['price'],
-                            quant=good['quant'])
+                            quant=good['quant'],
+                            category_uid_1с=good['category_uid_1с'])
+
+            parse_goods()
+        except:
+            return Response({"success": "error"})
+
+        return Response({"success": "ok"})
+
+
+# upload_categoryes/
+class UploadCategoryesView(APIView):
+    def post(self, request):
+
+        categoryes = request.data.get('categoryes')
+
+        if categoryes is None:
+            return Response({"success": "categoryes list is none"})
+
+        try:
+            for category in categoryes:
+                update_category(uid_1c=category['uid_1c'],                            
+                            name=category['name'],
+                            parent_uid_1c=category['parent_uid_1c'])
+
+            parse_categoryes()
         except:
             return Response({"success": "error"})
 

@@ -109,7 +109,7 @@ def update_good(uid_1c, name, art='',
                            description=description, is_sale=is_sale,
                            is_new=True, is_hot=is_hot, is_service=is_service,
                            price=price, quant=quant, category_uid_1с=category_uid_1с)
-        good.category = find_category_by_uid_1c(category_uid_1с=good.category_uid_1с)
+        good.category = find_category_by_uid_1c(uid_1c=good.category_uid_1с)
         good.save()
         
     else:

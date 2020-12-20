@@ -55,40 +55,23 @@ def find_good_by_slug(slug):
     return good
 
 
-
-# category
-def create_category(name, uid_1c='', parent_uid_1c=''):
-    category = find_category_by_name(name)
-
-    if not category is None:
-        return category
-
-    try:
-        category = Category.objects.create(name=name, uid_1c=uid_1c, parent_uid_1c=parent_uid_1c)
-    except:
-        return None
-
-    return category
-
-
 # goods
 def create_good(uid_1c, name,
                 art='', code_1c='',
                 description='', is_sale=False,
                 is_new=False, is_hot=False, is_service=False,
-                price=0, quant=0):#, category=''):
+                price=0, quant=0, category_uid_1с=''):#, category=''):
 
     good = find_good_by_uid_1c(uid_1c)
-    if not good is None:
+    if good:
         return good
-
     try:
 
         good = Good.objects.create(uid_1c=uid_1c, name=name,
                                    art=art, code_1c=code_1c,
                                    description=description, is_sale=is_sale,
                                    is_new=is_new, is_hot=is_hot, is_service=is_service,
-                                   price=price, quant=quant)# category=create_category(name=category))
+                                   price=price, quant=quant, category_uid_1с=category_uid_1с)# category=create_category(name=category))
         # good.save()
 
     except:
@@ -103,17 +86,7 @@ def update_good(uid_1c, name, art='',
                 price=0, quant=0, category_uid_1с=''):
 
     good = find_good_by_uid_1c(uid_1c)
-    if good is None:
-        good = create_good(uid_1c=uid_1c, name=name,
-                           art=art, code_1c=code_1c,
-                           description=description, is_sale=is_sale,
-                           is_new=True, is_hot=is_hot, is_service=is_service,
-                           price=price, quant=quant, category_uid_1с=category_uid_1с)
-        good.category = find_category_by_uid_1c(uid_1c=good.category_uid_1с)
-        good.save()
-        
-    else:
-
+    if good:
         try:            
             good.name = name
             good.code_1c = code_1c
@@ -131,6 +104,18 @@ def update_good(uid_1c, name, art='',
 
         except:            
             return good
+        
+        
+    else:
+        good = create_good(uid_1c=uid_1c, name=name,
+                           art=art, code_1c=code_1c,
+                           description=description, is_sale=is_sale,
+                           is_new=True, is_hot=is_hot, is_service=is_service,
+                           price=price, quant=quant, category_uid_1с=category_uid_1с)
+        if good:
+            good.category = find_category_by_uid_1c(uid_1c=good.category_uid_1с)
+            good.save()
+        
     return good
 
 
@@ -138,11 +123,9 @@ def create_category(uid_1c, name,
                 parent_uid_1c=''):
 
     category = find_category_by_uid_1c(uid_1c)
-    if not category is None:
+    if category:
         return category
-
     try:
-
         category = Category.objects.create(uid_1c=uid_1c, name=name,
                                    parent_uid_1c=parent_uid_1c)        
 
@@ -154,20 +137,21 @@ def create_category(uid_1c, name,
 def update_category(uid_1c, name, parent_uid_1c=''):
 
     category = find_category_by_uid_1c(uid_1c)
-    if category is None:
-        return create_category(uid_1c=uid_1c, name=name,
-                           parent_uid_1c=parent_uid_1c)
+    if category:
+        try:
 
-    try:
+            category.name = name
+            category.uid_1c = uid_1c
+            category.parent_uid_1c=parent_uid_1c      
+            category.save()
 
-        category.name = name
-        category.uid_1c = uid_1c
-        category.parent_uid_1c=parent_uid_1c      
-        category.save()
-
-    except:
+        except:
+            pass
         return category
-    return category
+    else:
+        return create_category(uid_1c=uid_1c, name=name,
+                           parent_uid_1c=parent_uid_1c)    
+    
 
 def get_properties_and_values(good):
     try:

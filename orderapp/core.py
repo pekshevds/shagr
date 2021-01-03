@@ -3,14 +3,9 @@ from decimal import Decimal
 from .models import Order
 from .models import OrderItem
 
-from catalogapp.core import get_rating_of_good
-from catalogapp.core import get_main_picture_of_good
 from catalogapp.core import find_good_by_slug
-
 from authapp.core import get_buyer
-
 from cartapp.core import get_cart
-from cartapp.core import get_cartitems
 
 
 def get_orders(buyer):
@@ -18,35 +13,13 @@ def get_orders(buyer):
 	return Order.objects.filter(buyer=buyer).order_by('-date')
 
 
-def get_order(id):
-	
-	context = {
-		'order': None,
-		'items': [],
-	}
-
-	order = None
+def get_order(id):	
 	try:
 		order = Order.objects.get(id=id)
 	except:
-		return context
+		return None
 
-	items = []
-	for orderItem in OrderItem.objects.filter(order=order):
-		items.append({
-			'id': orderItem.id,
-			'good': orderItem.good,
-			'quant': orderItem.quant,
-			'price': orderItem.price,
-			'total': orderItem.total,
-			'rating': get_rating_of_good(good=orderItem.good),
-			'picture': get_main_picture_of_good(good=orderItem.good),
-			})
-
-	context['order'] = order
-	context['items'] = items
-
-	return context
+	return order
 
 
 def del_from_order(id):
@@ -64,7 +37,7 @@ def del_from_order(id):
 	
 def reprice_order(order):
 	
-	items = OrderItem.objects.filter(order=order)
+	items = order.get_items()
 	for item in item:
 		item.price = item.good.price
 		item.save()
@@ -110,10 +83,10 @@ def create_order_from_cart(request):
 	buyer = get_buyer(request)
 	order = Order.objects.create(buyer=buyer)
 
-	cartitems = cart['items']
+	cartitems = cart.get_items()
 	if cartitems:
 		for item in cartitems:
-			OrderItem.objects.create(order=order, good=item['good'], quant=item['quant'])	
+			OrderItem.objects.create(order=order, good=item.good, quant=item.quant)	
 	
 		order.save()
 		return order
@@ -122,7 +95,7 @@ def create_order_from_cart(request):
 
 def change_payment_status_of_order(id, payment_status='AP'):
 	try:
-		order = Order.objects.get(id=id)
+		order = get_order(id=id)
 	except:
 		return False	
 	

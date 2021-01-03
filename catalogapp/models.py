@@ -153,6 +153,77 @@ class Good(models.Model):
     def __str__(self):
         return self.name
 
+
+    def get_reviews(self):
+        try:
+            reviews = Review.objects.filter(good=self).order_by('review_date')
+        except:
+            return None
+        return reviews
+
+
+    def get_reviews_count(self):
+        
+        reviews_count = 0
+        
+        reviews = self.get_reviews()
+        if reviews:
+            reviews_count = len(reviews)
+            
+        return reviews_count
+
+
+    def get_rating(self):
+        
+        rating = 0
+
+        reviews = self.get_reviews()
+        if reviews:            
+            ratint_sum = reviews.aggregate(ratint_sum=Sum('rating'))['ratint_sum']
+            rating = round(ratint_sum / reviews_count)
+
+        return rating
+
+
+    def get_properties_and_values(self):
+        try:
+            records = GoodsPropertyValue.objects.filter(good=self)
+        except:
+            return None
+
+        return records
+
+
+    def get_main_properties_and_values(self):
+        try:
+            records = GoodsPropertyValue.objects.filter(good=self, is_main=True)[:5]
+        except:
+            return None
+
+        return records
+
+
+    def get_pictures(self):
+        try:
+            records = Picture.objects.filter(good=self)
+        except:
+            return None
+        
+        return records
+
+
+    def get_main_picture(self):
+        try:
+            records = Picture.objects.filter(good=self, is_main=True)[:1]
+        except:
+            return None 
+
+        if records:   
+            return records[0]
+
+        return None
+
+
     def save(self, *args, **kwargs):
 
 

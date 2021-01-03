@@ -23,7 +23,7 @@ def add_good_to_wishlist(request, slug):
 		if good:
 		
 			wishlist = get_wishlist(request)
-			add_to_wishlist(wishlist['wishlist'], good)		
+			add_to_wishlist(wishlist, good)		
 
 	return redirect(request.META['HTTP_REFERER'])
 
@@ -34,7 +34,7 @@ def del_good_from_wishlist(request, slug):
 		if good:
 
 			wishlist = get_wishlist(request)
-			del_from_wishlist(wishlist['wishlist'], good)		
+			del_from_wishlist(wishlist, good)		
 
 	return redirect(request.META['HTTP_REFERER'])
 
@@ -42,6 +42,6 @@ def clear_current_wishlist(request):
 	
 	if request.user.is_authenticated:
 		wishlist = get_wishlist(request)
-		clear_wishlist(wishlist['wishlist'])		
+		clear_wishlist(wishlist)		
 
 	return redirect(request.META['HTTP_REFERER'])

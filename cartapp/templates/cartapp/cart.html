@@ -96,7 +96,7 @@
                                                 </tr>
                                             </thead>
                                             <tbody class="wishlist__body">
-                                                {% for item in cart.items %}
+                                                {% for item in cart.get_items %}
                                                 <tr class="wishlist__row wishlist__row--body">
 
                                                     <form method="post" action="{% url 'insert_to_cart' slug=item.good.slug %}">
@@ -104,8 +104,8 @@
                                                         <td class="wishlist__column wishlist__column--body wishlist__column--image">
                                                             <div class="image image--type--product">
                                                                 <a href="{% url 'show_item' slug=item.good.slug %}" class="image__body">
-                                                                    {% if item.picture %}
-                                                                    <img class="image__tag" src="{{ item.picture.image.url }}" alt="">
+                                                                    {% if item.good.get_main_picture %}
+                                                                    <img class="image__tag" src="{{ item.good.get_main_picture.image.url }}" alt="">
                                                                     {% else %}
                                                                     <img class="image__tag" src="{% static 'images/products/product-1-160x160.jpg' %}" alt="">
                                                                     {% endif %}
@@ -134,37 +134,37 @@
                                                             <div class="wishlist__product-rating-stars">
                                                                 <div class="rating">
                                                                     <div class="rating__body">
-                                                                        {% if item.rating.rating == 0 %}
+                                                                        {% if item.good.get_rating == 0 %}
                                                                         <div class="rating__star"></div>
                                                                         <div class="rating__star"></div>
                                                                         <div class="rating__star"></div>
                                                                         <div class="rating__star"></div>
                                                                         <div class="rating__star"></div>
-                                                                        {% elif item.rating.rating == 1 %}
+                                                                        {% elif item.good.get_rating == 1 %}
                                                                         <div class="rating__star rating__star--active"></div>
                                                                         <div class="rating__star"></div>
                                                                         <div class="rating__star"></div>
                                                                         <div class="rating__star"></div>
                                                                         <div class="rating__star"></div>
-                                                                        {% elif item.rating.rating == 2 %}
+                                                                        {% elif item.good.get_rating == 2 %}
                                                                         <div class="rating__star rating__star--active"></div>
                                                                         <div class="rating__star rating__star--active"></div>
                                                                         <div class="rating__star"></div>
                                                                         <div class="rating__star"></div>
                                                                         <div class="rating__star"></div>
-                                                                        {% elif item.rating.rating == 3 %}
+                                                                        {% elif item.good.get_rating == 3 %}
                                                                         <div class="rating__star rating__star--active"></div>
                                                                         <div class="rating__star rating__star--active"></div>
                                                                         <div class="rating__star rating__star--active"></div>
                                                                         <div class="rating__star"></div>
                                                                         <div class="rating__star"></div>
-                                                                        {% elif item.rating.rating == 4 %}
+                                                                        {% elif item.good.get_rating == 4 %}
                                                                         <div class="rating__star rating__star--active"></div>
                                                                         <div class="rating__star rating__star--active"></div>
                                                                         <div class="rating__star rating__star--active"></div>
                                                                         <div class="rating__star rating__star--active"></div>
                                                                         <div class="rating__star"></div>
-                                                                        {% elif item.rating.rating == 5 %}
+                                                                        {% elif item.good.get_rating == 5 %}
                                                                         <div class="rating__star rating__star--active"></div>
                                                                         <div class="rating__star rating__star--active"></div>
                                                                         <div class="rating__star rating__star--active"></div>
@@ -174,7 +174,7 @@
                                                                     </div>
                                                                 </div>
                                                             </div>
-                                                            <div class="wishlist__product-rating-title">{{ item.rating.reviews_count }} отзывов</div>
+                                                            <div class="wishlist__product-rating-title">{{ item.good.get_reviews_count }} отзывов</div>
                                                         </div>
                                                     </td>
                                                     <td class="wishlist__column wishlist__column--body wishlist__column--stock">
@@ -188,18 +188,18 @@
                                                         <div class="input-number">
                                                             <input class="input-number__input form-control form-control-lg" type="number" name="quant" min="1" value="{{ item.quant }}">
                                                             <div class="input-number__add"></div>
-                                                            <div class="input-number__sub"></div>
+                                                            <div class="input-number__sub"></div>                                                            
                                                         </div>
                                                     </td>
                                                     <td class="wishlist__column wishlist__column--body wishlist__column--price">
                                                         <div class="form-group">    
-                                                            <input id="signup-price" type="text" name="price" class="form-control" placeholder="Цена" value="{{ item.price }}" disabled>
+                                                            <input id="signup-price" type="text" name="price" class="form-control" placeholder="Цена" value="{{ item.good.price }}" disabled>
                                                         </div>
                                                     </td>
                                                     <td class="wishlist__column wishlist__column--body wishlist__column--price">
                                                         <div class="form-group">    
-                                                            <input id="signup-sum" type="text" name="sum" class="form-control" placeholder="Сумма" value="{{ item.sum }}" disabled>
-                                                        </div>
+                                                            <input id="signup-sum" type="text" name="sum" class="form-control" placeholder="Сумма" value="{{ item.get_amount }}" disabled>
+                                                        </div>                                                        
                                                     </td>
                                                     <td class="wishlist__column wishlist__column--body wishlist__column--button">
 
@@ -229,7 +229,7 @@
                                                     <th class="wishlist__column wishlist__column--head wishlist__column--stock"></th>
                                                     <th class="wishlist__column wishlist__column--head wishlist__column--price"></th>
                                                     <th class="wishlist__column wishlist__column--head wishlist__column--price">ИТОГО:</th>
-                                                    <th class="wishlist__column wishlist__column--head wishlist__column--price">{{ cart.cart_sum }}</th>
+                                                    <th class="wishlist__column wishlist__column--head wishlist__column--price">{{ cart.get_amount }}</th>
                                                     <th class="wishlist__column wishlist__column--head wishlist__column--button">
                                                         <form method="post" action="{% url 'send_cart_to_order' %}">
                                                         {% csrf_token %}

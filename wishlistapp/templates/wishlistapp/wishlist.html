@@ -97,7 +97,7 @@
                                                 </tr>
                                             </thead>
                                             <tbody class="wishlist__body">
-                                                {% for item in wishlist.items %}
+                                                {% for item in wishlist.get_items %}
                                                 <tr class="wishlist__row wishlist__row--body">
                                                     <td class="wishlist__column wishlist__column--body wishlist__column--image">
                                                         <div class="image image--type--product">
@@ -133,37 +133,37 @@
                                                         <div class="wishlist__product-rating-stars">
                                                             <div class="rating">
                                                                 <div class="rating__body">
-                                                                    {% if item.rating.rating == 0 %}
+                                                                    {% if item.good.get_rating == 0 %}
                                                                     <div class="rating__star"></div>
                                                                     <div class="rating__star"></div>
                                                                     <div class="rating__star"></div>
                                                                     <div class="rating__star"></div>
                                                                     <div class="rating__star"></div>
-                                                                    {% elif item.rating.rating == 1 %}
+                                                                    {% elif item.good.get_rating == 1 %}
                                                                     <div class="rating__star rating__star--active"></div>
                                                                     <div class="rating__star"></div>
                                                                     <div class="rating__star"></div>
                                                                     <div class="rating__star"></div>
                                                                     <div class="rating__star"></div>
-                                                                    {% elif item.rating.rating == 2 %}
+                                                                    {% elif item.good.get_rating == 2 %}
                                                                     <div class="rating__star rating__star--active"></div>
                                                                     <div class="rating__star rating__star--active"></div>
                                                                     <div class="rating__star"></div>
                                                                     <div class="rating__star"></div>
                                                                     <div class="rating__star"></div>
-                                                                    {% elif item.rating.rating == 3 %}
+                                                                    {% elif item.good.get_rating == 3 %}
                                                                     <div class="rating__star rating__star--active"></div>
                                                                     <div class="rating__star rating__star--active"></div>
                                                                     <div class="rating__star rating__star--active"></div>
                                                                     <div class="rating__star"></div>
                                                                     <div class="rating__star"></div>
-                                                                    {% elif item.rating.rating == 4 %}
+                                                                    {% elif item.good.get_rating == 4 %}
                                                                     <div class="rating__star rating__star--active"></div>
                                                                     <div class="rating__star rating__star--active"></div>
                                                                     <div class="rating__star rating__star--active"></div>
                                                                     <div class="rating__star rating__star--active"></div>
                                                                     <div class="rating__star"></div>
-                                                                    {% elif item.rating.rating == 5 %}
+                                                                    {% elif item.good.get_rating == 5 %}
                                                                     <div class="rating__star rating__star--active"></div>
                                                                     <div class="rating__star rating__star--active"></div>
                                                                     <div class="rating__star rating__star--active"></div>
@@ -173,7 +173,7 @@
                                                                 </div>
                                                             </div>
                                                         </div>
-                                                        <div class="wishlist__product-rating-title">{{ item.rating.reviews_count }} отзывов</div>
+                                                        <div class="wishlist__product-rating-title">{{ item.good.get_reviews_count }} отзывов</div>
                                                     </div>
                                                 </td>
                                                 <td class="wishlist__column wishlist__column--body wishlist__column--stock">

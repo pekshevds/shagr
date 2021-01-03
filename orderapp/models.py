@@ -42,6 +42,15 @@ class Order(models.Model):
 	def __str__(self):
 		return str(self.id) + ' от ' + self.date.strftime("%d.%m.%Y")
 
+
+	def get_items(self):
+		return OrderItem.objects.filter(order=self)
+
+
+	def get_items_count(self):
+		return len(OrderItem.objects.filter(order=self))	
+
+
 	def save(self, *args, **kwargs):
 		
 		if not self.uid_1c:

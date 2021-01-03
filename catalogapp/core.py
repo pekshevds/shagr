@@ -151,48 +151,6 @@ def update_category(uid_1c, name, parent_uid_1c=''):
     else:
         return create_category(uid_1c=uid_1c, name=name,
                            parent_uid_1c=parent_uid_1c)    
-    
-
-def get_properties_and_values(good):
-    try:
-        records = GoodsPropertyValue.objects.filter(good=good)
-    except:
-        return None
-
-    if records:
-        return records
-
-    return None
-
-def get_good_pictures(good):
-    try:
-        records = Picture.objects.filter(good=good)
-    except:
-        return None
-    if records:
-        return records
-
-    return None
-
-
-def get_main_picture_of_good(good):
-    try:
-        records = Picture.objects.filter(good=good, is_main=True)[:1]
-    except:
-        return None 
-
-    if records:   
-        return records[0]
-
-    return None
-
-
-def get_main_properties_and_values(good):
-    try:
-        records = GoodsPropertyValue.objects.filter(good=good, is_main=True)[:5]
-    except:
-        return None
-    return records
 
 
 def get_category_goods(category_list):
@@ -205,11 +163,6 @@ def get_category_goods(category_list):
         return goods
 
     return None
-
-
-
-
-
 
 
 def get_childs(parent=None):
@@ -278,28 +231,3 @@ def add_review(user, slug, rating, review):
     else:
         return False
     return True
-
-
-def get_good_reviews(good):
-    try:
-        reviews = Review.objects.filter(good=good).order_by('review_date')
-    except:
-        return None
-    return reviews
-
-
-def get_rating_of_good(good):
-    result = {}
-    reviews_count = 0
-    rating = 0
-
-    reviews = get_good_reviews(good=good)
-    if reviews:
-        reviews_count = len(reviews)
-        ratint_sum = reviews.aggregate(ratint_sum=Sum('rating'))['ratint_sum']
-        rating = round(ratint_sum / reviews_count)
-        
-    result['reviews_count'] = reviews_count
-    result['rating'] = rating
-    
-    return result

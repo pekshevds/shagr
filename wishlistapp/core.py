@@ -2,8 +2,6 @@ from authapp.models import Buyer
 from catalogapp.models import Good
 from .models import WishList, WishListItem
 
-from catalogapp.core import get_main_picture_of_good
-from catalogapp.core import get_rating_of_good
 
 def get_wishlist(request):
 	
@@ -12,7 +10,7 @@ def get_wishlist(request):
 	else:
 		wishlist = get_wishlist_by_id(request.session.get('wishlist_id'))	
 
-	request.session['wishlist_id'] = wishlist['wishlist'].id
+	request.session['wishlist_id'] = wishlist.id
 	return wishlist
 	
 
@@ -45,67 +43,6 @@ def clear_wishlist(wishlist):
 	return True
 
 
-def in_wishlist(wishlist, good):
-	
-	try:
-		records = WishListItem.objects.filter(wishlist=wishlist, good=good)
-	except:
-		return False
-
-	if records:
-		return True
-	return False
-
-
-def get_count_wishlist(wishlist):
-	
-	try:
-		records = WishListItem.objects.filter(wishlist=wishlist)
-	except:
-		return 0
-
-	if records:
-		return len(records)
-
-	return 0
-
-def get_wishlistitems(wishlist):
-	
-	try:
-		records = WishListItem.objects.filter(wishlist=wishlist)
-	except:
-		records = None
-	
-	items = []
-	goods = set()
-	if records:
-		for item in records:
-			
-			if not item.good in goods:
-			
-				items.append({
-					'good'	: 	item.good,				
-					'price'	: 	item.good.price,				
-					'picture':	get_main_picture_of_good(item.good),
-					'rating': 	get_rating_of_good(item.good),
-					})
-				goods.add(item.good)
-
-	return items
-
-
-def init_wishlist(wishlist):
-
-	items = get_wishlistitems(wishlist)
-
-	
-	return {
-		'wishlist': wishlist,
-		'items': items,
-		'wishlist_count': len(items),
-	}
-
-
 def get_wishlist_by_user(user):
 
 	try:
@@ -113,7 +50,7 @@ def get_wishlist_by_user(user):
 	except:
 		wishlist = WishList.objects.create(user=user)
 
-	return init_wishlist(wishlist)
+	return wishlist
 
 
 def get_wishlist_by_id(id):
@@ -123,4 +60,4 @@ def get_wishlist_by_id(id):
 	except:
 		wishlist = WishList.objects.create()
 
-	return init_wishlist(wishlist)
+	return wishlist

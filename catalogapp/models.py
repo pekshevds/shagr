@@ -4,6 +4,8 @@ from django.contrib.auth.models import User
 from django.template.defaultfilters import slugify
 from unidecode import unidecode
 
+from django.db.models import Avg, Max, Min, Sum
+
 import uuid
 
 def get_uuid4():
@@ -142,7 +144,7 @@ class Good(models.Model):
     category_uid_1с = models.SlugField(max_length=36, verbose_name='Идентификатор категории в 1С', null=True, blank=True)
 
     price = models.DecimalField(verbose_name='Цена', default=0, max_digits=15, decimal_places=2)
-    quant = models.DecimalField(verbose_name='Количество', default=0, max_digits=15, decimal_places=3)
+    quant = models.PositiveIntegerField(verbose_name='Количество', default=0)
 
     width = models.DecimalField(verbose_name='Ширина, см', default=0, max_digits=15, decimal_places=1)
     height = models.DecimalField(verbose_name='Высота, см', default=0, max_digits=15, decimal_places=1)
@@ -177,10 +179,13 @@ class Good(models.Model):
         
         rating = 0
 
+
         reviews = self.get_reviews()
         if reviews:            
-            ratint_sum = reviews.aggregate(ratint_sum=Sum('rating'))['ratint_sum']
-            rating = round(ratint_sum / reviews_count)
+
+            reviews_count = len(reviews)
+            rating_sum = reviews.aggregate(Sum('rating'))['rating__sum']
+            rating = round(rating_sum / reviews_count)
 
         return rating
 

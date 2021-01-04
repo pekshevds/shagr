@@ -6,14 +6,11 @@ from .core import find_category_by_slug
 from .core import find_good_by_slug
 from .core import get_childs
 from .core import get_goods
-from .core import get_goods_with_main_properties_and_values_on_category
 from .core import add_review
 
 
 
 from wishlistapp.core import get_wishlist
-from cartapp.core import get_cart
-
 from shagr.core import get_context
 
 from django.core.paginator import Paginator
@@ -23,7 +20,7 @@ def render_list(request, parent):
 	goods_count = 15
 
 	childs = get_childs(parent=parent)
-	goods = get_goods_with_main_properties_and_values_on_category(category=parent)
+	goods = get_goods(category=parent)
 	
 
 	page_number = request.GET.get('page', 1)

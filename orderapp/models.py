@@ -90,7 +90,7 @@ class OrderItem(models.Model):
 	
 	order = models.ForeignKey(Order, verbose_name='Номенклатура', on_delete=models.CASCADE)
 	good = models.ForeignKey(Good, verbose_name='Номенклатура', on_delete=models.PROTECT)
-	quant = models.DecimalField(verbose_name='Количество', default=0, max_digits=15, decimal_places=3)
+	quant = models.PositiveIntegerField(verbose_name='Количество', default=1)
 	price = models.DecimalField(verbose_name='Цена', default=0, max_digits=15, decimal_places=2)
 	discount = models.DecimalField(verbose_name='Скидка, %', default=0, max_digits=15, decimal_places=2)
 	total = models.DecimalField(verbose_name='Сумма', default=0, max_digits=15, decimal_places=2)
@@ -103,9 +103,9 @@ class OrderItem(models.Model):
 		if self.order.payment_status == DEFAULT_PAYMENT_STATUS and self.order.delivery_status == DEFAULT_DELIVERY_STATUS:
 			self.price = self.good.price
 
-		self.total = self.price * Decimal(self.quant)
-		self.weight = self.good.weight * Decimal(self.quant)
-		self.volume = self.good.volume * Decimal(self.quant)
+		self.total = self.price * self.quant
+		self.weight = self.good.weight * self.quant
+		self.volume = self.good.volume * self.quant
 
 		super(OrderItem, self).save(*args, **kwargs)
 

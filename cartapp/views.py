@@ -23,7 +23,7 @@ def show_cart(request):
 def add_good_to_cart(request, slug):
 	
 	good = find_good_by_slug(slug=slug)
-	quant = Decimal(request.POST.get('quant', 1))	
+	quant = int(request.POST.get('quant', 1))	
 	if good:
 
 		cart = get_cart(request)
@@ -35,7 +35,7 @@ def add_good_to_cart(request, slug):
 def insert_good_to_cart(request, slug):
 
 	good = find_good_by_slug(slug=slug)
-	quant = Decimal(request.POST.get('quant', 1))
+	quant = int(request.POST.get('quant', 1))
 	if good:
 
 		cart = get_cart(request)

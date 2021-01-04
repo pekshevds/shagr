@@ -42,7 +42,7 @@ class Cart(models.Model):
 class CartItem(models.Model):
 	cart = models.ForeignKey(Cart, verbose_name="Корзина", on_delete=models.CASCADE)
 	good = models.ForeignKey(Good, verbose_name="Товар", on_delete=models.PROTECT)
-	quant = models.DecimalField(verbose_name='Количество', default=1, max_digits=15, decimal_places=3)
+	quant = models.PositiveIntegerField(verbose_name='Количество', default=1)
     
 	def get_amount(self):
 		return self.good.price * self.quant

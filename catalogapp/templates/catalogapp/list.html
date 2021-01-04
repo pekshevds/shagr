@@ -187,7 +187,7 @@
     </div>
     <div class="products-list__content">
 
-     {% for object in page.object_list %}
+     {% for good in page.object_list %}
      <div class="products-list__item">
         <div class="product-card">
             <div class="product-card__actions-list">
@@ -198,7 +198,7 @@
                     </svg>
                 </button>
                 {% if user.is_authenticated %}
-                <form method="post" action="{% url 'add_to_wishlist' slug=object.good.slug %}">
+                <form method="post" action="{% url 'add_to_wishlist' slug=good.slug %}">
                     {% csrf_token %}
                     <button class="product-card__action product-card__action--wishlist" type="submit" aria-label="Add to wish list">
                         <svg width="16" height="16">
@@ -211,9 +211,9 @@
             </div>
             <div class="product-card__image">
                 <div class="image image--type--product">
-                    <a href="{% url 'show_item' slug=object.good.slug %}" class="image__body">
-                        {% if object.picture %}
-                        <img class="image__tag" src="{{ object.picture.image.url }}" alt="">
+                    <a href="{% url 'show_item' slug=good.slug %}" class="image__body">
+                        {% if good.get_main_picture %}
+                        <img class="image__tag" src="{{ good.get_main_picture.image.url }}" alt="">
                         {% else %}
                         <img class="image__tag" src="{% static 'images/products/product-1-245x245.jpg' %}" alt="">
                         {% endif %}
@@ -222,57 +222,57 @@
 
             </div>
             <div class="product-card__info">
-                <div class="product-card__meta"><span class="product-card__meta-title">Артикул:</span> {{ object.good.art }}</div>
+                <div class="product-card__meta"><span class="product-card__meta-title">Артикул:</span> {{ good.art }}</div>
                 <div class="product-card__name">
                     <div>
                         <div class="product-card__badges">
-                         {% if object.good.is_sale %}                                                                	
+                         {% if good.is_sale %}                                                                	
                          <div class="tag-badge tag-badge--sale">sale</div>
                          {% endif %}
-                         {% if object.good.is_new %}
+                         {% if good.is_new %}
                          <div class="tag-badge tag-badge--new">new</div>
                          {% endif %}
-                         {% if object.good.is_hot %}
+                         {% if good.is_hot %}
                          <div class="tag-badge tag-badge--hot">hot</div>
                          {% endif %}
                      </div>
-                     <a href="{% url 'show_item' slug=object.good.slug %}">{{ object.good.name }}</a>
+                     <a href="{% url 'show_item' slug=good.slug %}">{{ good.name }}</a>
                  </div>
              </div>
              <div class="product-card__rating">
                 <div class="rating product-card__rating-stars">
                     <div class="rating__body">
-                        {% if object.rating.rating == 0 %}
+                        {% if good.get_rating == 0 %}
                         <div class="rating__star"></div>
                         <div class="rating__star"></div>
                         <div class="rating__star"></div>
                         <div class="rating__star"></div>
                         <div class="rating__star"></div>
-                        {% elif object.rating.rating == 1 %}
+                        {% elif good.get_rating == 1 %}
                         <div class="rating__star rating__star--active"></div>
                         <div class="rating__star"></div>
                         <div class="rating__star"></div>
                         <div class="rating__star"></div>
                         <div class="rating__star"></div>
-                        {% elif object.rating.rating == 2 %}
+                        {% elif good.get_rating == 2 %}
                         <div class="rating__star rating__star--active"></div>
                         <div class="rating__star rating__star--active"></div>
                         <div class="rating__star"></div>
                         <div class="rating__star"></div>
                         <div class="rating__star"></div>
-                        {% elif object.rating.rating == 3 %}
+                        {% elif good.get_rating == 3 %}
                         <div class="rating__star rating__star--active"></div>
                         <div class="rating__star rating__star--active"></div>
                         <div class="rating__star rating__star--active"></div>
                         <div class="rating__star"></div>
                         <div class="rating__star"></div>
-                        {% elif object.rating.rating == 4 %}
+                        {% elif good.get_rating == 4 %}
                         <div class="rating__star rating__star--active"></div>
                         <div class="rating__star rating__star--active"></div>
                         <div class="rating__star rating__star--active"></div>
                         <div class="rating__star rating__star--active"></div>
                         <div class="rating__star"></div>
-                        {% elif object.rating.rating == 5 %}
+                        {% elif good.get_rating == 5 %}
                         <div class="rating__star rating__star--active"></div>
                         <div class="rating__star rating__star--active"></div>
                         <div class="rating__star rating__star--active"></div>
@@ -281,21 +281,21 @@
                         {% endif %}                            
                     </div>
                 </div>
-                <div class="product-card__rating-label">{{ object.rating.rating }} в {{ object.rating.reviews_count }} отзывах</div>
+                <div class="product-card__rating-label">{{ good.get_rating }} в {{ good.get_reviews_count }} отзывах</div>
             </div>
             <div class="product-card__features">
                 <ul>
-                    {% for item in object.properties_and_values %}
+                    {% for item in good.get_main_properties_and_values %}
                     <li>{{ item.property }}: {{ item.value }}</li>
 
                     {% endfor %}
                 </ul>
             </div>
         </div>
-        <form class="product-card__footer" method="post" action="{% url 'add_to_cart' slug=object.good.slug %}">
+        <form class="product-card__footer" method="post" action="{% url 'add_to_cart' slug=good.slug %}">
             {% csrf_token %}
             <div class="product-card__prices">
-                <div class="product-card__price product-card__price--current">{{ object.good.price }}</div>
+                <div class="product-card__price product-card__price--current">{{ good.price }}</div>
             </div>
             <button class="product-card__addtocart-icon" type="submit" aria-label="Add to cart">
                 <svg width="20" height="20">

@@ -4,7 +4,6 @@ from .models import GoodsPropertyValue
 from .models import Category
 from .models import Review
 
-from django.db.models import Avg, Max, Min, Sum
 # universal
 def find_good_by_uid_1c(uid_1c):
     try:
@@ -176,29 +175,6 @@ def get_goods(category=None):
     goods = Good.objects.filter(category=category).order_by('name')
 
     return goods
-
-
-
-def get_goods_with_main_properties_and_values_on_category(category=None):
-
-    goods = get_goods(category=category)
-    return get_goods_with_main_properties_and_values(goods)
-
-
-def get_goods_with_main_properties_and_values(goods):
-
-    items = []    
-    for good in goods:
-        items.append(
-            {
-            'good': good,
-            'picture': get_main_picture_of_good(good),
-            'properties_and_values': get_main_properties_and_values(good),
-            'rating': get_rating_of_good(good),            
-            }
-            )
-
-    return items
 
 
 def get_layer(parent=None):

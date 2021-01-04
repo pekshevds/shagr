@@ -93,8 +93,8 @@
                 attribute, in which case the width and height will be obtained from the naturalWidth
                 and naturalHeight property of img.image__tag.
             -->
-            {% if pictures %}
-            {% for picture in pictures %}
+            {% if good.get_pictures %}
+            {% for picture in good.get_pictures %}
             <a class="image image--type--product" href="{{ picture.image.url }}" target="_blank" data-width="700" data-height="700">
             	<div class="image__body">
             		<img class="image__tag" src="{{ picture.image.url }}" alt="">
@@ -112,8 +112,8 @@
     </div>
     <div class="product-gallery__thumbnails">
     	<div class="owl-carousel">
-    		{% if pictures %}
-    		{% for picture in pictures %}
+    		{% if good.get_pictures %}
+    		{% for picture in good.get_pictures %}
     		<div class="product-gallery__thumbnails-item image image--type--product">
     			<div class="image__body">
     				<img class="image__tag" src="{{ picture.image.url }}" alt="">
@@ -140,37 +140,37 @@
 			<div class="product__rating-stars">
 				<div class="rating">
 					<div class="rating__body">
-						{% if rating.rating == 0 %}
+						{% if good.get_rating == 0 %}
 						<div class="rating__star"></div>
 						<div class="rating__star"></div>
 						<div class="rating__star"></div>
 						<div class="rating__star"></div>
 						<div class="rating__star"></div>
-						{% elif rating.rating == 1 %}
+						{% elif good.get_rating == 1 %}
 						<div class="rating__star rating__star--active"></div>
 						<div class="rating__star"></div>
 						<div class="rating__star"></div>
 						<div class="rating__star"></div>
 						<div class="rating__star"></div>
-						{% elif rating.rating == 2 %}
+						{% elif good.get_rating == 2 %}
 						<div class="rating__star rating__star--active"></div>
 						<div class="rating__star rating__star--active"></div>
 						<div class="rating__star"></div>
 						<div class="rating__star"></div>
 						<div class="rating__star"></div>
-						{% elif rating.rating == 3 %}
+						{% elif good.get_rating == 3 %}
 						<div class="rating__star rating__star--active"></div>
 						<div class="rating__star rating__star--active"></div>
 						<div class="rating__star rating__star--active"></div>
 						<div class="rating__star"></div>
 						<div class="rating__star"></div>
-						{% elif rating.rating == 4 %}
+						{% elif good.get_rating == 4 %}
 						<div class="rating__star rating__star--active"></div>
 						<div class="rating__star rating__star--active"></div>
 						<div class="rating__star rating__star--active"></div>
 						<div class="rating__star rating__star--active"></div>
 						<div class="rating__star"></div>
-						{% elif rating.rating == 5 %}
+						{% elif good.get_rating == 5 %}
 						<div class="rating__star rating__star--active"></div>
 						<div class="rating__star rating__star--active"></div>
 						<div class="rating__star rating__star--active"></div>
@@ -180,7 +180,7 @@
 					</div>
 				</div>
 			</div>
-			<div class="product__rating-label"><a href="">{{ rating.rating }} в {{ rating.reviews_count }} отзывах</a></div>
+			<div class="product__rating-label"><a href="">{{ good.get_rating }} в {{ good.get_reviews_count }} отзывах</a></div>
 		</div>	
 	</div>
 </div>
@@ -382,7 +382,7 @@
 		<li class="product-tabs__item">
 			<a href="#product-tab-reviews">
 				Отзывы
-				<span class="product-tabs__item-counter">{{ reviews|length }}</span>
+				<span class="product-tabs__item-counter">{{ good.get_reviews_count }}</span>
 			</a>
 		</li>
 		<!-- <li class="product-tabs__item"><a href="#product-tab-analogs">Аналоги</a></li> -->
@@ -399,7 +399,7 @@
 			<div class="spec">
 				<div class="spec__section">
 					<h4 class="spec__section-title">Характеристики</h4>
-					{% for item in properties_and_values %}
+					{% for item in good.get_properties_and_values %}
 					<div class="spec__row">
 						<div class="spec__name">{{ item.property }}</div>
 						<div class="spec__value">{{ item.value }}</div>
@@ -417,7 +417,7 @@
 					<div class="reviews-list">
 						<ol class="reviews-list__content">
 							
-							{% for review in reviews %}
+							{% for review in good.get_reviews %}
 							<li class="reviews-list__item">
 								<div class="review">
 									<div class="review__body">

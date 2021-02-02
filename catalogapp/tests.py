@@ -97,3 +97,16 @@ def set_brand_by_name(name=''):
     # from catalogapp.tests import set_brand_by_name
     # set_brand_by_name(name='bosch')
     # 
+
+def set_brands_by_name():
+
+    for brand in Brand.objects.all():
+        
+        for good in Good.objects.filter(name__icontains=brand):
+        
+            good.brand = brand
+            good.save()
+
+    # from catalogapp.tests import set_brand_by_name
+    # set_brand_by_name(name='bosch')
+    #

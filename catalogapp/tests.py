@@ -3,7 +3,7 @@ from django.test import TestCase
 # Create your tests here.
 import json
 import os
-from .models import Good, Category
+from .models import Good, Category, Brand
 
 
 def download_goods_from_json(data):
@@ -83,3 +83,17 @@ def make_all():
 	parse_categoryes()
 	download_goods_from_file()
 	parse_goods()
+
+
+def set_brand_by_name(name=''):
+
+    brand = Brand.objects.filter(name__icontains=name).first()
+
+    for good in Good.objects.filter(name__icontains=name):
+        
+        good.brand = brand
+        good.save()
+
+    # from catalogapp.tests import set_brand_by_name
+    # set_brand_by_name(name='bosch')
+    # 

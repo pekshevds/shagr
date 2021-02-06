@@ -27,14 +27,14 @@ def search(request):
 		goods = get_search(name=search)
 		search = "&search=" + search
 	else:#Фильтры
-		search = ""
+		search = "&"
 		brands = set()
 		for brand in get_brands():
 			if request.GET.get(brand.slug, "") == "on":
 				brands.add(brand)
-				search = search + brand.slug + "&" 
+				search = search + brand.slug + "=on" + "&"
 		if search != "":
-			search = "&" + search
+			search = search.rstrip('&')
 
 		goods = get_brands_goods(brands)		
 

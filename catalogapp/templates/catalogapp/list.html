@@ -427,7 +427,7 @@
 </li>
 
 
-<li class="page-item"><a class="page-link" href="?page=1">1</a></li>
+<li class="page-item"><a class="page-link" href="?page=1{{ addon }}">1</a></li>
 <li class="page-item page-item--dots"><div class="pagination__dots"></div></li>
 <li class="page-item"><a class="page-link" href="?page={{ page.previous_page_number }}{{ addon }}">{{ page.previous_page_number }}</a></li>
 
@@ -453,7 +453,7 @@
 </li>
 
 {% if page.number > 2 %}
-<li class="page-item"><a class="page-link" href="?page=1">1</a></li>
+<li class="page-item"><a class="page-link" href="?page=1{{ addon }}">1</a></li>
 <li class="page-item page-item--dots"><div class="pagination__dots"></div></li>
 {% endif %}
 

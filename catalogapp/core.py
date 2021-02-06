@@ -156,7 +156,7 @@ def update_category(uid_1c, name, parent_uid_1c=''):
 
 def get_category_goods(category_list):
     try:
-        goods = Good.objects.filter(category__in=category_list)
+        goods = Good.objects.filter(category__in=category_list, is_show=True)
     except:
         return None
 
@@ -175,14 +175,14 @@ def get_childs(parent=None):
 
 def get_goods(category=None):
 
-    goods = Good.objects.filter(category=category).order_by('name')
+    goods = Good.objects.filter(category=category, is_show=True).order_by('name')
 
     return goods
 
 
 def get_search(name=""):
 
-    goods = Good.objects.filter(name__icontains=name)
+    goods = Good.objects.filter(name__icontains=name, is_show=True)
 
     return goods
 
@@ -221,5 +221,9 @@ def add_review(user, slug, rating, review):
 
 def get_brands():
     
-    brands = Brand.objects.all()
+    brands = set()
+    for brand in Brand.objects.all().order_by('name'):
+
+        if brand.get_goods_count() > 0:
+            brands.add(brand)
     return brands

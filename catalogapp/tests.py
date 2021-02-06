@@ -101,15 +101,22 @@ def set_brand_by_name(name=''):
 def set_brands_by_name():
 
     for brand in Brand.objects.all():
-        
-        for good in Good.objects.filter(name__icontains=brand):
-        
+        print(brand.name)
+        for good in Good.objects.filter(name__icontains=brand.name):
+            print("    " + good.name)
             good.brand = brand
             good.save()
 
-    # from catalogapp.tests import set_brand_by_name
+    # from catalogapp.tests import set_brands_by_name
     # set_brand_by_name(name='bosch')
     #
+
+
+def cleare_brands():    
+    for good in Good.objects.all():            
+            good.brand = None
+            good.save()
+
     
 def set_show():
     for good in Good.objects.all():

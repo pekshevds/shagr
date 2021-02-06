@@ -302,7 +302,7 @@ class Brand(models.Model):
     def save(self, *args, **kwargs):
         
         try:
-            self.slug = slugify(unidecode(self.site_name))  
+            self.slug = slugify(unidecode(self.name))  
         except:
             pass
 
@@ -310,7 +310,7 @@ class Brand(models.Model):
 
 
     def get_goods_count(self):
-        return len(Good.objects.filter(brand=self, quant__gt=4))
+        return len(Good.objects.filter(brand=self, quant__gt=0))
 
 
     class Meta:

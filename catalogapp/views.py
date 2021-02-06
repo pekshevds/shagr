@@ -6,6 +6,7 @@ from .core import find_category_by_slug
 from .core import find_good_by_slug
 from .core import get_childs
 from .core import get_goods
+from .core import get_search
 from .core import add_review
 
 
@@ -14,6 +15,34 @@ from wishlistapp.core import get_wishlist
 from shagr.core import get_context
 
 from django.core.paginator import Paginator
+
+
+def search(request):
+	
+	goods_count = 15
+	
+	childs = get_childs(parent=None)
+	search = request.GET.get('search', "")
+	goods = get_search(name=search)
+		
+
+	page_number = request.GET.get('page', 1)
+	paginator = Paginator(goods, goods_count)
+	page = paginator.get_page(page_number)
+	is_paginated = page.has_other_pages()
+	
+
+	context = get_context(request)
+		
+	context['parent'] = None
+	context['childs'] = childs
+	context['goods_count'] = len(goods)
+	context['page'] = page
+	context['is_paginated'] = is_paginated
+	context['addon'] = "&search=" + search
+	
+	return render(request, 'catalogapp/search.html', context)
+
 
 def render_list(request, parent):
 
@@ -51,14 +80,19 @@ def show_list(request, slug):
 
 
 def show_item(request, slug):
-
+	
+	
 	good = find_good_by_slug(slug=slug)
-	childs = get_childs(parent=good.category)
-	
-	
+	if not good:
+		return redirect(request.META['HTTP_REFERER'])	
+
 	context = get_context(request)
 
-	context['parent'] = good.category
+	parent = good.category
+	childs = get_childs(parent=parent)
+	
+
+	context['parent'] = parent
 	context['childs'] = childs
 	context['good'] = good
 	

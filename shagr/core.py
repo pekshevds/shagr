@@ -1,5 +1,7 @@
 from catalogapp.core import get_hierarchy_categoryes
 from catalogapp.core import get_childs
+from catalogapp.core import get_brands
+
 
 from cartapp.core import get_cart
 
@@ -26,6 +28,7 @@ def get_context(request):
 	'categories'			: get_hierarchy_categoryes(),
 	'parent'				: None,
 	'childs'				: childs,		
+	'brands'				: get_brands(),
 	'cart'					: get_cart(request),
 	'wishlist'				: get_wishlist(request),
 	'buyer'					: get_buyer(request),

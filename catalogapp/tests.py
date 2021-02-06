@@ -110,3 +110,11 @@ def set_brands_by_name():
     # from catalogapp.tests import set_brand_by_name
     # set_brand_by_name(name='bosch')
     #
+    
+def set_show():
+    for good in Good.objects.all():
+        
+        good.is_show = good.quant > 0
+        good.save()
+    # from catalogapp.tests import set_show
+    # set_show()

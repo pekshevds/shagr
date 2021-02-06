@@ -308,6 +308,11 @@ class Brand(models.Model):
 
         super(Brand, self).save(*args, **kwargs)
 
+
+    def get_goods_count(self):
+        return len(Good.objects.filter(brand=self, quant__gt=4))
+
+
     class Meta:
         verbose_name = 'Бренд'
         verbose_name_plural = 'Бренды'

@@ -34,6 +34,14 @@ class Cart(models.Model):
 		return amount
 
 
+	def clear(self):
+		try:
+			CartItem.objects.filter(cart=self).delete()
+		except:
+			return False
+		return True
+
+
 	class Meta:
 		verbose_name = 'Корзина'
 		verbose_name_plural = 'Корзина'

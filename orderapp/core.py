@@ -89,6 +89,8 @@ def create_order_from_cart(request):
 			OrderItem.objects.create(order=order, good=item.good, quant=item.quant)	
 	
 		order.save()
+
+		cart.clear()
 		return order
 	return None
 

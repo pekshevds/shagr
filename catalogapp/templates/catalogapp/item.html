@@ -63,6 +63,50 @@
 									{% endfor %}
 								</ul>
 							</li>
+							<li class="widget-categories-list__root-item" data-collapse-item>
+                  
+                  <div class="widget-filters__item">
+                                                    <div class="filter filter--opened" data-collapse-item>
+
+                                                        <form action="" method="">
+                                                        <button type="button" class="filter__title">
+                                                            Бренды
+                                                            
+                                                        </button>
+                                                        <div class="filter__body" data-collapse-content>
+                                                            <div class="filter__container">
+                                                                <div class="filter-list">
+                                                                    <div class="filter-list__list">
+                                                                        {% for brand in brands %}
+                                                                        <label class="filter-list__item ">
+                                                                            <span class="input-check filter-list__input">
+                                                                                <span class="input-check__body">
+                                                                                    <input class="input-check__input" type="checkbox">
+                                                                                    <span class="input-check__box"></span>
+                                                                                    <span class="input-check__icon"><svg width="9px" height="7px">
+                                                                                            <path d="M9,1.395L3.46,7L0,3.5L1.383,2.095L3.46,4.2L7.617,0L9,1.395Z" />
+                                                                                        </svg>
+                                                                                    </span>
+                                                                                </span>
+                                                                            </span>
+                                                                            <span class="filter-list__title">
+                                                                                {{ brand }}
+                                                                            </span>
+                                                                            <span class="filter-list__counter">{{ brand.get_goods_count }}</span>
+                                                                        </label>
+                                                                        {% endfor %}
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <button type="submit">
+                                                            Отобрать                                                            
+                                                        </button>
+                                                      </form>
+                                                    </div>
+                                                </div>
+
+                </li>
 						</ul>
 					</div>
 				</div>
@@ -120,13 +164,13 @@
     			</div>
     		</div>
     		{% endfor %}    		
-            {% else %}
-            <div class="product-gallery__thumbnails-item image image--type--product">
+    		{% else %}
+    		<div class="product-gallery__thumbnails-item image image--type--product">
     			<div class="image__body">
     				<img class="image__tag" src="{% static 'images/products/product-2-70x70.jpg' %}" alt="">
     			</div>
     		</div>
-            {% endif %}
+    		{% endif %}
     		
     	</div>
     </div>
@@ -189,21 +233,21 @@
 		<div class="product__info-body">
 			
 			<div class="product-card__name">
-                    <div>
-                        <div class="product-card__badges">
-                         {% if good.is_sale %}                                                                	
-                         <div class="tag-badge tag-badge--sale">sale</div>
-                         {% endif %}
-                         {% if good.is_new %}
-                         <div class="tag-badge tag-badge--new">new</div>
-                         {% endif %}
-                         {% if good.is_hot %}
-                         <div class="tag-badge tag-badge--hot">hot</div>
-                         {% endif %}
-                     </div>
-                     
-                 </div>
-             </div>
+				<div>
+					<div class="product-card__badges">
+						{% if good.is_sale %}                                                                	
+						<div class="tag-badge tag-badge--sale">sale</div>
+						{% endif %}
+						{% if good.is_new %}
+						<div class="tag-badge tag-badge--new">new</div>
+						{% endif %}
+						{% if good.is_hot %}
+						<div class="tag-badge tag-badge--hot">hot</div>
+						{% endif %}
+					</div>
+
+				</div>
+			</div>
 			
 			<div class="product__prices-stock">
 				<div class="product__prices">
@@ -219,11 +263,23 @@
 					</tr>
 					<tr>
 						<th>Бренд</th>
+						{% if good.barnd %}
+
 						<td>{{ good.brand }}</td>
+						{% else %}
+
+						<td>---</td>
+						{% endif %}
 					</tr>
 					<tr>
 						<th>Страна</th>
+						{% if good.country %}
+
 						<td>{{ good.country }}</td>
+						{% else %}
+
+						<td>---</td>
+						{% endif %}
 					</tr>                                                        
 				</table>
 			</div>
@@ -481,90 +537,90 @@
 							{% endfor %}
 						</ol>
 						
-			</div>
-		</div>
-		{% if user.is_authenticated %}
-		<form class="reviews-view__form" method="post" action="{% url 'new_review' slug=good.slug %}">
-			{% csrf_token %}
-			<h3 class="reviews-view__header">Написать отзыв</h3>
-			<div class="row">
-				<div class="col-xxl-12 col-xl-10 col-12">
-					<div class="form-row">
-						<div class="form-group col-md-4">
-							<label for="review-stars">Оценка</label>
-							<select id="review-stars" name="rating" class="form-control">
-								<option>5</option>
-								<option>4</option>
-								<option>3</option>
-								<option>2</option>
-								<option>1</option>
-							</select>
-						</div>
-						<div class="form-group col-md-4">
-							<label for="review-author">Ваше Имя</label>
-							<input type="text" class="form-control" id="review-author" placeholder="Пользователь" disabled value="{{ user.username }}">
-						</div>						
-					</div>
-					<div class="form-group">
-						<label for="review-text">Ваш отзыв</label>
-						<textarea class="form-control" id="review-text" name="review" rows="6"></textarea>
-					</div>
-					<div class="form-group mb-0 mt-4">
-						<button type="submit" class="btn btn-primary">Опубликовать</button>
 					</div>
 				</div>
-			</div>
-		</form>
-		{% endif %}
-	</div>
-</div>
-<div class="product-tabs__pane" id="product-tab-analogs">
-	<table class="analogs-table">
-		<thead>
-			<tr>
-				<th class="analogs-table__column analogs-table__column--name">Name</th>
-				<th class="analogs-table__column analogs-table__column--rating">Rating</th>
-				<th class="analogs-table__column analogs-table__column--vendor">Vendor</th>
-				<th class="analogs-table__column analogs-table__column--price">Price</th>
-			</tr>
-		</thead>
-		<tbody>
-
-			{% for analog in analogs %}
-			<tr>
-				<td class="analogs-table__column analogs-table__column--name">
-					<a href="" class="analogs-table__product-name">{{ analog.name }}}</a><br>
-					<div class="analogs-table__sku" data-title="SKU">{{ analog.art }}}</div>
-				</td>
-				<td class="analogs-table__column analogs-table__column--rating">
-					<div class="analogs-table__rating">
-						<div class="analogs-table__rating-stars">
-							<div class="rating">
-								<div class="rating__body">
-									<div class="rating__star rating__star--active"></div>
-									<div class="rating__star rating__star--active"></div>
-									<div class="rating__star rating__star--active"></div>
-									<div class="rating__star rating__star--active"></div>
-									<div class="rating__star"></div>
+				{% if user.is_authenticated %}
+				<form class="reviews-view__form" method="post" action="{% url 'new_review' slug=good.slug %}">
+					{% csrf_token %}
+					<h3 class="reviews-view__header">Написать отзыв</h3>
+					<div class="row">
+						<div class="col-xxl-12 col-xl-10 col-12">
+							<div class="form-row">
+								<div class="form-group col-md-4">
+									<label for="review-stars">Оценка</label>
+									<select id="review-stars" name="rating" class="form-control">
+										<option>5</option>
+										<option>4</option>
+										<option>3</option>
+										<option>2</option>
+										<option>1</option>
+									</select>
 								</div>
+								<div class="form-group col-md-4">
+									<label for="review-author">Ваше Имя</label>
+									<input type="text" class="form-control" id="review-author" placeholder="Пользователь" disabled value="{{ user.username }}">
+								</div>						
+							</div>
+							<div class="form-group">
+								<label for="review-text">Ваш отзыв</label>
+								<textarea class="form-control" id="review-text" name="review" rows="6"></textarea>
+							</div>
+							<div class="form-group mb-0 mt-4">
+								<button type="submit" class="btn btn-primary">Опубликовать</button>
 							</div>
 						</div>
-						<div class="analogs-table__rating-label">
-							10 Reviews
-						</div>
 					</div>
-				</td>
-				<td class="analogs-table__column analogs-table__column--vendor" data-title="Vendor">
-					{{ analog.brand }}}
-					<div class="analogs-table__country">{{ analog.country }}}</div>
-				</td>
-				<td class="analogs-table__column analogs-table__column--price">$1259.00</td>
-			</tr>
-			{% endfor %}			
-		</tbody>
-	</table>
-</div>
-</div>
+				</form>
+				{% endif %}
+			</div>
+		</div>
+		<div class="product-tabs__pane" id="product-tab-analogs">
+			<table class="analogs-table">
+				<thead>
+					<tr>
+						<th class="analogs-table__column analogs-table__column--name">Name</th>
+						<th class="analogs-table__column analogs-table__column--rating">Rating</th>
+						<th class="analogs-table__column analogs-table__column--vendor">Vendor</th>
+						<th class="analogs-table__column analogs-table__column--price">Price</th>
+					</tr>
+				</thead>
+				<tbody>
+
+					{% for analog in analogs %}
+					<tr>
+						<td class="analogs-table__column analogs-table__column--name">
+							<a href="" class="analogs-table__product-name">{{ analog.name }}}</a><br>
+							<div class="analogs-table__sku" data-title="SKU">{{ analog.art }}}</div>
+						</td>
+						<td class="analogs-table__column analogs-table__column--rating">
+							<div class="analogs-table__rating">
+								<div class="analogs-table__rating-stars">
+									<div class="rating">
+										<div class="rating__body">
+											<div class="rating__star rating__star--active"></div>
+											<div class="rating__star rating__star--active"></div>
+											<div class="rating__star rating__star--active"></div>
+											<div class="rating__star rating__star--active"></div>
+											<div class="rating__star"></div>
+										</div>
+									</div>
+								</div>
+								<div class="analogs-table__rating-label">
+									10 Reviews
+								</div>
+							</div>
+						</td>
+						<td class="analogs-table__column analogs-table__column--vendor" data-title="Vendor">
+							{{ analog.brand }}}
+							<div class="analogs-table__country">{{ analog.country }}}</div>
+						</td>
+						<td class="analogs-table__column analogs-table__column--price">$1259.00</td>
+					</tr>
+					{% endfor %}			
+				</tbody>
+			</table>
+		</div>
+	</div>
 </div>
 </div>
 </div>

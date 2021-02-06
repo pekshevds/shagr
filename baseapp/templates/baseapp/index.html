@@ -83,76 +83,37 @@
 							</a>
 						</li>
 
-						<li class="main-menu__item main-menu__item--submenu--menu main-menu__item--has-submenu">
-							<a href="{% url 'show_catalog' %}" class="main-menu__link">
-								Каталог
-								<svg width="7px" height="5px">
-									<path d="M0.280,0.282 C0.645,-0.084 1.238,-0.077 1.596,0.297 L3.504,2.310 L5.413,0.297 C5.770,-0.077 6.363,-0.084 6.728,0.282 C7.080,0.634 7.088,1.203 6.746,1.565 L3.504,5.007 L0.262,1.565 C-0.080,1.203 -0.072,0.634 0.280,0.282 Z" />
-								</svg>
-							</a>
-							<div class="main-menu__submenu">
-								<ul class="menu">
-
-									{% for key0, value0 in categories.items %}
-									<li class="menu__item {% if value0.items %}menu__item--has-submenu{% endif %}">
-										<a href="{% url 'show_list' slug=key0.slug %}" class="menu__link">
-											{{ key0.name }}
-
-											{% if value0.items %}
-											<span class="menu__arrow">
-												<svg width="6px" height="9px">
-													<path d="M0.3,7.4l3-2.9l-3-2.9c-0.4-0.3-0.4-0.9,0-1.3l0,0c0.4-0.3,0.9-0.4,1.3,0L6,4.5L1.6,8.7c-0.4,0.4-0.9,0.4-1.3,0l0,0C-0.1,8.4-0.1,7.8,0.3,7.4z" />
-												</svg>
-											</span>
-											{% endif %}
-										</a>
-										{% if value0.items %}
-										<div class="menu__submenu">
-											<ul class="menu">
-												{% for key1, value1 in value0.items %}
-												<li class="menu__item {% if value1.items %}menu__item--has-submenu{% endif %}">
-													<a href="{% url 'show_list' slug=key1.slug %}" class="menu__link">
-													{{ key1.name }}
-													{% if value1 %}
-													<span class="menu__arrow">
-														<svg width="6px" height="9px">
-														<path d="M0.3,7.4l3-2.9l-3-2.9c-0.4-0.3-0.4-0.9,0-1.3l0,0c0.4-0.3,0.9-0.4,1.3,0L6,4.5L1.6,8.7c-0.4,0.4-0.9,0.4-1.3,0l0,0C-0.1,8.4-0.1,7.8,0.3,7.4z" />
-														</svg>
-													</span>
-														
-													</a>
-													
-													<div class="menu__submenu">
-														<ul class="menu">
-															
-															{% for key2 in value1 %}
-															<li class="menu__item ">
-																<a href="{% url 'show_list' slug=key2.slug %}" class="menu__link">
-																	{{ key2.name }}
-																</a>
-															</li>
-															{% endfor %}
-															
-														</ul>
-													</div>
-													{% endif %}
-												</li>
-												{% endfor %}
-											</ul>
-										</div>
-										{% endif %}
-									</li>
-									{% endfor %}
-								</ul>
-							</div>
-						</li>
+						
 					</ul>
 				</div>
 			</div>
+			
+
+
+			<div class="block">
+				<div class="block">
+					<form action="{% url 'search' %}" class="search__body" method="get">
+
+						<input class="form-control" type="text" name="search" placeholder="Поиск">
+
+						<button class="search__button search__button--end" type="submit">
+							<span class="search__button-icon"><svg width="20" height="20">
+								<path d="M19.2,17.8c0,0-0.2,0.5-0.5,0.8c-0.4,0.4-0.9,0.6-0.9,0.6s-0.9,0.7-2.8-1.6c-1.1-1.4-2.2-2.8-3.1-3.9C10.9,14.5,9.5,15,8,15
+								c-3.9,0-7-3.1-7-7s3.1-7,7-7s7,3.1,7,7c0,1.5-0.5,2.9-1.3,4c1.1,0.8,2.5,2,4,3.1C20,16.8,19.2,17.8,19.2,17.8z M8,3C5.2,3,3,5.2,3,8
+								c0,2.8,2.2,5,5,5c2.8,0,5-2.2,5-5C13,5.2,10.8,3,8,3z" />
+							</svg>
+						</span>
+					</button>
+				</form>                    
+			</div>
+		</div>
+
+
+
 			<div class="header__navbar-phone phone">
 				<a href="" class="phone__body">
-					<div class="phone__title">Наш телефон:</div>
-					<div class="phone__number">+7 (4722) 54-14-22</div>
+					<div class="phone__title">Менеджеры:</div>
+					<div class="phone__number">+7 (910) 326-14-68, +7 (919) 434-98-36</div>
 				</a>
 			</div>
 		</div>
@@ -293,6 +254,9 @@
 		</div>
 	</div>
 </div>
+
+
+
 </header>
 <!-- site__header / end -->
 {% endblock %}
@@ -325,7 +289,7 @@
 							<address class="footer-contacts__contacts">
 								<dl>
 									<dt>Номер телефона</dt>
-									<dd>+7 (4722) 54-14-22</dd>
+									<dd>+7 (4722) 55-26-43</dd>
 								</dl>
 								<dl>
 									<dt>Электронная почта</dt>
@@ -404,7 +368,7 @@
 						<!-- copyright / end -->
 					</div>
 					<div class="site-footer__payments">
-						<img src="{% static 'images/payments.png' %}" alt="">
+						<!-- <img src="{% static 'images/payments.png' %}" alt=""> -->
 					</div>
 				</div>
 			</div>
@@ -653,7 +617,7 @@
 		<div class="mobile-menu__divider"></div>
 		<a class="mobile-menu__contacts" href="">
 			<div class="mobile-menu__contacts-subtitle">Наш телефон</div>
-			<div class="mobile-menu__contacts-title">+7 (4722) 54-14-22</div>
+			<div class="mobile-menu__contacts-title">+7 (4722) 55-26-43</div>
 		</a>
 	</div>
 </div>

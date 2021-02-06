@@ -3,6 +3,7 @@ from .models import Picture
 from .models import GoodsPropertyValue
 from .models import Category
 from .models import Review
+from .models import Brand
 
 # universal
 def find_good_by_uid_1c(uid_1c):
@@ -97,6 +98,7 @@ def update_good(uid_1c, name, art='',
             good.is_service = is_service
             good.price = price
             good.quant = quant
+            good.is_show = (quant > 0)
             good.category_uid_1с = category_uid_1с
             good.category = find_category_by_uid_1c(uid_1c=good.category_uid_1с)
             good.save()
@@ -170,9 +172,17 @@ def get_childs(parent=None):
 
     return childs
 
+
 def get_goods(category=None):
 
     goods = Good.objects.filter(category=category).order_by('name')
+
+    return goods
+
+
+def get_search(name=""):
+
+    goods = Good.objects.filter(name__icontains=name)
 
     return goods
 
@@ -207,3 +217,9 @@ def add_review(user, slug, rating, review):
     else:
         return False
     return True
+
+
+def get_brands():
+    
+    brands = Brand.objects.all()
+    return brands

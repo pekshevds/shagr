@@ -155,15 +155,15 @@ def update_category(uid_1c, name, parent_uid_1c=''):
 
 
 def get_category_goods(category_list):
-    try:
-        goods = Good.objects.filter(category__in=category_list, is_show=True)
-    except:
-        return None
 
-    if goods:        
-        return goods
+    goods = Good.objects.filter(category__in=category_list, is_show=True)
+    return goods
 
-    return None
+
+def get_brands_goods(brands_list):
+
+    goods = Good.objects.filter(brand__in=brands_list, is_show=True)
+    return goods
 
 
 def get_childs(parent=None):
@@ -176,14 +176,12 @@ def get_childs(parent=None):
 def get_goods(category=None):
 
     goods = Good.objects.filter(category=category, is_show=True).order_by('name')
-
     return goods
 
 
 def get_search(name=""):
 
     goods = Good.objects.filter(name__icontains=name, is_show=True)
-
     return goods
 
 

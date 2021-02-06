@@ -119,9 +119,9 @@ def cleare_brands():
 
     
 def set_show():
-    for good in Good.objects.all():
+    for good in Good.objects.filter(quant__gt=0):
         
-        good.is_show = good.quant > 0
+        good.is_show = True
         good.save()
     # from catalogapp.tests import set_show
     # set_show()

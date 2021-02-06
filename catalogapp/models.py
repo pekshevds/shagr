@@ -310,7 +310,7 @@ class Brand(models.Model):
 
 
     def get_goods_count(self):
-        return len(Good.objects.filter(brand=self, quant__gt=0))
+        return len(Good.objects.filter(brand=self, is_show=True))
 
 
     class Meta:

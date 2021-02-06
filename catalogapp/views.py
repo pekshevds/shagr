@@ -6,6 +6,8 @@ from .core import find_category_by_slug
 from .core import find_good_by_slug
 from .core import get_childs
 from .core import get_goods
+from .core import get_brands_goods
+from .core import get_brands
 from .core import get_search
 from .core import add_review
 
@@ -19,38 +21,33 @@ from django.core.paginator import Paginator
 
 def search(request):
 	
-	goods_count = 15
-	
-	childs = get_childs(parent=None)
 	search = request.GET.get('search', "")
-	goods = get_search(name=search)
-		
 
-	page_number = request.GET.get('page', 1)
-	paginator = Paginator(goods, goods_count)
-	page = paginator.get_page(page_number)
-	is_paginated = page.has_other_pages()
+	if search != "":#Это поиск по имени
+		goods = get_search(name=search)
+		search = "&search=" + search
+	else:#Фильтры
+		search = ""
+		brands = set()
+		for brand in get_brands():
+			if request.GET.get(brand.slug, "") == "on":
+				brands.add(brand)
+				search = search + brand.slug + "&" 
+		if search != "":
+			search = "&" + search
+
+		goods = get_brands_goods(brands)		
+
 	
-
-	context = get_context(request)
-		
-	context['parent'] = None
-	context['childs'] = childs
-	context['goods_count'] = len(goods)
-	context['page'] = page
-	context['is_paginated'] = is_paginated
-	context['addon'] = "&search=" + search
-	
-	return render(request, 'catalogapp/search.html', context)
+	return render_list(request, goods, None, search)
 
 
-def render_list(request, parent):
+def render_list(request, goods, parent, addon=""):
 
 	goods_count = 15
 
 	childs = get_childs(parent=parent)
-	goods = get_goods(category=parent)
-	
+		
 
 	page_number = request.GET.get('page', 1)
 	paginator = Paginator(goods, goods_count)
@@ -65,18 +62,22 @@ def render_list(request, parent):
 	context['goods_count'] = len(goods)
 	context['page'] = page
 	context['is_paginated'] = is_paginated
+	context['addon'] = addon
 	
 	return render(request, 'catalogapp/list.html', context)
 
 
 def show_catalog(request):
 
-	return render_list(request, None)
+
+	return render_list(request, get_goods(), None)
 
 
 def show_list(request, slug):
 	
-	return render_list(request, find_category_by_slug(slug))
+	parent = find_category_by_slug(slug)
+	goods = get_goods(category=parent)
+	return render_list(request, goods, parent)
 
 
 def show_item(request, slug):

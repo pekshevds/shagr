@@ -5,6 +5,7 @@ from .models import Category
 from .models import Review
 from .models import Brand
 
+import random as random
 # universal
 def find_good_by_uid_1c(uid_1c):
     try:
@@ -225,3 +226,51 @@ def get_brands():
         if brand.get_goods_count() > 0:
             brands.add(brand)
     return brands
+
+
+
+def get_goods_for_carousel(goods_count=10):
+
+    carousel = set()
+    goods = Good.objects.all()
+
+    while len(carousel) < goods_count:
+        carousel.add(random.choice(goods))
+
+    return carousel
+
+def get_goods_for_new(goods_count=3):
+    news = set()
+    goods = Good.objects.filter(is_new=True)
+    
+    if len(goods) == 0:
+        return None
+
+    while len(news) < goods_count:
+        news.add(random.choice(goods))
+
+    return news
+
+def get_goods_for_sale(goods_count=3):
+    sales = set()
+    goods = Good.objects.filter(is_sale=True)
+
+    if len(goods) == 0:
+        return None
+
+    while len(sales) < goods_count:
+        sales.add(random.choice(goods))
+
+    return sales
+
+def get_goods_for_hot(goods_count=3):
+    hots = set()
+    goods = Good.objects.filter(is_hot=True) 
+
+    if len(goods) == 0:
+        return None
+        
+    while len(hots) < goods_count:
+        hots.add(random.choice(goods))
+
+    return hots

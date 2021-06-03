@@ -25,9 +25,9 @@
 						<a href="{% if parent.parent.slug %}{% url 'show_list' slug=parent.parent.slug %}{% endif %}" class="breadcrumb__item-link">{{ parent.parent }}</a>
 					</li>
 					{% endif %}
-					<li class="breadcrumb__item breadcrumb__item--current breadcrumb__item--last" aria-current="page">
-						<span class="breadcrumb__item-link">{{ parent }}</span>
-					</li>
+                    <li class="breadcrumb__item breadcrumb__item--parent">
+                        <a href="{% if parent.slug %}{% url 'show_list' slug=parent.slug %}{% endif %}" class="breadcrumb__item-link">{{ parent }}</a>
+                    </li>
 					{% endif %}
 					
 					<li class="breadcrumb__title-safe-area" role="presentation"></li>          
@@ -249,12 +249,12 @@
      <div class="products-list__item">
         <div class="product-card">
             <div class="product-card__actions-list">
-                <button class="product-card__action product-card__action--quickview" type="button" aria-label="Quick view">
+               <!--  <button class="product-card__action product-card__action--quickview" type="button" aria-label="Quick view">
                     <svg width="16" height="16">
                         <path d="M14,15h-4v-2h3v-3h2v4C15,14.6,14.6,15,14,15z M13,3h-3V1h4c0.6,0,1,0.4,1,1v4h-2V3z M6,3H3v3H1V2c0-0.6,0.4-1,1-1h4V3z
                         M3,13h3v2H2c-0.6,0-1-0.4-1-1v-4h2V13z" />
                     </svg>
-                </button>
+                </button> -->
                 {% if user.is_authenticated %}
                 <form method="post" action="{% url 'add_to_wishlist' slug=good.slug %}">
                     {% csrf_token %}
@@ -280,7 +280,10 @@
 
             </div>
             <div class="product-card__info">
-                <div class="product-card__meta"><span class="product-card__meta-title">Артикул:</span> {{ good.art }}</div>
+                <div class="product-card__meta">
+                    <span class="product-card__meta-title">Артикул:</span>
+                    {% if good.art %}{{ good.art }}{% else %}---{% endif %}
+                </div>
                 <div class="product-card__name">
                     <div>
                         <div class="product-card__badges">
@@ -339,22 +342,29 @@
                         {% endif %}                            
                     </div>
                 </div>
-                <div class="product-card__rating-label">{{ good.get_rating }} в {{ good.get_reviews_count }} отзывах</div>
+                {% if good.get_reviews_count %}
+                <div class="product-card__rating-label">Отзывов: {{ good.get_reviews_count }}</div>
+                {% endif %}
+                <!-- <div class="product-card__rating-label">{{ good.get_rating }} в {{ good.get_reviews_count }} отзывах</div> -->
             </div>
             <div class="product-card__features">
                 <ul>
                     {% for item in good.get_main_properties_and_values %}
+                    {% if item.value %}
                     <li>{{ item.property }}: {{ item.value }}</li>
-
+                    {% endif %}
                     {% endfor %}
                 </ul>
             </div>
+
+
         </div>
        
-            <div class="product-card__prices">
-                <div class="product-card__price product-card__price--current">{{ good.price }}</div>
-            </div>
+            
         <form class="product-card__footer" method="post" action="{% url 'add_to_cart' slug=good.slug %}">
+            <div class="product-card__prices">
+                <div class="product-card__price product-card__price--current">{{ good.price }} &#8381;</div>
+            </div>
             {% csrf_token %}
             <button class="product-card__addtocart-icon" type="submit" aria-label="Add to cart">
                 <svg width="20" height="20">

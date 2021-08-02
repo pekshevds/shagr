@@ -220,11 +220,11 @@ def add_review(user, slug, rating, review):
 
 def get_brands():
     
-    brands = set()
+    brands = []
     for brand in Brand.objects.all().order_by('name'):
 
         if brand.get_goods_count() > 0:
-            brands.add(brand)
+            brands.append(brand)
     return brands
 
 

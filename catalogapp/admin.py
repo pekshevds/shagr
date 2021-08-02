@@ -13,12 +13,13 @@ from .models import Brand
 from .models import Country
 from .models import Review
 
+from django.contrib.admin import SimpleListFilter
+
 
 class PictureInline(admin.TabularInline):
     model = Picture
     exclude = ('title', 'slug')
     extra = 0
-
 
 class GoodsPropertyValueInlineForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
@@ -46,8 +47,6 @@ class PropertyAdmin(admin.ModelAdmin):
     )
 
     inlines = [ValueInline, ]
-
-
 
 class CategoryAdmin(admin.ModelAdmin):
     list_display = (
@@ -78,6 +77,7 @@ class CategoryAdmin(admin.ModelAdmin):
 
 
 class GoodAdmin(admin.ModelAdmin):
+
     list_display = (
         'name',
         'site_name',
@@ -92,7 +92,9 @@ class GoodAdmin(admin.ModelAdmin):
 
     inlines = [PictureInline, GoodsPropertyValueInline, ]
 
-    list_filter = ( 'category', 'brand', 'is_sale', 'is_new', 'is_hot', 'is_service', 'is_show',)
+    
+
+    list_filter = ('category', 'brand', 'is_sale', 'is_new', 'is_hot', 'is_service', 'is_show',)
 
     search_fields = ('name',)
 
@@ -100,6 +102,16 @@ class GoodAdmin(admin.ModelAdmin):
  
     exclude = ('uid_1c', 'full_name')
 
+    def formfield_for_foreignkey(self, db_field, request, **kwargs):
+
+        if db_field.name == "category":
+            kwargs["queryset"] = Category.objects.all().order_by('name')
+            return super(GoodAdmin, self).formfield_for_foreignkey(db_field, request, **kwargs)
+
+        if db_field.name == "brand":
+            kwargs["queryset"] = Brand.objects.all().order_by('name')
+            return super(GoodAdmin, self).formfield_for_foreignkey(db_field, request, **kwargs)     
+     
 
 class BrandAdmin(admin.ModelAdmin):
     list_display = (

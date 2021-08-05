@@ -69,7 +69,7 @@ def send_contact_form(request):
 			phone = contactForm.cleaned_data['contactPhone']
 			message = contactForm.cleaned_data['contactMessage']
 
-			send_mail(name, phone, message)
+			# send_mail(name, phone, message)
 
 			return render(request, 'baseapp/send_form_success.html', context)
 

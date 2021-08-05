@@ -102,7 +102,10 @@ class Category(models.Model):
         super(Category, self).save(*args, **kwargs)
 
     def get_goods_count(self):
-        return len(Good.objects.filter(category=self, is_show=True))    
+        return len(Good.objects.filter(category=self, is_show=True))
+
+    def get_childs_category(self):
+        return Category.objects.filter(parent=self)    
 
     class Meta:
         verbose_name = 'Категория'

@@ -40,3 +40,9 @@ class BuyerForm(forms.Form):
 	apartments  = forms.CharField(max_length = 10, required=False)
 	porch  		= forms.CharField(max_length = 10, required=False)
 	floor  		= forms.CharField(max_length = 10, required=False)
+
+class ContactForm(forms.Form):
+
+	contactName 	= forms.CharField(max_length = 50, required=False)
+	contactPhone 	= forms.CharField(max_length = 15, required=True)
+	contactMessage  = forms.CharField(max_length=1024, required=False)

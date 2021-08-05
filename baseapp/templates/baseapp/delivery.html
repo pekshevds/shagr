@@ -4,46 +4,57 @@
 {% load static %}
 
 {% block body %}
-	<!-- site__body -->
-        <div class="site__body">
-            
-            <div class="block-header block-header--has-breadcrumb block-header--has-title">
-                <div class="container">
-                    <div class="block-header__body">
-                        
-                        <h1 class="block-header__title">Условия доставки</h1>
-                    </div>
-                </div>
+<div class="site__body">
+    <div class="block-header block-header--has-breadcrumb block-header--has-title">
+        <div class="container">
+            <div class="block-header__body">
+                <nav class="breadcrumb block-header__breadcrumb" aria-label="breadcrumb">
+                    <ol class="breadcrumb__list">
+                        <li class="breadcrumb__spaceship-safe-area" role="presentation"></li>
+                        <li class="breadcrumb__item breadcrumb__item--parent breadcrumb__item--first">
+                            <a href="{% url 'show_index' %}" class="breadcrumb__item-link">Главная</a>
+                        </li>
+                        <li class="breadcrumb__item breadcrumb__item--current breadcrumb__item--last" aria-current="page">
+                            <span class="breadcrumb__item-link">Информация о доставке</span>
+                    </ol>
+                </nav>
             </div>
-            <div class="block">
-                <div class="container container--max--lg">
-                    <div class="card">
-                        <div class="card-body card-body--padding--2">
-                            <div class="row">
-                                <div class="col-12 col-lg-12 pb-4 pb-lg-0">
-                                    <div class="mr-1">
-                                        <h4 class="contact-us__header card-title"></h4>
-                                        <div class="contact-us__address">
-                                            <p>
-                                                
-                                            </p>
-                                            <p>
-                                                
-                                            </p>
-                                            <p>
-                                                
-                                            </p>
-                                        </div>
-                                    </div>
-                                </div>
-                                
-                            </div>
-                            </div>
-                           
-                    </div>
-                </div>
-            </div>
-            <div class="block-space block-space--layout--before-footer"></div>
         </div>
-        <!-- site__body / end -->
+    </div>
+    <div class="block post-view">
+        <div class="post-view__header post-header post-header--has-image">
+            <div class="post-header__image" style="background-image: url('images/posts/post-1-1903x500.jpg');"></div>
+            <div class="post-header__body">
+                <h1 class="post-header__title">ИНФОРМАЦИЯ О ДОСТАВКЕ</h1>
+            </div>
+            <div class="decor post-header__decor decor--type--bottom">
+                <div class="decor__body">
+                    <div class="decor__start"></div>
+                    <div class="decor__end"></div>
+                    <div class="decor__center"></div>
+                </div>
+            </div>
+        </div>
+        <div class="container">
+            <div class="post-view__body">
+                <div class="post-view__item post-view__item-post">
+                    <div class="post-view__card post">
+                        <div class="post__body typography">
+                            <p>
+                               Наш магазин предоставляет покупателям доставку по России различными транспортными компаниями и почтой РФ. По СНГ почтой России и авиа перевозкой. Учитываются пожелания клиентов в выборе способа доставки. 
+                            </p>
+                            <p>
+                                По области постоянным клиентам осуществляем бесплатную доставку автотранспортом.
+                            </p>
+                            <p>
+                                Так же клиенты могут получить товар по адресу: г. Белгород, ул. Костюкова дом 1. В рабочее время.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="block-space block-space--layout--before-footer"></div>
+</div>
 {% endblock %}

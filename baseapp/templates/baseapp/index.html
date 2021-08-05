@@ -113,7 +113,7 @@
 			<div class="header__navbar-phone phone">
 				<a href="" class="phone__body">
 					<div class="phone__title">Менеджеры:</div>
-					<div class="phone__number">+7 (910) 326-14-68, +7 (919) 434-98-36</div>
+					<div class="phone__number">+7(919)434-98-36, +7(4722)54-14-22</div>
 				</a>
 			</div>
 		</div>
@@ -227,6 +227,9 @@
 				</a>
 				
 		</div>
+		<!-- <div class="indicator"> -->
+			<button class="btn btn-light btn-lg" data-toggle="modal" data-target="#connectModal"><i class="fa fa-phone" aria-hidden="true"></i></button>
+		<!-- </div> -->
 	</div>
 </div>
 
@@ -308,721 +311,6 @@
                     </div>
                 </div>
             </div>
-            
-            
-            <div class="block-space block-space--layout--divider-nl"></div>
-            <div class="block block-products-carousel" data-layout="grid-5">
-                <div class="container">
-                    <div class="section-header">
-                        <div class="section-header__body">
-                            <h2 class="section-header__title">Рекомендуем</h2>
-                            <div class="section-header__spring"></div>
-                            
-                            <div class="section-header__arrows">
-                                <div class="arrow section-header__arrow section-header__arrow--prev arrow--prev">
-                                    <button class="arrow__button" type="button"><svg width="7" height="11">
-                                            <path d="M6.7,0.3L6.7,0.3c-0.4-0.4-0.9-0.4-1.3,0L0,5.5l5.4,5.2c0.4,0.4,0.9,0.3,1.3,0l0,0c0.4-0.4,0.4-1,0-1.3l-4-3.9l4-3.9C7.1,1.2,7.1,0.6,6.7,0.3z" />
-                                        </svg>
-                                    </button>
-                                </div>
-                                <div class="arrow section-header__arrow section-header__arrow--next arrow--next">
-                                    <button class="arrow__button" type="button"><svg width="7" height="11">
-                                            <path d="M0.3,10.7L0.3,10.7c0.4,0.4,0.9,0.4,1.3,0L7,5.5L1.6,0.3C1.2-0.1,0.7,0,0.3,0.3l0,0c-0.4,0.4-0.4,1,0,1.3l4,3.9l-4,3.9
-	C-0.1,9.8-0.1,10.4,0.3,10.7z" />
-                                        </svg>
-                                    </button>
-                                </div>
-                            </div>
-                            <div class="section-header__divider"></div>
-                        </div>
-                    </div>
-                    <div class="block-products-carousel__carousel">
-                        <div class="block-products-carousel__carousel-loader"></div>
-                        <div class="owl-carousel">
-                            
-                        	{% for good in carousel %}
-                            <div class="block-products-carousel__column">
-                                <div class="block-products-carousel__cell">
-                                    <div class="product-card product-card--layout--grid">
-                                        <div class="product-card__actions-list">
-                                            {% if user.is_authenticated %}
-                							<form method="post" action="{% url 'add_to_wishlist' slug=good.slug %}">
-                    						{% csrf_token %}
-                                            <button class="product-card__action product-card__action--wishlist" type="button" aria-label="Add to wish list">
-                                                <svg width="16" height="16">
-                                                    <path d="M13.9,8.4l-5.4,5.4c-0.3,0.3-0.7,0.3-1,0L2.1,8.4c-1.5-1.5-1.5-3.8,0-5.3C2.8,2.4,3.8,2,4.8,2s1.9,0.4,2.6,1.1L8,3.7
-	l0.6-0.6C9.3,2.4,10.3,2,11.3,2c1,0,1.9,0.4,2.6,1.1C15.4,4.6,15.4,6.9,13.9,8.4z" />
-                                                </svg>
-                                            </button>
-                                           </form>
-               					 			{% endif %}
-                                        </div>
-                                        <div class="product-card__image">
-                                            <div class="image image--type--product">
-                                                <a href="{% url 'show_item' slug=good.slug %}" class="image__body">
-                                                	 {% if good.get_main_picture %}
-                        							<img class="image__tag" src="{{ good.get_main_picture.image.url }}" alt="">
-                        							{% else %}
-                        							<img class="image__tag" src="{% static 'images/products/product-1-245x245.jpg' %}" alt="">
-                        							 {% endif %}
-                                                </a>
-                                            </div>
-                                            
-                                        </div>
-                                        <div class="product-card__info">
-                                            <div class="product-card__meta"><span class="product-card__meta-title">Артикул:</span> {{ good.art }}</div>
-                                            <div class="product-card__name">
-                                                <div>
-                                                    <div class="product-card__badges">
-                                                        {% if good.is_sale %}                                                                	
-								                         <div class="tag-badge tag-badge--sale">sale</div>
-								                         {% endif %}
-								                         {% if good.is_new %}
-								                         <div class="tag-badge tag-badge--new">new</div>
-								                         {% endif %}
-								                         {% if good.is_hot %}
-								                         <div class="tag-badge tag-badge--hot">hot</div>
-								                         {% endif %}
-                                                    </div>
-                                                    <a href="">{{ good }}</a>
-                                                </div>
-                                            </div>
-                                            <div class="product-card__rating">
-                                                <div class="rating product-card__rating-stars">
-                                                    <div class="rating__body">
-                                                        {% if good.get_rating == 0 %}
-								                        <div class="rating__star"></div>
-								                        <div class="rating__star"></div>
-								                        <div class="rating__star"></div>
-								                        <div class="rating__star"></div>
-								                        <div class="rating__star"></div>
-								                        {% elif good.get_rating == 1 %}
-								                        <div class="rating__star rating__star--active"></div>
-								                        <div class="rating__star"></div>
-								                        <div class="rating__star"></div>
-								                        <div class="rating__star"></div>
-								                        <div class="rating__star"></div>
-								                        {% elif good.get_rating == 2 %}
-								                        <div class="rating__star rating__star--active"></div>
-								                        <div class="rating__star rating__star--active"></div>
-								                        <div class="rating__star"></div>
-								                        <div class="rating__star"></div>
-								                        <div class="rating__star"></div>
-								                        {% elif good.get_rating == 3 %}
-								                        <div class="rating__star rating__star--active"></div>
-								                        <div class="rating__star rating__star--active"></div>
-								                        <div class="rating__star rating__star--active"></div>
-								                        <div class="rating__star"></div>
-								                        <div class="rating__star"></div>
-								                        {% elif good.get_rating == 4 %}
-								                        <div class="rating__star rating__star--active"></div>
-								                        <div class="rating__star rating__star--active"></div>
-								                        <div class="rating__star rating__star--active"></div>
-								                        <div class="rating__star rating__star--active"></div>
-								                        <div class="rating__star"></div>
-								                        {% elif good.get_rating == 5 %}
-								                        <div class="rating__star rating__star--active"></div>
-								                        <div class="rating__star rating__star--active"></div>
-								                        <div class="rating__star rating__star--active"></div>
-								                        <div class="rating__star rating__star--active"></div>
-								                        <div class="rating__star rating__star--active"></div>
-								                        {% endif %}
-                                                    </div>
-                                                </div>
-                                                <div class="product-card__rating-label">{{ good.get_rating }} в {{ good.get_reviews_count }} отзывах</div>
-                                            </div>
-                                        </div>
-                                        <div class="product-card__footer">
-                                            <div class="product-card__prices">
-                                                <div class="product-card__price product-card__price--current">{{ good.price }}</div>
-                                            </div>
-                                            <form class="product-card__footer" method="post" action="{% url 'add_to_cart' slug=good.slug %}">
-            								{% csrf_token %}
-                                            <button class="product-card__addtocart-icon" type="submit" aria-label="Add to cart">
-                                                <svg width="20" height="20">
-                                                    <circle cx="7" cy="17" r="2" />
-                                                    <circle cx="15" cy="17" r="2" />
-                                                    <path d="M20,4.4V5l-1.8,6.3c-0.1,0.4-0.5,0.7-1,0.7H6.7c-0.4,0-0.8-0.3-1-0.7L3.3,3.9C3.1,3.3,2.6,3,2.1,3H0.4C0.2,3,0,2.8,0,2.6
-	V1.4C0,1.2,0.2,1,0.4,1h2.5c1,0,1.8,0.6,2.1,1.6L5.1,3l2.3,6.8c0,0.1,0.2,0.2,0.3,0.2h8.6c0.1,0,0.3-0.1,0.3-0.2l1.3-4.4
-	C17.9,5.2,17.7,5,17.5,5H9.4C9.2,5,9,4.8,9,4.6V3.4C9,3.2,9.2,3,9.4,3h9.2C19.4,3,20,3.6,20,4.4z" />
-                                                </svg>
-                                            </button>
-                                            </form>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            {% endfor %}
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="block-space block-space--layout--divider-nl"></div>
-            <div class="block-banners block">
-                <div class="container">
-                    <div class="block-banners__list">
-                        <a href="{% url 'show_catalog' %}" class="block-banners__item block-banners__item--style--one">
-                            <span class="block-banners__item-image"><img src="{% static 'images/banners/banner1.jpg' %}" alt=""></span>
-                            <span class="block-banners__item-image block-banners__item-image--blur"><img src="{% static 'images/banners/banner1.jpg' %}" alt=""></span>
-                            <span class="block-banners__item-title">Моторные масла</span>
-                            <span class="block-banners__item-details">
-                                Моторные масла для Вашей садовой технике<br>
-                                для продолжительной и безперебойной работы.
-                            </span>
-                            <span class="block-banners__item-button btn btn-primary btn-sm">
-                                В каталог
-                            </span>
-                        </a>
-                        <a href="{% url 'show_catalog' %}" class="block-banners__item block-banners__item--style--two">
-                            <span class="block-banners__item-image"><img src="{% static 'images/banners/banner2.jpg' %}" alt=""></span>
-                            <span class="block-banners__item-image block-banners__item-image--blur"><img src="{% static 'images/banners/banner2.jpg' %}" alt=""></span>
-                            <span class="block-banners__item-title">Save up to $40</span>
-                            <span class="block-banners__item-details">
-                                Luxurious interior part for real aesthetes<br>
-                                Leather, fabric, ivory and more.
-                            </span>
-                            <span class="block-banners__item-button btn btn-primary btn-sm">
-                                В каталог
-                            </span>
-                        </a>
-                    </div>
-                </div>
-            </div>
-            <div class="block-space block-space--layout--divider-nl"></div>
-            
-            <div class="block-space block-space--layout--divider-nl"></div>
-            <div class="block block-posts-carousel block-posts-carousel--layout--list" data-layout="list">
-                <div class="container">
-                    <div class="section-header">
-                        <div class="section-header__body">
-                            <h2 class="section-header__title">Последние новости</h2>
-                            <div class="section-header__spring"></div>
-                            
-                            <div class="section-header__arrows">
-                                <div class="arrow section-header__arrow section-header__arrow--prev arrow--prev">
-                                    <button class="arrow__button" type="button"><svg width="7" height="11">
-                                            <path d="M6.7,0.3L6.7,0.3c-0.4-0.4-0.9-0.4-1.3,0L0,5.5l5.4,5.2c0.4,0.4,0.9,0.3,1.3,0l0,0c0.4-0.4,0.4-1,0-1.3l-4-3.9l4-3.9C7.1,1.2,7.1,0.6,6.7,0.3z" />
-                                        </svg>
-                                    </button>
-                                </div>
-                                <div class="arrow section-header__arrow section-header__arrow--next arrow--next">
-                                    <button class="arrow__button" type="button"><svg width="7" height="11">
-                                            <path d="M0.3,10.7L0.3,10.7c0.4,0.4,0.9,0.4,1.3,0L7,5.5L1.6,0.3C1.2-0.1,0.7,0,0.3,0.3l0,0c-0.4,0.4-0.4,1,0,1.3l4,3.9l-4,3.9
-	C-0.1,9.8-0.1,10.4,0.3,10.7z" />
-                                        </svg>
-                                    </button>
-                                </div>
-                            </div>
-                            <div class="section-header__divider"></div>
-                        </div>
-                    </div>
-                    <div class="block-posts-carousel__carousel">
-                        <div class="owl-carousel">
-                            <div class="block-posts-carousel__item">
-                                <div class="post-card">
-                                    <div class="post-card__image">
-                                        <a href="">
-                                            <img src="{% static 'images/posts/post-1-730x485.jpg' %}" alt="">
-                                        </a>
-                                    </div>
-                                    <div class="post-card__content">
-                                        <div class="post-card__category">
-                                            <a href="">Special Offers</a>
-                                        </div>
-                                        <div class="post-card__title">
-                                            <h2><a href="">Philosophy That Addresses Topics Such As Goodness</a></h2>
-                                        </div>
-                                        <div class="post-card__date">
-                                            By <a href="">Jessica Moore</a> on October 19, 2019
-                                        </div>
-                                        <div class="post-card__excerpt">
-                                            <div class="typography">
-                                                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec facilisis neque ut purus fermentum, ac pretium
-                                                nibh facilisis. Vivamus venenatis viverra iaculis. Suspendisse tempor orci non sapien ullamcorper dapibus.
-                                                Suspendisse at velit diam. Donec pharetra nec enim blandit vulputate.
-                                            </div>
-                                        </div>
-                                        <div class="post-card__more">
-                                            <a href="" class="btn btn-secondary btn-sm">Read more</a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="block-posts-carousel__item">
-                                <div class="post-card">
-                                    <div class="post-card__image">
-                                        <a href="">
-                                            <img src="{% static 'images/posts/post-2-730x485.jpg' %}" alt="">
-                                        </a>
-                                    </div>
-                                    <div class="post-card__content">
-                                        <div class="post-card__category">
-                                            <a href="">Latest News</a>
-                                        </div>
-                                        <div class="post-card__title">
-                                            <h2><a href="">Logic Is The Study Of Reasoning And Argument Part 2</a></h2>
-                                        </div>
-                                        <div class="post-card__date">
-                                            By <a href="">Jessica Moore</a> on September 5, 2019
-                                        </div>
-                                        <div class="post-card__excerpt">
-                                            <div class="typography">
-                                                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec facilisis neque ut purus fermentum, ac pretium
-                                                nibh facilisis. Vivamus venenatis viverra iaculis. Suspendisse tempor orci non sapien ullamcorper dapibus.
-                                                Suspendisse at velit diam. Donec pharetra nec enim blandit vulputate.
-                                            </div>
-                                        </div>
-                                        <div class="post-card__more">
-                                            <a href="" class="btn btn-secondary btn-sm">Read more</a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="block-posts-carousel__item">
-                                <div class="post-card">
-                                    <div class="post-card__image">
-                                        <a href="">
-                                            <img src="{% static 'images/posts/post-3-730x485.jpg' %}" alt="">
-                                        </a>
-                                    </div>
-                                    <div class="post-card__content">
-                                        <div class="post-card__category">
-                                            <a href="">New Arrivals</a>
-                                        </div>
-                                        <div class="post-card__title">
-                                            <h2><a href="">Some Philosophers Specialize In One Or More Historical Periods</a></h2>
-                                        </div>
-                                        <div class="post-card__date">
-                                            By <a href="">Jessica Moore</a> on August 12, 2019
-                                        </div>
-                                        <div class="post-card__excerpt">
-                                            <div class="typography">
-                                                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec facilisis neque ut purus fermentum, ac pretium
-                                                nibh facilisis. Vivamus venenatis viverra iaculis. Suspendisse tempor orci non sapien ullamcorper dapibus.
-                                                Suspendisse at velit diam. Donec pharetra nec enim blandit vulputate.
-                                            </div>
-                                        </div>
-                                        <div class="post-card__more">
-                                            <a href="" class="btn btn-secondary btn-sm">Read more</a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="block-posts-carousel__item">
-                                <div class="post-card">
-                                    <div class="post-card__image">
-                                        <a href="">
-                                            <img src="{% static 'images/posts/post-4-730x485.jpg' %}" alt="">
-                                        </a>
-                                    </div>
-                                    <div class="post-card__content">
-                                        <div class="post-card__category">
-                                            <a href="">Special Offers</a>
-                                        </div>
-                                        <div class="post-card__title">
-                                            <h2><a href="">A Variety Of Other Academic And Non-Academic Approaches Have Been Explored</a></h2>
-                                        </div>
-                                        <div class="post-card__date">
-                                            By <a href="">Jessica Moore</a> on Jule 30, 2019
-                                        </div>
-                                        <div class="post-card__excerpt">
-                                            <div class="typography">
-                                                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec facilisis neque ut purus fermentum, ac pretium
-                                                nibh facilisis. Vivamus venenatis viverra iaculis. Suspendisse tempor orci non sapien ullamcorper dapibus.
-                                                Suspendisse at velit diam. Donec pharetra nec enim blandit vulputate.
-                                            </div>
-                                        </div>
-                                        <div class="post-card__more">
-                                            <a href="" class="btn btn-secondary btn-sm">Read more</a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="block-posts-carousel__item">
-                                <div class="post-card">
-                                    <div class="post-card__image">
-                                        <a href="">
-                                            <img src="{% static 'images/posts/post-5-730x485.jpg' %}" alt="">
-                                        </a>
-                                    </div>
-                                    <div class="post-card__content">
-                                        <div class="post-card__category">
-                                            <a href="">New Arrivals</a>
-                                        </div>
-                                        <div class="post-card__title">
-                                            <h2><a href="">Germany Was The First Country To Professionalize Philosophy</a></h2>
-                                        </div>
-                                        <div class="post-card__date">
-                                            By <a href="">Jessica Moore</a> on June 12, 2019
-                                        </div>
-                                        <div class="post-card__excerpt">
-                                            <div class="typography">
-                                                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec facilisis neque ut purus fermentum, ac pretium
-                                                nibh facilisis. Vivamus venenatis viverra iaculis. Suspendisse tempor orci non sapien ullamcorper dapibus.
-                                                Suspendisse at velit diam. Donec pharetra nec enim blandit vulputate.
-                                            </div>
-                                        </div>
-                                        <div class="post-card__more">
-                                            <a href="" class="btn btn-secondary btn-sm">Read more</a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="block-posts-carousel__item">
-                                <div class="post-card">
-                                    <div class="post-card__image">
-                                        <a href="">
-                                            <img src="{% static 'images/posts/post-6-730x485.jpg' %}" alt="">
-                                        </a>
-                                    </div>
-                                    <div class="post-card__content">
-                                        <div class="post-card__category">
-                                            <a href="">Special Offers</a>
-                                        </div>
-                                        <div class="post-card__title">
-                                            <h2><a href="">Logic Is The Study Of Reasoning And Argument Part 1</a></h2>
-                                        </div>
-                                        <div class="post-card__date">
-                                            By <a href="">Jessica Moore</a> on May 21, 2019
-                                        </div>
-                                        <div class="post-card__excerpt">
-                                            <div class="typography">
-                                                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec facilisis neque ut purus fermentum, ac pretium
-                                                nibh facilisis. Vivamus venenatis viverra iaculis. Suspendisse tempor orci non sapien ullamcorper dapibus.
-                                                Suspendisse at velit diam. Donec pharetra nec enim blandit vulputate.
-                                            </div>
-                                        </div>
-                                        <div class="post-card__more">
-                                            <a href="" class="btn btn-secondary btn-sm">Read more</a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="block-space block-space--layout--divider-nl d-xl-block d-none"></div>
-            <div class="block block-products-columns">
-                <div class="container">
-                    <div class="row">
-                        <div class="col-4">
-                            <div class="block-products-columns__title">Новинки</div>
-                            <div class="block-products-columns__list">
-
-                            	{% for good in new_items %}
-                                <div class="block-products-columns__list-item">
-                                    <div class="product-card">
-                                        <div class="product-card__actions-list">
-
-                                        	 {% if user.is_authenticated %}
-                							<form method="post" action="{% url 'add_to_wishlist' slug=good.slug %}">
-                    						{% csrf_token %}
-                                            <button class="product-card__action product-card__action--quickview" type="submit" aria-label="Quick view">
-                                                <svg width="16" height="16">
-                                                    <path d="M14,15h-4v-2h3v-3h2v4C15,14.6,14.6,15,14,15z M13,3h-3V1h4c0.6,0,1,0.4,1,1v4h-2V3z M6,3H3v3H1V2c0-0.6,0.4-1,1-1h4V3z
-	 M3,13h3v2H2c-0.6,0-1-0.4-1-1v-4h2V13z" />
-                                                </svg>
-                                            </button>
-                                        	</form>
-                                        	{% endif %}
-                                        </div>
-                                        <div class="product-card__image">
-                                            <div class="image image--type--product">
-                                                <a href="{% url 'show_item' slug=good.slug %}" class="image__body">
-                                                	 {% if good.get_main_picture %}
-                        							<img class="image__tag" src="{{ good.get_main_picture.image.url }}" alt="">
-                        							{% else %}
-                                                    <img class="image__tag" src="{% static 'images/products/product-1-245x245.jpg' %}" alt="">
-                                                    {% endif %}
-                                                </a>
-                                            </div>
-                                        </div>
-                                        <div class="product-card__info">
-                                            <div class="product-card__name">
-                                                <div>
-                                                    <div class="product-card__badges">
-                                                         {% if good.is_sale %}                                                             	
-								                         <div class="tag-badge tag-badge--sale">sale</div>
-								                         {% endif %}
-								                         {% if good.is_new %}
-								                         <div class="tag-badge tag-badge--new">new</div>
-								                         {% endif %}
-								                         {% if good.is_hot %}
-								                         <div class="tag-badge tag-badge--hot">hot</div>
-								                         {% endif %}
-                                                    </div>
-                                                    <a href="{% url 'show_item' slug=good.slug %}">{{ good }}</a>
-                                                </div>
-                                            </div>
-                                            <div class="product-card__rating">
-                                                <div class="rating product-card__rating-stars">
-                                                    <div class="rating__body">
-                                                        {% if good.get_rating == 0 %}
-								                        <div class="rating__star"></div>
-								                        <div class="rating__star"></div>
-								                        <div class="rating__star"></div>
-								                        <div class="rating__star"></div>
-								                        <div class="rating__star"></div>
-								                        {% elif good.get_rating == 1 %}
-								                        <div class="rating__star rating__star--active"></div>
-								                        <div class="rating__star"></div>
-								                        <div class="rating__star"></div>
-								                        <div class="rating__star"></div>
-								                        <div class="rating__star"></div>
-								                        {% elif good.get_rating == 2 %}
-								                        <div class="rating__star rating__star--active"></div>
-								                        <div class="rating__star rating__star--active"></div>
-								                        <div class="rating__star"></div>
-								                        <div class="rating__star"></div>
-								                        <div class="rating__star"></div>
-								                        {% elif good.get_rating == 3 %}
-								                        <div class="rating__star rating__star--active"></div>
-								                        <div class="rating__star rating__star--active"></div>
-								                        <div class="rating__star rating__star--active"></div>
-								                        <div class="rating__star"></div>
-								                        <div class="rating__star"></div>
-								                        {% elif good.get_rating == 4 %}
-								                        <div class="rating__star rating__star--active"></div>
-								                        <div class="rating__star rating__star--active"></div>
-								                        <div class="rating__star rating__star--active"></div>
-								                        <div class="rating__star rating__star--active"></div>
-								                        <div class="rating__star"></div>
-								                        {% elif good.get_rating == 5 %}
-								                        <div class="rating__star rating__star--active"></div>
-								                        <div class="rating__star rating__star--active"></div>
-								                        <div class="rating__star rating__star--active"></div>
-								                        <div class="rating__star rating__star--active"></div>
-								                        <div class="rating__star rating__star--active"></div>
-								                        {% endif %}
-                                                    </div>
-                                                </div>
-                                                <div class="product-card__rating-label">{{ good.get_rating }} в {{ good.get_reviews_count }} отзывах</div>
-                                            </div>
-                                        </div>
-                                        <div class="product-card__footer">
-                                            <div class="product-card__prices">
-                                                <div class="product-card__price product-card__price--current">{{ good.price }}</div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                {% endfor %}                                
-                            </div>
-                        </div>
-                        <div class="col-4">
-                            <div class="block-products-columns__title">Спец. предложения</div>
-                            <div class="block-products-columns__list">
-                                
-                                {% for good in sale_items %}
-                                <div class="block-products-columns__list-item">
-                                    <div class="product-card">
-                                        <div class="product-card__actions-list">
-
-                                        	 {% if user.is_authenticated %}
-                							<form method="post" action="{% url 'add_to_wishlist' slug=good.slug %}">
-                    						{% csrf_token %}
-                                            <button class="product-card__action product-card__action--quickview" type="submit" aria-label="Quick view">
-                                                <svg width="16" height="16">
-                                                    <path d="M14,15h-4v-2h3v-3h2v4C15,14.6,14.6,15,14,15z M13,3h-3V1h4c0.6,0,1,0.4,1,1v4h-2V3z M6,3H3v3H1V2c0-0.6,0.4-1,1-1h4V3z
-	 M3,13h3v2H2c-0.6,0-1-0.4-1-1v-4h2V13z" />
-                                                </svg>
-                                            </button>
-                                        	</form>
-                                        	{% endif %}
-                                        </div>
-                                        <div class="product-card__image">
-                                            <div class="image image--type--product">
-                                                <a href="{% url 'show_item' slug=good.slug %}" class="image__body">
-                                                	 {% if good.get_main_picture %}
-                        							<img class="image__tag" src="{{ good.get_main_picture.image.url }}" alt="">
-                        							{% else %}
-                                                    <img class="image__tag" src="{% static 'images/products/product-1-245x245.jpg' %}" alt="">
-                                                    {% endif %}
-                                                </a>
-                                            </div>
-                                        </div>
-                                        <div class="product-card__info">
-                                            <div class="product-card__name">
-                                                <div>
-                                                    <div class="product-card__badges">
-                                                         {% if good.is_sale %}                                                             	
-								                         <div class="tag-badge tag-badge--sale">sale</div>
-								                         {% endif %}
-								                         {% if good.is_new %}
-								                         <div class="tag-badge tag-badge--new">new</div>
-								                         {% endif %}
-								                         {% if good.is_hot %}
-								                         <div class="tag-badge tag-badge--hot">hot</div>
-								                         {% endif %}
-                                                    </div>
-                                                    <a href="{% url 'show_item' slug=good.slug %}">{{ good }}</a>
-                                                </div>
-                                            </div>
-                                            <div class="product-card__rating">
-                                                <div class="rating product-card__rating-stars">
-                                                    <div class="rating__body">
-                                                        {% if good.get_rating == 0 %}
-								                        <div class="rating__star"></div>
-								                        <div class="rating__star"></div>
-								                        <div class="rating__star"></div>
-								                        <div class="rating__star"></div>
-								                        <div class="rating__star"></div>
-								                        {% elif good.get_rating == 1 %}
-								                        <div class="rating__star rating__star--active"></div>
-								                        <div class="rating__star"></div>
-								                        <div class="rating__star"></div>
-								                        <div class="rating__star"></div>
-								                        <div class="rating__star"></div>
-								                        {% elif good.get_rating == 2 %}
-								                        <div class="rating__star rating__star--active"></div>
-								                        <div class="rating__star rating__star--active"></div>
-								                        <div class="rating__star"></div>
-								                        <div class="rating__star"></div>
-								                        <div class="rating__star"></div>
-								                        {% elif good.get_rating == 3 %}
-								                        <div class="rating__star rating__star--active"></div>
-								                        <div class="rating__star rating__star--active"></div>
-								                        <div class="rating__star rating__star--active"></div>
-								                        <div class="rating__star"></div>
-								                        <div class="rating__star"></div>
-								                        {% elif good.get_rating == 4 %}
-								                        <div class="rating__star rating__star--active"></div>
-								                        <div class="rating__star rating__star--active"></div>
-								                        <div class="rating__star rating__star--active"></div>
-								                        <div class="rating__star rating__star--active"></div>
-								                        <div class="rating__star"></div>
-								                        {% elif good.get_rating == 5 %}
-								                        <div class="rating__star rating__star--active"></div>
-								                        <div class="rating__star rating__star--active"></div>
-								                        <div class="rating__star rating__star--active"></div>
-								                        <div class="rating__star rating__star--active"></div>
-								                        <div class="rating__star rating__star--active"></div>
-								                        {% endif %}
-                                                    </div>
-                                                </div>
-                                                <div class="product-card__rating-label">{{ good.get_rating }} в {{ good.get_reviews_count }} отзывах</div>
-                                            </div>
-                                        </div>
-                                        <div class="product-card__footer">
-                                            <div class="product-card__prices">
-                                                <div class="product-card__price product-card__price--current">{{ good.price }}</div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                {% endfor %}
-                                
-                            </div>
-                        </div>
-                        <div class="col-4">
-                            <div class="block-products-columns__title">Хиты продаж</div>
-                            <div class="block-products-columns__list">
-                                
-                                {% for good in hot_items %}
-                                <div class="block-products-columns__list-item">
-                                    <div class="product-card">
-                                        <div class="product-card__actions-list">
-
-                                        	 {% if user.is_authenticated %}
-                							<form method="post" action="{% url 'add_to_wishlist' slug=good.slug %}">
-                    						{% csrf_token %}
-                                            <button class="product-card__action product-card__action--quickview" type="submit" aria-label="Quick view">
-                                                <svg width="16" height="16">
-                                                    <path d="M14,15h-4v-2h3v-3h2v4C15,14.6,14.6,15,14,15z M13,3h-3V1h4c0.6,0,1,0.4,1,1v4h-2V3z M6,3H3v3H1V2c0-0.6,0.4-1,1-1h4V3z
-	 M3,13h3v2H2c-0.6,0-1-0.4-1-1v-4h2V13z" />
-                                                </svg>
-                                            </button>
-                                        	</form>
-                                        	{% endif %}
-                                        </div>
-                                        <div class="product-card__image">
-                                            <div class="image image--type--product">
-                                                <a href="{% url 'show_item' slug=good.slug %}" class="image__body">
-                                                	 {% if good.get_main_picture %}
-                        							<img class="image__tag" src="{{ good.get_main_picture.image.url }}" alt="">
-                        							{% else %}
-                                                    <img class="image__tag" src="{% static 'images/products/product-1-245x245.jpg' %}" alt="">
-                                                    {% endif %}
-                                                </a>
-                                            </div>
-                                        </div>
-                                        <div class="product-card__info">
-                                            <div class="product-card__name">
-                                                <div>
-                                                    <div class="product-card__badges">
-                                                         {% if good.is_sale %}                                                             	
-								                         <div class="tag-badge tag-badge--sale">sale</div>
-								                         {% endif %}
-								                         {% if good.is_new %}
-								                         <div class="tag-badge tag-badge--new">new</div>
-								                         {% endif %}
-								                         {% if good.is_hot %}
-								                         <div class="tag-badge tag-badge--hot">hot</div>
-								                         {% endif %}
-                                                    </div>
-                                                    <a href="{% url 'show_item' slug=good.slug %}">{{ good }}</a>
-                                                </div>
-                                            </div>
-                                            <div class="product-card__rating">
-                                                <div class="rating product-card__rating-stars">
-                                                    <div class="rating__body">
-                                                        {% if good.get_rating == 0 %}
-								                        <div class="rating__star"></div>
-								                        <div class="rating__star"></div>
-								                        <div class="rating__star"></div>
-								                        <div class="rating__star"></div>
-								                        <div class="rating__star"></div>
-								                        {% elif good.get_rating == 1 %}
-								                        <div class="rating__star rating__star--active"></div>
-								                        <div class="rating__star"></div>
-								                        <div class="rating__star"></div>
-								                        <div class="rating__star"></div>
-								                        <div class="rating__star"></div>
-								                        {% elif good.get_rating == 2 %}
-								                        <div class="rating__star rating__star--active"></div>
-								                        <div class="rating__star rating__star--active"></div>
-								                        <div class="rating__star"></div>
-								                        <div class="rating__star"></div>
-								                        <div class="rating__star"></div>
-								                        {% elif good.get_rating == 3 %}
-								                        <div class="rating__star rating__star--active"></div>
-								                        <div class="rating__star rating__star--active"></div>
-								                        <div class="rating__star rating__star--active"></div>
-								                        <div class="rating__star"></div>
-								                        <div class="rating__star"></div>
-								                        {% elif good.get_rating == 4 %}
-								                        <div class="rating__star rating__star--active"></div>
-								                        <div class="rating__star rating__star--active"></div>
-								                        <div class="rating__star rating__star--active"></div>
-								                        <div class="rating__star rating__star--active"></div>
-								                        <div class="rating__star"></div>
-								                        {% elif good.get_rating == 5 %}
-								                        <div class="rating__star rating__star--active"></div>
-								                        <div class="rating__star rating__star--active"></div>
-								                        <div class="rating__star rating__star--active"></div>
-								                        <div class="rating__star rating__star--active"></div>
-								                        <div class="rating__star rating__star--active"></div>
-								                        {% endif %}
-                                                    </div>
-                                                </div>
-                                                <div class="product-card__rating-label">{{ good.get_rating }} в {{ good.get_reviews_count }} отзывах</div>
-                                            </div>
-                                        </div>
-                                        <div class="product-card__footer">
-                                            <div class="product-card__prices">
-                                                <div class="product-card__price product-card__price--current">{{ good.price }}</div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                {% endfor %}
-                                
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
             <div class="block-space block-space--layout--divider-nl"></div>
             <div class="block-features block block-features--layout--bottom-strip">
                 <div class="container">
@@ -1065,7 +353,7 @@
                             </div>
                             <div class="block-features__item-info">
                                 <div class="block-features__item-title">Бесплатная доставка</div>
-                                <div class="block-features__item-subtitle">При заказе от $1 000 000</div>
+                                <div class="block-features__item-subtitle">постоянным клиентам автотранспортом по области.</div>
                             </div>
                         </li>
                         
@@ -1096,8 +384,8 @@
                                 </svg>
                             </div>
                             <div class="block-features__item-info">
-                                <div class="block-features__item-title">100% Безопасно</div>
-                                <div class="block-features__item-subtitle">Только безопасные платежи</div>
+                                <div class="block-features__item-title">Компания с 30-летней историей</div>
+                                <div class="block-features__item-subtitle">по продаже профессионального оборудования и запчастей к нему.</div>
 
                             </div>
                         </li>
@@ -1125,24 +413,15 @@
                                 </svg>
                             </div>
                             <div class="block-features__item-info">
-                                <div class="block-features__item-title">Горячие предложения
+                                <div class="block-features__item-title">Официальные диллеры
 </div>
-                                <div class="block-features__item-subtitle">Скидки до 90%</div>
+                                <div class="block-features__item-subtitle">крупнейших производителей: Bosch, Metabo, Stihl, Wortex  и других.</div>
                             </div>
                         </li>
                     </ul>
                 </div>
             </div>
         </div>
-        <!-- site__body / end -->
-
-
-
-
-
-
-
-
 
 {% endblock %}
 
@@ -1170,11 +449,11 @@
 							<address class="footer-contacts__contacts">
 								<dl>
 									<dt>Номер телефона</dt>
-									<dd>+7 (4722) 55-26-43</dd>
+									<dd>+7 (4722) 54-14-22</dd>
 								</dl>
 								<dl>
 									<dt>Электронная почта</dt>
-									<dd>info@shagr.ru</dd>
+									<dd>web@shagrbel.ru</dd>
 								</dl>
 								<dl>
 									<dt>Почтовый адрес</dt>
@@ -1182,7 +461,7 @@
 								</dl>
 								<dl>
 									<dt>Часы работы</dt>
-									<dd>Понедельник-Воскресенье 09:00 - 18:00</dd>
+									<dd>Понедельник-Суббота 09:00 - 18:00</dd>
 								</dl>
 							</address>
 						</div>
@@ -1193,46 +472,43 @@
 							<ul class="footer-links__list">
 								<li class="footer-links__item"><a href="{% url 'about' %}" class="footer-links__link">О нас</a></li>
 								<li class="footer-links__item"><a href="{% url 'delivery' %}" class="footer-links__link">Информация о доставке</a></li>
-								<li class="footer-links__item"><a href="{% url 'agreement' %}" class="footer-links__link">Согласие о нераспространении</a></li>
-								<li class="footer-links__item"><a href="{% url 'brands' %}" class="footer-links__link">Бренды</a></li>
 								<li class="footer-links__item"><a href="{% url 'contacts' %}" class="footer-links__link">Наши контакты</a></li>
-								<li class="footer-links__item"><a href="{% url 'returns' %}" class="footer-links__link">Возвраты</a></li>
-								<li class="footer-links__item"><a href="{% url 'map' %}" class="footer-links__link">Карта сайта</a></li>
 							</ul>
 						</div>
 					</div>
 					<div class="col-6 col-md-3 col-xl-2">
 						<div class="site-footer__widget footer-links">
 							<h5 class="footer-links__title">Мой профиль</h5>
-							<ul class="footer-links__list">								
-								<li class="footer-links__item"><a href="{% url 'show_orders' %}" class="footer-links__link">Исторя заказов</a></li>
+							<ul class="footer-links__list">
+								<li class="footer-links__item"><a href="{% url 'account_show' %}" class="footer-links__link">Личный кабинет</a></li>						
+								<li class="footer-links__item"><a href="{% url 'show_orders' %}" class="footer-links__link">История заказов</a></li>
 								<li class="footer-links__item"><a href="{% url 'show_wishlist' %}" class="footer-links__link">Избранное</a></li>
-								<li class="footer-links__item"><a href="{% url 'news' %}" class="footer-links__link">Новости</a></li>								
+								<!-- <li class="footer-links__item"><a href="{% url 'news' %}" class="footer-links__link">Новости</a></li> -->		
 							</ul>
 						</div>
 					</div>
 					<div class="col-12 col-md-6 col-xl-4">
 						<div class="site-footer__widget footer-newsletter">
-							<h5 class="footer-newsletter__title">Подписаться на новости</h5>
+							<h5 class="footer-newsletter__title">Обратный звонок</h5>
 							<div class="footer-newsletter__text">
-								Введите адрес вашей электронной почты
+								Отправьте запрос и мы свяжемся с Вами.
 							</div>
-							<form action="" class="footer-newsletter__form">
+							<!-- <form action="" class="footer-newsletter__form">
 								<label class="sr-only" for="footer-newsletter-address">Электронная почта</label>
-								<input type="text" class="footer-newsletter__form-input" id="footer-newsletter-address" placeholder="Email Address..." {% if buyer %} value="{{ buyer.email }}" {% endif %}>
+								<input type="text" class="footer-newsletter__form-input" id="footer-newsletter-address" placeholder="Email Address..." {% if buyer %} value="{{ buyer.email }}" {% endif %}> -->
 
-								<button class="footer-newsletter__form-button">Подписаться</button>
-							</form>
+								<button class="btn btn-primary btn-lg" data-toggle="modal" data-target="#connectModal">Отправить запрос</button>
+							<!-- </form> -->
 							<div class="footer-newsletter__text footer-newsletter__text--social">
 								Мы в социальных сетях
 							</div>
 							<div class="footer-newsletter__social-links social-links">
 								<ul class="social-links__list">
-									<li class="social-links__item social-links__item--facebook"><a href="#" target="_blank"><i class="fab fa-facebook-f"></i></a></li>
-									<li class="social-links__item social-links__item--twitter"><a href="#" target="_blank"><i class="fab fa-twitter"></i></a></li>
-									<li class="social-links__item social-links__item--youtube"><a href="#" target="_blank"><i class="fab fa-youtube"></i></a></li>
-									<li class="social-links__item social-links__item--instagram"><a href="#" target="_blank"><i class="fab fa-instagram"></i></a></li>
-									<li class="social-links__item social-links__item--twitter"><a href="#" target="_blank"><i class="fab fa-vk"></i></a></li>
+									<li class="social-links__item social-links__item--facebook"><a  target="_blank"><i class="fab fa-facebook-f"></i></a></li>
+									<li class="social-links__item social-links__item--twitter"><a  target="_blank"><i class="fab fa-twitter"></i></a></li>
+									<li class="social-links__item social-links__item--youtube"><a  target="_blank"><i class="fab fa-youtube"></i></a></li>
+									<li class="social-links__item social-links__item--instagram"><a  target="_blank"><i class="fab fa-instagram"></i></a></li>
+									<li class="social-links__item social-links__item--twitter"><a  target="_blank"><i class="fab fa-vk"></i></a></li>
 								</ul>
 							</div>
 						</div>
@@ -1312,6 +588,7 @@
 					</span>
 				</a>
 			</div>
+			<button class="btn btn-light btn-lg" data-toggle="modal" data-target="#connectModal"><i class="fa fa-phone" aria-hidden="true"></i></button>
 		</div>
 	</div>
 </div>
@@ -1370,6 +647,8 @@
 				</span>
 				<span class="mobile-menu__indicator-title">Корзина</span>
 			</a>
+			<button class="btn btn-light btn-lg" data-toggle="modal" data-target="#connectModal"><i class="fa fa-phone" aria-hidden="true"></i></button>
+
 		</div>
 		<div class="mobile-menu__divider"></div>
 		<ul class="mobile-menu__links">
@@ -1482,4 +761,44 @@
 </div>
 </div>
 <!-- mobile-menu / end -->
+
+<div class="modal fade" id="connectModal" tabindex="-1" role="dialog" aria-labelledby="connectModalLabel" aria-hidden="true">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title" id="exampleModalLabel">Свяжитесь со мной</h5>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+			<div class="modal-body">
+				<div class="col-12">
+					<div class="ml-1">
+						<form id="contactFormShagr" action="{% url 'send_contact_form' %}" method="POST">
+							{% csrf_token %}
+							<div class="form-row">
+								<div class="form-group col-md-6">
+									<label for="form-name">Имя</label>
+									<input type="text" name="contactName" id="form-name" class="form-control" placeholder="Ваше Имя">
+								</div>
+								<div class="form-group col-md-6">
+									<label for="form-email">Телефон</label>
+									<input required name="contactPhone" type="text" id="form-phone" class="form-control" placeholder="Телефон">
+								</div>
+							</div>
+							<div class="form-group">
+								<label for="form-message">Сообщение</label>
+								<textarea name="contactMessage" id="form-message" class="form-control" rows="4"></textarea>
+							</div>
+						</form>
+					</div>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary" data-dismiss="modal">Закрыть</button>
+					<button type="submit" form="contactFormShagr" class="btn btn-primary">Отправить</button>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
 {% endblock %}

@@ -55,7 +55,7 @@ def render_list(request, goods, parent, addon=""):
 	is_paginated = page.has_other_pages()
 	
 
-	context = get_context(request)
+	context = get_context(request, parent)
 	
 	context['parent'] = parent
 	context['childs'] = childs

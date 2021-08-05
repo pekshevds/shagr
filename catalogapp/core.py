@@ -218,13 +218,17 @@ def add_review(user, slug, rating, review):
     return True
 
 
-def get_brands():
+def get_brands(category=None):
     
     brands = []
-    for brand in Brand.objects.all().order_by('name'):
 
-        if brand.get_goods_count() > 0:
-            brands.append(brand)
+    if category:
+        pass
+    else:    
+        for brand in Brand.objects.all().order_by('name'):
+
+            if brand.get_goods_count() > 0:
+                brands.append(brand)
     return brands
 
 

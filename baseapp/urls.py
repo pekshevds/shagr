@@ -8,16 +8,17 @@ from .views import show_returns
 from .views import show_map
 from .views import show_brands
 from .views import show_news
+from .views import send_contact_form
 
 urlpatterns = [
     path('', show_index, name='show_index'),
     path('about/', show_about, name='about'),
     path('delivery/', show_delivery, name='delivery'),
-    path('agreement/', show_agreement, name='agreement'),
-    path('brands/', show_brands, name='brands'),
+    # path('agreement/', show_agreement, name='agreement'),
+    # path('brands/', show_brands, name='brands'),
     path('contacts/', show_contacts, name='contacts'),
-    path('returns/', show_returns, name='returns'),
-    path('map/', show_map, name='map'),
-
+    # path('returns/', show_returns, name='returns'),
+    # path('map/', show_map, name='map'),
+    path('send-contact-form/', send_contact_form, name='send_contact_form'),
     path('news/', show_news, name='news'),
 ]

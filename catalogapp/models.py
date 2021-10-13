@@ -224,15 +224,13 @@ class Good(models.Model):
 
 
     def get_main_picture(self):
-        try:
-            records = Picture.objects.filter(good=self, is_main=True)[:1]
-        except:
-            return None 
 
-        if records:   
-            return records[0]
+        main_image = Picture.objects.filter(good=self, is_main=True).first()
+        
+        if not main_image:
+            main_image = Picture.objects.filter(good=self).first()
 
-        return None
+        return main_image
 
 
     def save(self, *args, **kwargs):

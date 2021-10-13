@@ -14,74 +14,77 @@
                             <a href="{% url 'show_index' %}" class="breadcrumb__item-link">Главная</a>
                         </li>
                         <li class="breadcrumb__item breadcrumb__item--parent breadcrumb__item--first">
-                            <a href="{% url 'show_catalog' %}" class="breadcrumb__item-link">Каталог</a>
+                            <a href="{% url 'show_orders' %}" class="breadcrumb__item-link">Мои заказы</a>
                         </li>
-                        {% if parent %}
-                        {% if parent.parent %}
-                        <li class="breadcrumb__item breadcrumb__item--parent">
-                            <a href="{% if parent.parent.slug %}{% url 'show_list' slug=parent.parent.slug %}{% endif %}" class="breadcrumb__item-link">{{ parent.parent }}</a>
-                        </li>
-                        {% endif %}
-                        <li class="breadcrumb__item breadcrumb__item--current breadcrumb__item--last" aria-current="page">
-                            <span class="breadcrumb__item-link">{{ parent }}</span>
-                        </li>
-                        {% endif %}
 
                         <li class="breadcrumb__title-safe-area" role="presentation"></li>
                     </ol>
                 </nav>
                 <h1 class="block-header__title">
-                    Заказы
+                    Мои заказы
                 </h1>
             </div>
         </div>
     </div>
 
-    <div class="block block-split block-split--has-sidebar">
+
+    <div class="site__body">
+        <div class="block-space block-space--layout--after-header"></div>
+        <div class="block">
+            <div class="container container--max--xl">
+                <div class="row">
+                    <div class="col-12 col-lg-12 mt-2 mt-lg-0">
+                        <div class="card">
+                            <!-- <div class="card-header">
+                                <h5>Order History</h5>
+                            </div> -->
+                            <div class="card-divider"></div>
+                            <div class="card-table">
+                                <div class="table-responsive-sm">
+                                    <table>
+                                        <thead>
+                                            <tr>
+                                                <th>Заказ</th>
+                                                <th>Состояние оплаты</th>
+                                                <th>Состояние доставки</th>
+                                                <th>Сумма заказа</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            {% for order in orders %}
+                                                <tr>
+                                                    <td><a href="{% url 'show_order' id=order.id %}">{{ order }}</a></td>                                                    
+                                                    <td>{{ order.display_current_payment_status }}</td>
+                                                    <td>{{ order.display_current_delivery_status }}</td>
+                                                    <td>{{ order.total }}</td>
+                                                </tr>
+                                            {% endfor %}
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                            <div class="card-divider"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="block-space block-space--layout--before-footer"></div>
+</div>
+
+    <!-- <div class="block">
         <div class="container">
             <div class="block-split__row row no-gutters">
-                <div class="block-split__item block-split__item-sidebar col-auto">
-                    <div class="card widget widget-categories-list">
-                        <div class="widget-categories-list__body" data-collapse data-collapse-opened-class="widget-categories-list--open">
-                            <ul class="widget-categories-list__root">
-
-                                <li class="widget-categories-list__root-item" data-collapse-item>
-                                    <a href="{% if parent.slug %}{% url 'show_list' slug=parent.slug %}{% endif %}" class="widget-categories-list__root-link">
-                                        {% if parent %}
-                                        {{ parent }}
-                                        {% else %}
-                                        Каталог
-                                        {% endif %}
-                                    </a>
-                                    <ul class="widget-categories-list__child">
-                                        {% for category in childs %}
-                                        <li class="widget-categories-list__child-item">
-                                            <a href="{% if category.slug %}{% url 'show_list' slug=category.slug %}{% endif %}" class="widget-categories-list__child-link">{{ category }}</a>
-                                        </li>
-                                        {% endfor %}
-                                    </ul>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-
-
 
                 <div class="block-split__item block-split__item-content col-auto">
                     <div class="block">
                         <div class="categories-list categories-list--layout--columns-3-sidebar">
-
-
-
-
-
-                            <!-- Правая часть -->
+                            {% if orders %}
                             <div class="block">
                                 <div class="container container--max--xl">
                                     <div class="card">
                                 <div class="card-header">
-                                    <h5>Исторя заказов</h5>
+                                    <h5>История заказов</h5>
                                 </div>
                                 <div class="card-divider"></div>
                                 <div class="card-table">
@@ -140,9 +143,7 @@
                             </div>
                                 </div>
                             </div>
-
-
-                            <!-- Конец правой части -->
+                            {% endif %}
 
                         </div>
                     </div>
@@ -153,6 +154,6 @@
 
 
 
-    <div class="block-space block-space--layout--before-footer"></div>
+    <div class="block-space block-space--layout--before-footer"></div> -->
     {% endblock %}
 

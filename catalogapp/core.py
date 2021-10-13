@@ -278,3 +278,7 @@ def get_goods_for_hot(goods_count=3):
         hots.add(random.choice(goods))
 
     return hots
+
+def get_main_categories():
+
+    return Category.objects.filter(parent=None)

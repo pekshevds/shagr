@@ -10,6 +10,7 @@ from .core import del_from_order
 from .core import add_to_order
 from .core import create_order_from_cart
 from .core import change_payment_status_of_order
+from .core import send_mail_with_order
 
 
 def show_orders(request):
@@ -24,6 +25,9 @@ def send_cart_to_order(request):
 
 	order = create_order_from_cart(request)	
 	if order:
+		
+		send_mail_with_order(request, order)
+
 		return redirect('show_order', id=order.id)
 
 	return redirect(request.META['HTTP_REFERER'])

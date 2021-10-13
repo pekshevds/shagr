@@ -23,7 +23,7 @@
 							</svg>
 						</span>
 					</button>
-					<div class="departments__menu">
+					<!-- <div class="departments__menu">
 						<div class="departments__arrow"></div>
 						<div class="departments__body">
 							<ul class="departments__list">
@@ -65,6 +65,58 @@
 											</div>
 										</div>
 									</div>
+								</li>
+								
+								{% endfor %}
+							</ul>
+							<div class="departments__menu-container"></div>
+						</div>
+					</div> -->
+					<div class="departments__menu">
+						<div class="departments__arrow"></div>
+						<div class="departments__body">
+							<ul class="departments__list">
+
+								{% for category in main_categories %}
+								
+								<li class="departments__item departments__item--submenu--megamenu departments__item--has-submenu">
+									<a href="{% url 'show_list' slug=category.slug %}" class="departments__item-link">
+										{{ category.name }}	
+										{% if category.get_childs_category %}	
+										<span class="departments__item-arrow">
+											<svg width="7" height="11">
+												<path d="M0.3,10.7L0.3,10.7c0.4,0.4,0.9,0.4,1.3,0L7,5.5L1.6,0.3C1.2-0.1,0.7,0,0.3,0.3l0,0c-0.4,0.4-0.4,1,0,1.3l4,3.9l-4,3.9
+												C-0.1,9.8-0.1,10.4,0.3,10.7z" />
+											</svg>
+										</span>
+										{% endif %}
+									</a>
+									{% if category.get_childs_category %}
+									<div class="departments__item-menu">
+										<div class="megamenu departments__megamenu departments__megamenu--size--lg">
+											<div class="megamenu__image">
+											</div>
+											<div class="row">
+												{% for 2_nest_level_cat in category.get_childs_category %}
+												<div class="col-1of5">
+													<ul class="megamenu__links megamenu-links megamenu-links--root">
+														<li class="megamenu-links__item megamenu-links__item--has-submenu">
+															<a class="megamenu-links__item-link" href="{% url 'show_list' slug=2_nest_level_cat.slug %}">{{ 2_nest_level_cat.name }}</a>
+															<ul class="megamenu-links">
+																{% for 3_nest_level_cat in 2_nest_level_cat.get_childs_category %}
+																<li class="megamenu-links__item">
+																	<a class="megamenu-links__item-link" href="{% url 'show_list' slug=3_nest_level_cat.slug %}">{{ 3_nest_level_cat.name }}</a>
+																</li>
+																{% endfor %}
+															</ul>
+														</li>
+													</ul>
+												</div>
+												{% endfor %}
+											</div>
+										</div>
+									</div>
+									{% endif %}
 								</li>
 								
 								{% endfor %}
@@ -255,57 +307,9 @@
                 <div class="container">
                     <div class="block-slideshow__carousel">
                         <div class="owl-carousel">
-                            <a class="block-slideshow__item" href="{% url 'show_catalog' %}">
-                                <span class="block-slideshow__item-image block-slideshow__item-image--desktop" style=""></span>
-                                <span class="block-slideshow__item-image block-slideshow__item-image--mobile" style=""></span>
-                                <span class="block-slideshow__item-offer">
-                                    -30% 
-                                </span>
-                                <span class="block-slideshow__item-title">
-                                    При покупке запчастей <br>
-                                    с установкой
-                                </span>
-                                <span class="block-slideshow__item-details">
-                                    Купленные запчасти вы можете установить у нас<br>
-                                    или у наших партнеров.
-                                </span>
-                                <span class="block-slideshow__item-button">
-                                    В каталог
-                                </span>
-                            </a>
-                            <a class="block-slideshow__item" href="{% url 'show_catalog' %}">
-                                <span class="block-slideshow__item-image block-slideshow__item-image--desktop" style=""></span>
-                                <span class="block-slideshow__item-image block-slideshow__item-image--mobile" style=""></span>
-                                <span class="block-slideshow__item-title">
-                                    Затеяли ремонт?<br>
-                                    Нужен инструмент для работы или хобби?
-                                </span>
-                                <span class="block-slideshow__item-details">
-                                    У нас есть все необходимое - запасные части,<br>
-                                    инструмент, расходные материалы, жидкости<br>
-                                    и многое другое...
-                                </span>
-                                <span class="block-slideshow__item-button">
-                                    В каталог
-                                </span>
-                            </a>
-                            <a class="block-slideshow__item" href="{% url 'show_catalog' %}">
-                                <span class="block-slideshow__item-image block-slideshow__item-image--desktop" style=""></span>
-                                <span class="block-slideshow__item-image block-slideshow__item-image--mobile" style=""></span>
-                                <span class="block-slideshow__item-offer">
-                                    -30%
-                                </span>
-                                <span class="block-slideshow__item-title">
-                                    Широкий выбор<br>
-                                    Низкие цены
-                                </span>
-                                <span class="block-slideshow__item-details">
-                                    Сезонные акции и специальные предложения<br>
-                                    для наших постоянных покупателей.
-                                </span>
-                                <span class="block-slideshow__item-button">
-                                    В каталог
-                                </span>
+                            <a class="block-slideshow__item">
+                                <span class="block-slideshow__item-image block-slideshow__item-image--desktop" style="background-image: url('../static/images/banners/banner_1.jpg')"></span>
+                                <span class="block-slideshow__item-image block-slideshow__item-image--mobile" style="background-image: url('../static/images/banners/banner_1_mobile.jpg')"></span>
                             </a>
                         </div>
                     </div>

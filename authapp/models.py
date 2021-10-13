@@ -32,8 +32,7 @@ class Buyer(models.Model):
 
 	def save(self, *args, **kwargs):
 
-		if not self.address:
-			self.address = "{}, {}, {}, д. {}, кв. {}, подъезд {}, этаж {}".format(self.zipcode, self.locality, self.street, self.house, self.apartments, self.porch, self.floor)
+		self.address = "{}, {}, {}, д. {}, кв. {}, подъезд {}, этаж {}".format(self.zipcode, self.locality, self.street, self.house, self.apartments, self.porch, self.floor)
 		
 		super(Buyer, self).save(*args, **kwargs)
 

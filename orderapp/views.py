@@ -25,8 +25,8 @@ def send_cart_to_order(request):
 
 	order = create_order_from_cart(request)	
 	if order:
-		
-		send_mail_with_order(request, order)
+
+		send_mail_with_order(order)
 
 		return redirect('show_order', id=order.id)
 

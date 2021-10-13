@@ -110,7 +110,7 @@ def change_payment_status_of_order(id, payment_status='AP'):
 	order.save()
 	return True
 
-def send_mail_with_order(request, order):
+def send_mail_with_order(order):
 
 	HOST = "mail.hosting.reg.ru"
 	sender_email = config('MAIL_USER')
@@ -132,8 +132,6 @@ def send_mail_with_order(request, order):
 	if order:
 		for item in OrderItem.objects.filter(order=order):
 			order_items += "<tr><td {3}>{0}</td> <td {3}>x{1}</td> <td{3}>{2}</td></tr>".format(item.good, item.quant, item.total, css_style_td)
-
-
 
 		text = """\
 		{}""".format(order_items)
@@ -174,7 +172,15 @@ def send_mail_with_order(request, order):
 			</div>
 	      </body>
 	    </html>
-		""".format(order.id, order.buyer.phone, order_items, order.total, order.buyer.first_name, order.buyer.last_name, order.buyer.email)
+		""".format(
+			order.id,
+			order.buyer.phone if order.buyer else '',
+			order_items,
+			order.total,
+			order.buyer.first_name if order.buyer else '',
+			order.buyer.last_name if order.buyer else '',
+			order.buyer.email if order.buyer else ''
+		)
 
 
 	part1 = MIMEText(text, "plain")

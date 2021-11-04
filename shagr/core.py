@@ -1,6 +1,7 @@
 from catalogapp.core import get_hierarchy_categoryes, get_main_categories
 from catalogapp.core import get_childs
 from catalogapp.core import get_brands
+from authapp.forms import ContactForm
 
 
 from cartapp.core import get_cart
@@ -37,6 +38,7 @@ def get_context(request, parent=None):
 	'cart'					: get_cart(request),
 	'wishlist'				: get_wishlist(request),
 	'buyer'					: get_buyer(request),
+	'contactForm'			: ContactForm(),
 	}
 	return context
 
@@ -59,7 +61,7 @@ def send_mail(name, phone, comment):
 	html = """\
 	<html>
       <body>
-        <H3>Свяжитесь с {0}. Контакты: {1}</H3>
+        <H3>Свяжитесь с {0}</H3>
         <H3>Контакты:</H3>
         <p>Телефон: {1}</p>
         <p></p>

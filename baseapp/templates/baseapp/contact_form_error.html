@@ -1,0 +1,28 @@
+{% extends 'baseapp/index.html' %}
+
+
+{% load static %}
+
+{% block body %}
+<div class="site__body">
+	<div class="block-space block-space--layout--spaceship-ledge-height"></div>
+	<div class="block">
+		<div class="container">
+			<div class="not-found">
+				<div class="not-found__content">
+					<h1 class="not-found__title">Форма обратной связи заполнена не корректно!</h1>
+					<h2 class="not-found__title">Попробуйте еще раз</h2>
+
+					<a class="btn btn-secondary btn-sm" href="{% url 'show_index' %}">На главную</a>
+					<a class="btn btn-secondary btn-sm" href="{% url 'show_catalog' %}">Каталог</a>
+
+				</div>
+				<div class="not-found__content pt-5">
+					<button class="btn btn-primary btn-lg" data-toggle="modal" data-target="#connectModal">Связаться с нами</button>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="block-space block-space--layout--before-footer"></div>
+</div>
+{% endblock %}

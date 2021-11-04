@@ -59,6 +59,7 @@ def send_contact_form(request):
 	if request.method == 'POST':
 
 		contactForm = ContactForm(request.POST)
+
 		if contactForm.is_valid():
 
 			name = contactForm.cleaned_data['contactName']
@@ -67,6 +68,10 @@ def send_contact_form(request):
 
 			send_mail(name, phone, message)
 
-			return render(request, 'baseapp/send_form_success.html', context)
+			return render(request, 'baseapp/contact_form_success.html', context)
+
+		else:
+
+			return render(request, 'baseapp/contact_form_error.html', context)
 
 

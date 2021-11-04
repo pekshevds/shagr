@@ -1,4 +1,6 @@
 from django import forms
+from captcha.fields import ReCaptchaField
+from captcha.widgets import ReCaptchaV2Checkbox
  
 class BuyerSaveForm(forms.Form):
 
@@ -43,6 +45,22 @@ class BuyerForm(forms.Form):
 
 class ContactForm(forms.Form):
 
-	contactName 	= forms.CharField(max_length = 50, required=False)
-	contactPhone 	= forms.CharField(max_length = 15, required=True)
-	contactMessage  = forms.CharField(max_length=1024, required=False)
+	contactName 	= forms.CharField(max_length=30, widget=forms.TextInput(attrs={
+			'class': 'form-control',
+			'placeholder': 'Ваше Имя',
+			'id': 'form-name',
+
+		}))
+	contactPhone 	= forms.CharField(max_length=15, widget=forms.TextInput(attrs={
+			'class': 'form-control',
+			'placeholder': 'Телефон',
+			'id': 'form-phone',
+
+		}))
+	contactMessage = forms.CharField(max_length=1024, widget=forms.Textarea(attrs={
+			'class': 'form-control',
+			'placeholder': 'Сообщение',
+			'id': 'form-message',
+			'rows': '5',
+		}))
+	captcha 		= ReCaptchaField(widget=ReCaptchaV2Checkbox, required=True)

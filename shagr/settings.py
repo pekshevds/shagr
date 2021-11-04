@@ -28,7 +28,7 @@ SECRET_KEY = config('SECRET_KEY')
 DEBUG = config('DEBUG', cast=bool)
 
 #ALLOWED_HOSTS = []
-ALLOWED_HOSTS = ['shagr.ru', 'www.shagr.ru', 'localhost']
+ALLOWED_HOSTS = ['shagr.ru', 'www.shagr.ru', 'localhost', '127.0.0.1']
 
 # Application definition
 
@@ -53,6 +53,7 @@ INSTALLED_APPS = [
     'cartapp',
     'wishlistapp',
     'orderapp',
+    'captcha',
 ]
 
 MIDDLEWARE = [
@@ -139,6 +140,9 @@ USE_L10N = True
 
 USE_TZ = False
 
+
+RECAPTCHA_PUBLIC_KEY = config('RECAPTCHA_PUBLIC_KEY')
+RECAPTCHA_PRIVATE_KEY = config('RECAPTCHA_PRIVATE_KEY')
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.2/howto/static-files/

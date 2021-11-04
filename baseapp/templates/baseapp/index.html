@@ -783,16 +783,19 @@
 							<div class="form-row">
 								<div class="form-group col-md-6">
 									<label for="form-name">Имя</label>
-									<input type="text" name="contactName" id="form-name" class="form-control" placeholder="Ваше Имя">
+									{{ contactForm.contactName }}
 								</div>
 								<div class="form-group col-md-6">
 									<label for="form-email">Телефон</label>
-									<input required name="contactPhone" type="text" id="form-phone" class="form-control" placeholder="Телефон">
+									{{ contactForm.contactPhone }}
 								</div>
 							</div>
 							<div class="form-group">
 								<label for="form-message">Сообщение</label>
-								<textarea name="contactMessage" id="form-message" class="form-control" rows="4"></textarea>
+								{{ contactForm.contactMessage }}
+							</div>
+							<div class="form-group" align="center">
+								{{ contactForm.captcha }}
 							</div>
 						</form>
 					</div>

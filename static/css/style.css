@@ -4824,10 +4824,13 @@ select.form-control::-ms-expand {
   margin-left: 10px;
 }
 
-@media (min-width: 992px) {
+/*@media (min-width: 992px) {
   .view-options--offcanvas--mobile .view-options__filters-button {
     display: none;
   }
+}*/
+.view-options--offcanvas--mobile .view-options__filters-button {
+    display: none;
 }
 
 @media (max-width: 991.98px) {

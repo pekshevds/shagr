@@ -1,0 +1,20 @@
+<html>
+<body>
+  <div style="max-width: 610px; width:100%">
+    <H4 style="background-color: #0064f0; color: #fff; padding: 12px 0; text-align: center; font-size: 14px; margin-bottom: 30px;">{% load account %}{% user_display user as user_display %}{% load i18n %}{% autoescape off %}{% blocktrans with site_name=current_site.name site_domain=current_site.domain %}Вас приветствует {{ site_name }}!</H4>
+    <p>
+    Вы поличили это письмо потому что пользователь {{ user_display }} указал этот email при регистрации учетной записи.
+    </p>
+    <p>Что бы подтвердить, что это ваш email, перейдите по ссылке {{ activate_url }}</p>
+    <p>Если Вы не проходили регистрацию на сайте {{ site_domain }} просто игнорируйте это письмо.</p>
+    <p></p>
+    <p>
+      {% endblocktrans %}
+      {% blocktrans with site_name=current_site.name site_domain=current_site.domain %}Спасибо, {{ site_name }}!
+      {% endblocktrans %}
+      {% endautoescape %}
+    </p>
+    <p></p>
+  </div>
+</body>
+</html>

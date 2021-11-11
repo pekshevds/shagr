@@ -1,5 +1,6 @@
 from django.db import models
 from catalogapp.models import Good
+from django.db.models import Sum
 
 from django.contrib.auth.models import User
 
@@ -13,8 +14,7 @@ class Cart(models.Model):
 
 
 	def get_items_count(self):
-		return len(CartItem.objects.filter(cart=self))
-
+		return (CartItem.objects.filter(cart=self).aggregate(Sum('quant'))['quant__sum'])
 
 	def get_quant(self):
 		quant = 0

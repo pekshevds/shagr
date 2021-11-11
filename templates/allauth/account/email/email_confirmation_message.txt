@@ -1,10 +1,12 @@
- 
-{% load account %}{% user_display user as user_display %}{% load i18n %}{% autoescape off %}{% blocktrans with site_name=current_site.name site_domain=current_site.domain %}Hello from {{ site_name }}!
+{% load account %}{% user_display user as user_display %}{% load i18n %}{% autoescape off %}{% blocktrans with site_name=current_site.name site_domain=current_site.domain %}Вас приветствует {{ site_name }}!
 
-You're receiving this e-mail because user {{ user_display }} has given yours as an e-mail address to connect their account.
+Вы поличили это письмо потому что пользователь {{ user_display }} указал этот email при регистрации учетной записи.
 
-To confirm this is correct, go to {{ activate_url }}
+Что бы подтвердить, что это ваш email, перейдите по ссылке {{ activate_url }}
+
+Если Вы не проходили регистрацию на сайте {{ site_domain }} просто игнорируйте это письмо.
+
 {% endblocktrans %}
-{% blocktrans with site_name=current_site.name site_domain=current_site.domain %}Thank you from {{ site_name }}!
-{{ site_domain }}{% endblocktrans %}
+{% blocktrans with site_name=current_site.name site_domain=current_site.domain %}Спасибо, {{ site_name }}!
+{% endblocktrans %}
 {% endautoescape %}

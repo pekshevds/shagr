@@ -4,6 +4,7 @@
     {% load static %}
 
     {% block body %}
+
     <div class="block-header block-header--has-breadcrumb block-header--has-title">
         <div class="container">
             <div class="block-header__body">
@@ -13,251 +14,171 @@
                         <li class="breadcrumb__item breadcrumb__item--parent breadcrumb__item--first">
                             <a href="{% url 'show_index' %}" class="breadcrumb__item-link">Главная</a>
                         </li>
-                        <li class="breadcrumb__item breadcrumb__item--parent breadcrumb__item--first">
-                            <a href="{% url 'show_catalog' %}" class="breadcrumb__item-link">Каталог</a>
-                        </li>
-                        {% if parent %}
-                        {% if parent.parent %}
-                        <li class="breadcrumb__item breadcrumb__item--parent">
-                            <a href="{% if parent.parent.slug %}{% url 'show_list' slug=parent.parent.slug %}{% endif %}" class="breadcrumb__item-link">{{ parent.parent }}</a>
-                        </li>
-                        {% endif %}
                         <li class="breadcrumb__item breadcrumb__item--current breadcrumb__item--last" aria-current="page">
-                            <span class="breadcrumb__item-link">{{ parent }}</span>
+                            <span class="breadcrumb__item-link">Заказ #{{ order.id }}</span>
                         </li>
-                        {% endif %}
-
                         <li class="breadcrumb__title-safe-area" role="presentation"></li>
                     </ol>
                 </nav>
                 <h1 class="block-header__title">
-                    Заказ {{ order }}
+                    Заказ #{{ order.id }}
                 </h1>
             </div>
         </div>
     </div>
-
-    <div class="block block-split block-split--has-sidebar">
-        <div class="container">
-            <div class="block-split__row row no-gutters">
-                <div class="block-split__item block-split__item-sidebar col-auto">
-                    <div class="card widget widget-categories-list">
-                        <div class="widget-categories-list__body" data-collapse data-collapse-opened-class="widget-categories-list--open">
-                            <ul class="widget-categories-list__root">
-
-                                <li class="widget-categories-list__root-item" data-collapse-item>
-                                    <a href="{% if parent.slug %}{% url 'show_list' slug=parent.slug %}{% endif %}" class="widget-categories-list__root-link">
-                                        {% if parent %}
-                                        {{ parent }}
-                                        {% else %}
-                                        Каталог
-                                        {% endif %}
-                                    </a>
-                                    <ul class="widget-categories-list__child">
-                                        {% for category in childs %}
-                                        <li class="widget-categories-list__child-item">
-                                            <a href="{% if category.slug %}{% url 'show_list' slug=category.slug %}{% endif %}" class="widget-categories-list__child-link">{{ category }}</a>
-                                        </li>
-                                        {% endfor %}
-                                    </ul>
-                                </li>
-                            </ul>
-                        </div>
+    <div class="block">
+        <div class="container container--max--lg">
+            <div class="row">
+                <div class="col-12 col-lg-3 d-flex">
+                    <div class="account-nav flex-grow-1">
+                        <h4 class="account-nav__title">Личный кабинет</h4>
+                        <ul class="account-nav__list">
+                            <li class="account-nav__item ">
+                                <a href="{% url 'account_show' %}">Профиль</a>
+                            </li>
+                            <li class="account-nav__item">
+                                <a href="{% url 'show_orders' %}">История заказов</a>
+                            </li>
+                            <li class="account-nav__divider" role="presentation"></li>
+                            <li class="account-nav__item ">
+                                <a href="{% url 'account_logout' %}">Выйти</a>
+                            </li>
+                        </ul>
                     </div>
                 </div>
-
-
-
-                <div class="block-split__item block-split__item-content col-auto">
-                    <div class="block">
-                        <div class="categories-list categories-list--layout--columns-3-sidebar">
-
-
-                            <!-- Правая часть -->
-                            
-                            
-
-
-                            <div class="block">
-                                <div class="container container--max--xl">
-                                    <div class="wishlist">
-                                        <table class="wishlist__table">
-                                            <thead class="wishlist__head">
-                                                <tr class="wishlist__row wishlist__row--head">
-                                                    <th class="wishlist__column wishlist__column--head wishlist__column--image">
-                                                        {% if user.is_authenticated %}
-                                                        <a href="{% url 'show_orders' %} " class="breadcrumb__item-link">История</a></th>
-                                                        {% endif %}
-                                                    <th class="wishlist__column wishlist__column--head wishlist__column--product"></th>
-                                                    <th class="wishlist__column wishlist__column--head wishlist__column--stock"></th>
-                                                    <th class="wishlist__column wishlist__column--head wishlist__column--price"></th>
-                                                    <th class="wishlist__column wishlist__column--head wishlist__column--price"></th>
-                                                    <th class="wishlist__column wishlist__column--head wishlist__column--price"></th>
-                                                    <th class="wishlist__column wishlist__column--head wishlist__column--remove"></th>
-                                                </tr>
-                                                <tr class="wishlist__row wishlist__row--head">
-                                                    <th class="wishlist__column wishlist__column--head wishlist__column--image">Изображение</th>
-                                                    <th class="wishlist__column wishlist__column--head wishlist__column--product">Товар</th>
-                                                    <th class="wishlist__column wishlist__column--head wishlist__column--stock">Остаток</th>
-                                                    <th class="wishlist__column wishlist__column--head wishlist__column--price">Количество</th>
-                                                    <th class="wishlist__column wishlist__column--head wishlist__column--price">Цена</th>
-                                                    <th class="wishlist__column wishlist__column--head wishlist__column--price">Сумма</th>
-                                                    <th class="wishlist__column wishlist__column--head wishlist__column--remove"></th>
-                                                </tr>
-                                            </thead>
-                                            <tbody class="wishlist__body">
-                                                {% for item in order.get_items %}
-                                                <tr class="wishlist__row wishlist__row--body">
-                                                    <td class="wishlist__column wishlist__column--body wishlist__column--image">
-                                                        <div class="image image--type--product">
-                                                            <a href="{% url 'show_item' slug=item.good.slug %}" class="image__body">
-                                                                {% if item.get_main_picture %}
-                                                                <img class="image__tag" src="{{ item.get_main_picture.image.url }}" alt="">
-                                                                {% else %}
-                                                                <img class="image__tag" src="{% static 'images/products/product-1-160x160.jpg' %}" alt="">
-                                                                {% endif %}
-
-                                                            </a>
-                                                        </div>
-                                                    </td>
-                                                    <td class="wishlist__column wishlist__column--body wishlist__column--product">
-                                                        <div class="wishlist__product-name">
-                                                            <div>
-                                                                <div class="product-card__badges">
-                                                                   {% if item.good.is_sale %}                                                                 
-                                                                   <div class="tag-badge tag-badge--sale">sale</div>
-                                                                   {% endif %}
-                                                                   {% if item.good.is_new %}
-                                                                   <div class="tag-badge tag-badge--new">new</div>
-                                                                   {% endif %}
-                                                                   {% if item.good.is_hot %}
-                                                                   <div class="tag-badge tag-badge--hot">hot</div>
-                                                                   {% endif %}
-                                                               </div>
-                                                               <a href="{% url 'show_item' slug=item.good.slug %}">{{ item.good.name }}</a>
-                                                           </div>
-                                                       </div>
-                                                       <div class="wishlist__product-rating">
-                                                        <div class="wishlist__product-rating-stars">
-                                                            <div class="rating">
-                                                                <div class="rating__body">
-                                                                    {% if item.good.get_rating == 0 %}
-                                                                    <div class="rating__star"></div>
-                                                                    <div class="rating__star"></div>
-                                                                    <div class="rating__star"></div>
-                                                                    <div class="rating__star"></div>
-                                                                    <div class="rating__star"></div>
-                                                                    {% elif item.good.get_rating == 1 %}
-                                                                    <div class="rating__star rating__star--active"></div>
-                                                                    <div class="rating__star"></div>
-                                                                    <div class="rating__star"></div>
-                                                                    <div class="rating__star"></div>
-                                                                    <div class="rating__star"></div>
-                                                                    {% elif item.good.get_rating == 2 %}
-                                                                    <div class="rating__star rating__star--active"></div>
-                                                                    <div class="rating__star rating__star--active"></div>
-                                                                    <div class="rating__star"></div>
-                                                                    <div class="rating__star"></div>
-                                                                    <div class="rating__star"></div>
-                                                                    {% elif item.good.get_rating == 3 %}
-                                                                    <div class="rating__star rating__star--active"></div>
-                                                                    <div class="rating__star rating__star--active"></div>
-                                                                    <div class="rating__star rating__star--active"></div>
-                                                                    <div class="rating__star"></div>
-                                                                    <div class="rating__star"></div>
-                                                                    {% elif item.good.get_rating == 4 %}
-                                                                    <div class="rating__star rating__star--active"></div>
-                                                                    <div class="rating__star rating__star--active"></div>
-                                                                    <div class="rating__star rating__star--active"></div>
-                                                                    <div class="rating__star rating__star--active"></div>
-                                                                    <div class="rating__star"></div>
-                                                                    {% elif item.good.get_rating == 5 %}
-                                                                    <div class="rating__star rating__star--active"></div>
-                                                                    <div class="rating__star rating__star--active"></div>
-                                                                    <div class="rating__star rating__star--active"></div>
-                                                                    <div class="rating__star rating__star--active"></div>
-                                                                    <div class="rating__star rating__star--active"></div>
-                                                                    {% endif %}
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                        <div class="wishlist__product-rating-title">{{ item.good.get_reviews_count }} отзывов</div>
-                                                    </div>
-                                                </td>
-                                                <td class="wishlist__column wishlist__column--body wishlist__column--stock">
-                                                    <div class="status-badge status-badge--style--success status-badge--has-text">
-                                                        <div class="status-badge__body">
-                                                            <div class="status-badge__text">{{ item.good.quant }}</div>
-                                                        </div>
-                                                    </div>
-                                                </td>
-                                                <td class="wishlist__column wishlist__column--body wishlist__column--price">
-                                                    {{ item.quant }}
-                                                </td>
-                                                <td class="wishlist__column wishlist__column--body wishlist__column--price">
-                                                    {{ item.price }}
-                                                </td>
-                                                <td class="wishlist__column wishlist__column--body wishlist__column--price">
-                                                    {{ item.total }}
-                                                </td>                                                    
-                                                <td class="wishlist__column wishlist__column--body wishlist__column--remove">
-                                                    <!-- <form method="post" action="{% url 'del_from_order' id=item.id %}">
-                                                        {% csrf_token %}
-                                                        <button type="submit" class="wishlist__remove btn btn-sm btn-muted btn-icon">
-                                                            <svg width="12" height="12">
-                                                                <path d="M10.8,10.8L10.8,10.8c-0.4,0.4-1,0.4-1.4,0L6,7.4l-3.4,3.4c-0.4,0.4-1,0.4-1.4,0l0,0c-0.4-0.4-0.4-1,0-1.4L4.6,6L1.2,2.6
-                                                                c-0.4-0.4-0.4-1,0-1.4l0,0c0.4-0.4,1-0.4,1.4,0L6,4.6l3.4-3.4c0.4-0.4,1-0.4,1.4,0l0,0c0.4,0.4,0.4,1,0,1.4L7.4,6l3.4,3.4
-                                                                C11.2,9.8,11.2,10.4,10.8,10.8z" />
-                                                            </svg>
-                                                        </button>
-                                                    </form> -->
-                                                </td>
-                                            </tr>
-                                            {% endfor %}
-                                        </tbody>
-                                        <thead class="wishlist__head">
-                                                <tr class="wishlist__row wishlist__row--head">
-                                                    <th class="wishlist__column wishlist__column--head wishlist__column--image"></th>
-                                                    <th class="wishlist__column wishlist__column--head wishlist__column--product"></th>
-                                                    <th class="wishlist__column wishlist__column--head wishlist__column--stock"></th>
-                                                    <th class="wishlist__column wishlist__column--head wishlist__column--price"></th>
-                                                    <th class="wishlist__column wishlist__column--head wishlist__column--price">Итого:</th>
-                                                    <th class="wishlist__column wishlist__column--head wishlist__column--price">{{ order.total }}</th>
-                                                    <th class="wishlist__column wishlist__column--head wishlist__column--remove"></th>
-                                                </tr>
-
-                                                <tr class="wishlist__row wishlist__row--head">
-                                                    <th class="wishlist__column wishlist__column--head wishlist__column--image"></th>
-                                                    <th class="wishlist__column wishlist__column--head wishlist__column--product"></th>
-                                                    <th class="wishlist__column wishlist__column--head wishlist__column--stock"></th>
-                                                    <th class="wishlist__column wishlist__column--head wishlist__column--price"></th>
-                                                    <th class="wishlist__column wishlist__column--head wishlist__column--price"></th>
-                                                    <th class="wishlist__column wishlist__column--head wishlist__column--price">
-                                                        {% if order.payment_status == 'NP' %}
-                                                        <form method="post" action="{% url 'pay_for_order' id=order.id %}">
-                                                        {% csrf_token %}
-                                                        <button type="submit" class="btn btn-sm btn-primary">Оплатить</button>
-                                                        </form>
-                                                        {% endif %}
-                                                    </th>
-                                                    <th class="wishlist__column wishlist__column--head wishlist__column--remove"></th>
-                                                </tr>
-                                            </thead>
-                                    </table>
-                                </div>
+                <div class="col-12 col-lg-9 mt-4 mt-lg-0">
+                    <div class="card">
+                        <div class="order-header">
+                            <div class="order-header__actions">
+                                <a href="{% url 'show_orders' %}" class="btn btn-xs btn-secondary">Все заказы</a>
+                            </div>
+                            <h5 class="order-header__title">Заказ #{{ order.id }}</h5>
+                            <div class="order-header__subtitle">
+                                Размещен <mark>{{ order.date }}</mark>
                             </div>
                         </div>
-                        <!-- Конец правой части -->
-
+                        <div class="card-divider"></div>
+                        <div class="card-table">
+                            <div class="table-responsive-sm">
+                                <table>
+                                    <thead>
+                                        <tr>
+                                            <th>Товар</th>
+                                            <th>Сумма</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody class="card-table__body card-table__body--merge-rows">
+                                        {% for item in order.get_items %}
+                                        <tr>
+                                            <td>{{ item.good.name }} × {{ item.good.quant }}</td>
+                                            <td>{{ item.total }}</td>
+                                        </tr>
+                                        {% endfor %}
+                                    </tbody>
+                                    <tfoot>
+                                        <tr>
+                                            <th>Итого</th>
+                                            <td>{{ order.total }}</td>
+                                        </tr>
+                                    </tfoot>
+                                </table>
+                            </div>
+                        </div>
                     </div>
-                </div>
-            </div>
+                    <div class="row mt-3 no-gutters mx-n2">
+                        <div class="col-sm-6 col-12 px-2">
+                           <div class="card address-card address-card--featured">
+                            <div class="address-card__badge tag-badge tag-badge--theme">
+                                Информация о заказе
+                            </div>
+                            <div class="address-card__body">
+                                <div class="address-card__name">{{ order.first_name }} {{ order.last_name }}</div>
+                                <div class="address-card__row">
+                                    <div class="address-card__row-title">Тип доставки</div>
+                                    {% if order.delivery_type == 'DL' %}
+                                    <div class="address-card__row-content">Доставка до адреса</div>
+                                    {% elif order.delivery_type == 'SL' %}
+                                    <div class="address-card__row-content">Самовывоз</div>
+                                    {% endif %}
+                                </div>
+                                {% if order.delivery_type == 'DL' %}
+                                <div class="address-card__row">
+                                    <div class="address-card__row-title">Адрес доставки</div>
+                                    {% if  order.zipcode %}{{ order.zipcode }}{% endif %}
+                                    {% if  order.locality %}, {{ order.locality }} г.{% endif %}
+                                    {% if  order.street %}, {{ order.street }} ул.{% endif %}
+                                    {% if  order.house %}, д. {{ order.house }}{% endif %}
+                                    {% if  order.apartments %}, кв/оф {{ order.apartments }}{% endif %}
+                                    {% if  order.porch %}, подъезд {{ order.porch }}{% endif %}
+                                    {% if  order.floor %}, этаж {{ order.floor }}{% endif %}
+                                </div>
+                                {% else %}
+                                <div class="address-card__row">
+                                    <div class="address-card__row-title">Самовывоз осуществляется по адресу</div>
+                                    г. Белгород, ул. Костюкова, д. 1 <br>
+                                    Время работы: <br>
+                                    Понедельник-Суббота 09:00 - 18:00
+                                </div>    
+                                {% endif %}
+                                <div class="address-card__row">
+                                    <div class="address-card__row-title">Контактный телефон</div>
+                                    <div class="address-card__row-content">{{ order.phone }}</div>
+                                </div>
+                                <div class="address-card__row">
+                                    <div class="address-card__row-title">Email</div>
+                                    <div class="address-card__row-content">{{ order.email }}</div>
+                                </div>
+                                
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-6 col-12 px-2">
+                        <div class="card address-card address-card--featured">
+                            <div class="address-card__badge tag-badge tag-badge--theme">
+                                Информация об оплате
+                            </div>
+                            <div class="address-card__body">
+                                <div class="address-card__row">
+                                    <div class="address-card__row-title">Форма оплаты</div>
+                                    {% if order.payment_form == 'ON' %}
+                                    <div class="address-card__row-content">Онлайн</div>
+                                    {% elif order.payment_form == 'BN' %}
+                                    <div class="address-card__row-content">Безналичная (Счет для Юр. лица)</div>
+                                    {% elif order.payment_form == 'NL' %}
+                                    <div class="address-card__row-content">Наличными при получении</div>
+                                    {% endif %}
+
+                                </div>
+                                <div class="address-card__row">
+                                    <div class="address-card__row-title">Статус оплаты</div>
+                                    {% if order.payment_status == 'NP' %}
+                                    <div class="address-card__row-content">Ожидает оплаты</div>
+                                    {% elif order.payment_status == 'PP' %}
+                                    <div class="address-card__row-content">Оплачен частично</div>
+                                    {% elif order.payment_status == 'AP' %}
+                                    <div class="address-card__row-content">Оплачен полностью</div>
+                                    {% endif %}
+                                </div>
+                                {% if order.company_name or order.company_inn %}
+                                <div class="address-card__row">
+                                    <div class="address-card__row-title">Реквизиты Юр. лица</div>
+                                    {% if order.company_name %}
+                                    <div class="address-card__row-content">Наименование компании - {{  order.company_name }}</div>
+                                    {% endif %}
+                                    {% if order.company_inn %}
+                                    <div class="address-card__row-content">ИНН - {{  order.company_inn }}</div>
+                                    {% endif %}
+                                </div>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                </div>  
+            </div>                  
         </div>
     </div>
 </div>
-
-
-
 <div class="block-space block-space--layout--before-footer"></div>
+
 {% endblock %}
 

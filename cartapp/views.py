@@ -10,6 +10,7 @@ from .core import add_to_cart
 from .core import insert_to_cart
 from .core import del_from_cart
 from .core import clear_cart
+from .core import decrease_item_from_cart
 
 from shagr.core import get_context
 
@@ -60,3 +61,19 @@ def clear_current_cart(request):
 	clear_cart(cart)		
 
 	return redirect(request.META['HTTP_REFERER'])
+
+
+def decrease_from_cart(request, slug):
+	
+	good = find_good_by_slug(slug=slug)
+	if good:
+		cart = get_cart(request)
+		decrease_item_from_cart(cart, good)		
+
+	return redirect(request.META['HTTP_REFERER'])
+
+def cart_checkout(request):
+
+	context = get_context(request)
+
+	return render(request, 'cartapp/checkout.html', context)

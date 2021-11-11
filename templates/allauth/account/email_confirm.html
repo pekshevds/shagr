@@ -2,53 +2,50 @@
 
 {% load static %}
 
-{% block meta_description %}
-{{ block.super }}
-{% endblock %}
-
-{% block title %}
-{{ block.super }}
-{% endblock %}
-
-
-{% block header %}
-{{ block.super }}
-{% endblock %}
 
 {% load i18n %}
 
-{% block social %}
-{% endblock %}
 
+{% block body %}
 
-{% block content %}
-
-<div class="main-container no-sidebar">
+<div class="block-header block-header--has-breadcrumb block-header--has-title">
 	<div class="container">
-		<div class="form-authentication text-center">
-				<div class="form-register">
-					<h1>Подтвердите e-mail адрес.</h1>
+		<div class="block-header__body">
+			<nav class="breadcrumb block-header__breadcrumb" aria-label="breadcrumb">
+				<ol class="breadcrumb__list">
+					<li class="breadcrumb__spaceship-safe-area" role="presentation"></li>
+					<li class="breadcrumb__item breadcrumb__item--parent breadcrumb__item--first">
+						<a href="{% url 'show_index' %}" class="breadcrumb__item-link">Главная</a>
+					</li>
+					<li class="breadcrumb__item breadcrumb__item--current breadcrumb__item--last" aria-current="page">
+						<span class="breadcrumb__item-link">Подтвердите Email</span>
+					</li>
+					<li class="breadcrumb__title-safe-area" role="presentation"></li>
+				</ol>
+			</nav>
 
-					{% if confirmation %}
-
-					<p>Пожалуйста подтвердите, что <a href="mailto:{{ confirmation.email_address.email }}">{{ confirmation.email_address.email }}</a> это адрес элетронной почты пользователя {{ confirmation.email_address.user }}.</p>
-
-					<form method="post" action="{% url 'account_confirm_email' confirmation.key %}">
-						{% csrf_token %}
-						<button type="submit">Подтвердить</button>
-					</form>
-
-					{% else %}
-
-					<p>Срок действия ссылки для подтверждения элетронной почты истек. Пожалуйста <a href="{% url 'account_signup' %}">отправьте новый запрос на подтверждения e-mail</a>.</p>
-
-					{% endif %}
-				</div>
 		</div>
-		<div class="form-authentication-footer">
+		<div class="row justify-content-center">
+			<div class="col-8">
+				<h1 class="block-header__title" align="center">
+					Подтвердите свой E-mail адрес
+				</h1>
+				{% if confirmation %}
+					<p align="center">Пожалуйста подтвердите, что <a href="mailto:{{ confirmation.email_address.email }}">{{ confirmation.email_address.email }}</a> это адрес элетронной почты пользователя {{ confirmation.email_address.user }}.</p>
+
+					<form class="row justify-content-center" method="post" action="{% url 'account_confirm_email' confirmation.key %}">
+						{% csrf_token %}
+						<button class="btn btn-primary btn-lg" type="submit">Подтвердить</button>
+					</form>
+				{% else %}
+					<p align="">Срок действия ссылки для подтверждения элетронной почты истек. Пожалуйста <a href="{% url 'account_signup' %}">отправьте новый запрос на подтверждения e-mail</a>.</p>
+				{% endif %}
+			</div>
 		</div>
 	</div>
-</div>
+
+	<div class="block-space block-space--layout--before-footer"></div>
+</div>	
 
 {% endblock %}
 

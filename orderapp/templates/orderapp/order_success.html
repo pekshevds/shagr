@@ -1,0 +1,187 @@
+{% extends 'baseapp/index.html' %}
+
+
+{% load static %}
+
+{% block body %}
+
+<div class="block order-success">
+    <div class="container">
+        <div class="order-success__body">
+            <div class="order-success__header">
+                <div class="order-success__icon">
+                    <svg width="100" height="100">
+                        <path d="M50,100C22.4,100,0,77.6,0,50S22.4,0,50,0s50,22.4,50,50S77.6,100,50,100z M50,2C23.5,2,2,23.5,2,50
+                        s21.5,48,48,48s48-21.5,48-48S76.5,2,50,2z M44.2,71L22.3,49.1l1.4-1.4l21.2,21.2l34.4-34.4l1.4,1.4L45.6,71
+                        C45.2,71.4,44.6,71.4,44.2,71z" />
+                    </svg>
+                </div>
+                <h1 class="order-success__title">Спасибо!</h1>
+                <div class="order-success__subtitle">Ваш заказ успешно размещен</div>
+                <div class="order-success__actions">
+                    <a href="/" class="btn btn-sm btn-secondary">На главную</a>
+                </div>
+            </div>
+            <div class="card order-success__meta">
+                <ul class="order-success__meta-list">
+                    <li class="order-success__meta-item">
+                        <span class="order-success__meta-title">Номер заказа:</span>
+                        <span class="order-success__meta-value">#{{ order.id }}</span>
+                    </li>
+                    <li class="order-success__meta-item">
+                        <span class="order-success__meta-title">Дата создания:</span>
+                        <span class="order-success__meta-value">{{ order.date }}</span>
+                    </li>
+                    <li class="order-success__meta-item">
+                        <span class="order-success__meta-title">Итого:</span>
+                        <span class="order-success__meta-value">{{ order.total }}</span>
+                    </li>
+                    <li class="order-success__meta-item">
+                        <span class="order-success__meta-title">Форма оплаты:</span>
+                        {% if order.payment_form == 'ON' %}
+                        <div class="order-success__meta-value">Онлайн</div>
+                        {% elif order.payment_form == 'BN' %}
+                        <div class="order-success__meta-value">Безналичная (Счет для Юр. лица)</div>
+                        {% elif order.payment_form == 'NL' %}
+                        <div class="order-success__meta-value">Наличными при получении</div>
+                        {% endif %}
+                    </li>
+                </ul>
+            </div>
+            <div class="card">
+                <div class="order-list">
+                    <table>
+                        <thead class="order-list__header">
+                            <tr>
+                                <th class="order-list__column-label" colspan="2">Товар</th>
+                                <th class="order-list__column-quantity">Количество</th>
+                                <th class="order-list__column-total">Сумма</th>
+                            </tr>
+                        </thead>
+                        <tbody class="order-list__products">
+                            {% for item in order.get_items %}
+                            <tr>
+                                <td class="order-list__column-image">
+                                    <div class="image image--type--product">
+                                        {% if item.good.get_main_picture %}
+                                        <a href="{% url 'show_item' slug=item.good.slug %}" class="image__body">
+                                            <img class="image__tag" src="{{ item.good.get_main_picture.image.url }}" width="40" alt="">
+                                        </a>
+                                        {% else %}
+                                         <a href="{% url 'show_item' slug=item.good.slug %}" class="image__body">
+                                            <img class="image__tag" src="{% static 'images/products/product-1-40x40.jpg' %}" alt="">
+                                        </a>
+                                        {% endif %}
+                                    </div>
+                                </td>
+                                <td class="order-list__column-product">
+                                    <a href="{% url 'show_item' slug=item.good.slug %}">{{ item.good.name }}</a>
+
+                                </td>
+                                <td class="order-list__column-quantity" data-title="Количество:">
+                                    {{ item.quant }}
+                                </td>
+                                <td class="order-list__column-total">
+                                    {{ item.total }}
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                        <tfoot class="order-list__footer">
+                            <tr>
+                                <th class="order-list__column-label" colspan="3">Итого</th>
+                                <td class="order-list__column-total">{{ order.total }}</td>
+                            </tr>
+                        </tfoot>
+                    </table>
+                </div>
+            </div>
+            <div class="order-success__addresses">
+                <div class="order-success__address card address-card">
+                    <div class="address-card__badge tag-badge tag-badge--theme">
+                        Информация о доставке
+                    </div>
+                    <div class="address-card__body">
+                        <div class="address-card__name">{{ order.first_name }} {{ order.last_name }}</div>
+                        <div class="address-card__row">
+                            <div class="address-card__row-title">Тип доставки</div>
+                            {% if order.delivery_type == 'DL' %}
+                            <div class="address-card__row-content">Доставка до адреса</div>
+                            {% elif order.delivery_type == 'SL' %}
+                            <div class="address-card__row-content">Самовывоз</div>
+                            {% endif %}
+                        </div>
+                        {% if order.delivery_type == 'DL' %}
+                        <div class="address-card__row">
+                            <div class="address-card__row-title">Адрес доставки</div>
+                            {% if  order.zipcode %}{{ order.zipcode }}{% endif %}
+                            {% if  order.locality %}, {{ order.locality }} г.{% endif %}
+                            {% if  order.street %}, {{ order.street }} ул.{% endif %}
+                            {% if  order.house %}, д. {{ order.house }}{% endif %}
+                            {% if  order.apartments %}, кв/оф {{ order.apartments }}{% endif %}
+                            {% if  order.porch %}, подъезд {{ order.porch }}{% endif %}
+                            {% if  order.floor %}, этаж {{ order.floor }}{% endif %}
+                        </div>
+                        {% else %}
+                        <div class="address-card__row">
+                            <div class="address-card__row-title">Самовывоз осуществляется по адресу</div>
+                            г. Белгород, ул. Костюкова, д. 1 <br>
+                            Время работы: <br>
+                            Понедельник-Суббота 09:00 - 18:00
+                        </div>
+                        {% endif %}
+                        <div class="address-card__row">
+                            <div class="address-card__row-title">Контактный телефон</div>
+                            <div class="address-card__row-content">{{ order.phone }}</div>
+                        </div>
+                        <div class="address-card__row">
+                            <div class="address-card__row-title">Email</div>
+                            <div class="address-card__row-content">{{ order.email }}</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="order-success__address card address-card">
+                    <div class="address-card__badge tag-badge tag-badge--theme">
+                        Информация об оплате
+                    </div>
+                    <div class="address-card__body">
+                        <div class="address-card__row">
+                            <div class="address-card__row-title">Форма оплаты</div>
+                            {% if order.payment_form == 'ON' %}
+                            <div class="address-card__row-content">Онлайн</div>
+                            {% elif order.payment_form == 'BN' %}
+                            <div class="address-card__row-content">Безналичная (Счет для Юр. лица)</div>
+                            {% elif order.payment_form == 'NL' %}
+                            <div class="address-card__row-content">Наличными при получении</div>
+                            {% endif %}
+
+                        </div>
+                        <div class="address-card__row">
+                            <div class="address-card__row-title">Статус оплаты</div>
+                            {% if order.payment_status == 'NP' %}
+                            <div class="address-card__row-content">Ожидает оплаты</div>
+                            {% elif order.payment_status == 'PP' %}
+                            <div class="address-card__row-content">Оплачен частично</div>
+                            {% elif order.payment_status == 'AP' %}
+                            <div class="address-card__row-content">Оплачен полностью</div>
+                            {% endif %}
+                        </div>
+                        {% if order.company_name or order.company_inn %}
+                        <div class="address-card__row">
+                            <div class="address-card__row-title">Реквизиты Юр. лица</div>
+                            {% if order.company_name %}
+                            <div class="address-card__row-content">Наименование компании - {{  order.company_name }}</div>
+                            {% endif %}
+                            {% if order.company_inn %}
+                            <div class="address-card__row-content">ИНН - {{  order.company_inn }}</div>
+                            {% endif %}
+                        </div>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="block-space block-space--layout--before-footer"></div>
+{% endblock %}

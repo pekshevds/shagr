@@ -1,0 +1,297 @@
+{% extends 'baseapp/index.html' %}
+
+
+{% load static %}
+
+{% block body %}
+
+<div class="block-header block-header--has-breadcrumb block-header--has-title">
+	<div class="container">
+		<div class="block-header__body">
+			<nav class="breadcrumb block-header__breadcrumb" aria-label="breadcrumb">
+				<ol class="breadcrumb__list">
+					<li class="breadcrumb__spaceship-safe-area" role="presentation"></li>
+					<li class="breadcrumb__item breadcrumb__item--parent breadcrumb__item--first">
+						<a href="{% url 'show_index' %}" class="breadcrumb__item-link">Главная</a>
+					</li>
+					<li class="breadcrumb__item breadcrumb__item--current breadcrumb__item--last" aria-current="page">
+						<span class="breadcrumb__item-link">Оформление заказа</span>
+					</li>
+					<li class="breadcrumb__title-safe-area" role="presentation"></li>
+				</ol>
+			</nav>
+			<h1 class="block-header__title">Оформление заказа</h1>
+		</div>
+	</div>
+</div>
+<div class="checkout block">
+	<div class="container container--max--xl">
+		<form class="row" id="order-form" method="POST" action="{% url 'send_cart_to_order' %}">
+			{% csrf_token %}
+			<div class="col-12 col-lg-6 col-xl-7">
+				<div class="card mb-lg-0">
+					<div class="card-body card-body--padding--2">
+						<h3 class="card-title">Информация о доставке</h3>
+						<div class="form-row">
+							<div class="form-group col-md-6">
+								<label for="checkout-first-name">* Имя</label>
+								<input type="text" class="form-control" name="first_name" id="checkout-first-name" value="{{ buyer.first_name }}" required>
+							</div>
+							<div class="form-group col-md-6">
+								<label for="checkout-last-name">* Фамилия</label>
+								<input type="text" class="form-control" name="last_name" id="checkout-last-name" value="{{ buyer.last_name }}" required>
+							</div>
+						</div>
+						<div class="form-row">
+							<div class="form-group col-md-6">
+								<label for="checkout-email">* Email адрес</label>
+								<input type="email" class="form-control" name="email" id="checkout-email" value="{{ user.email }}" required>
+							</div>
+							<div class="form-group col-md-6">
+								<label for="checkout-phone">* Контактный телефон</label>
+								<input type="text" class="form-control" name="phone" id="checkout-phone" value="{{ buyer.phone }}" required>
+							</div>
+						</div>
+						<div class="form-row">
+							<div class="form-group col-md-6">
+								<label for="checkout-company-name">Название компании</span></label>
+								<input type="text" class="form-control" name="company_name" id="checkout-company-name">
+							</div>
+							<div class="form-group col-md-6">
+								<label for="checkout-company-name">ИНН компании</label>
+								<input type="text" class="form-control" name="company_inn" id="checkout-company-name">
+							</div>
+						</div>
+						<div class="checkout__payment-methods payment-methods">
+							<ul class="payment-methods__list">
+								<li class="payment-methods__item payment-methods__item--active" style="background-color: white;">
+									<label class="payment-methods__item-header">
+										<span class="payment-methods__item-radio input-radio">
+											<span class="input-radio__body">
+												<input class="input-radio__input" name="checkout_delivery_type" value="DL" type="radio" checked>
+												<span class="input-radio__circle"></span>
+											</span>
+										</span>
+										<span class="payment-methods__item-title">Доставка до адреса</span>
+									</label>
+									<div class="payment-methods__item-container">
+										<div class="payment-methods__item-details text-muted">
+											<div class="form-row">
+												<div class="form-group col-md-6">
+													<label for="checkout-postcode">* Индекс</label>
+													<input type="text" class="form-control" name="zipcode" id="checkout-postcode" value="{{ buyer.zipcode }}" required="true">
+												</div>
+												<div class="form-group col-md-6">
+													<label for="checkout-city">* Населенный пункт</label>
+													<input type="text" class="form-control" name="locality" id="checkout-city" value="{{ buyer.locality }}" required="true">
+												</div>
+											</div>
+											<div class="form-group">
+												<label for="checkout-street-address">* Улица</label>
+												<input type="text" class="form-control" name="street" id="checkout-street-address" value="{{ buyer.street }}" required="true">
+											</div>
+
+											<div class="form-row">
+												<div class="form-group col-md-6">
+													<label for="checkout-address">* Дом</label>
+													<input type="text" class="form-control" name="house" id="checkout-address" value="{{ buyer.house }}" required="true">
+												</div>
+												<div class="form-group col-md-6">
+													<label for="signup-apartments">Квартира/Офис</label>
+													<input id="signup-apartments" type="text" name="apartments" class="form-control" value="{{ buyer.apartments }}">
+												</div>
+											</div>
+											<div class="form-row">
+												<div class="form-group col-md-6">
+													<label for="signup-porch">Подъезд</label>
+													<input id="signup-porch" type="text" name="porch" class="form-control" value="{{ buyer.porch }}">
+												</div>
+												<div class="form-group col-md-6">
+													<label for="signup-floor">Этаж</label>
+													<input id="signup-floor" type="text" name="floor" class="form-control" value="{{ buyer.floor }}">
+												</div>
+											</div>	
+										</div>
+									</div>
+								</li>
+								<li class="payment-methods__item" style="background-color: white;">
+									<label class="payment-methods__item-header">
+										<span class="payment-methods__item-radio input-radio">
+											<span class="input-radio__body">
+												<input class="input-radio__input" name="checkout_delivery_type" type="radio" value="SL">
+												<span class="input-radio__circle"></span>
+											</span>
+										</span>
+										<span class="payment-methods__item-title">Самовывоз</span>
+									</label>
+									<div class="payment-methods__item-container">
+										<div class="payment-methods__item-details text-muted">
+											Самовывоз осуществляется по адресу:<br>
+											г. Белгород, ул. Костюкова, д. 1 <br>
+											Время работы: <br>
+											Понедельник-Суббота 09:00 - 18:00
+										</div>
+									</div>
+								</li>
+							</ul>
+						</div>
+						
+						<div class="card-divider"></div>
+						<div class="form-group">
+							<div class="form-check">
+								<span class="form-check-label">* Обязательные для заполнения поля</span>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="col-12 col-lg-6 col-xl-5 mt-4 mt-lg-0">
+				<div class="card mb-0">
+					
+					<div class="card-body card-body--padding--2">
+						<h3 class="card-title">Ваш заказ</h3>
+						<table class="checkout__totals">
+							<thead class="checkout__totals-header">
+								<tr>
+									<th >Товар</th>
+									<th >Сумма</th>
+								</tr>
+							</thead>
+							<tbody class="checkout__totals-products">
+								{% for item in cart.get_items %}
+								<tr>
+									<td>{{ item.good.name }} × {{ item.good.quant }}</td>
+									<td>{{ item.get_amount }}</td>
+								</tr>
+								{% endfor %}
+							</tbody>
+							<tfoot class="checkout__totals-footer">
+								<tr>
+									<th>Итого</th>
+									<td>{{ cart.get_amount }}</td>
+								</tr>
+							</tfoot>
+						</table>
+						<h3 class="card-title">Форма оплаты</h3>
+						<div class="checkout__payment-methods payment-methods">
+							<ul class="payment-methods__list">
+
+								<li class="payment-methods__item payment-methods__item--active">
+									<label class="payment-methods__item-header">
+										<span class="payment-methods__item-radio input-radio">
+											<span class="input-radio__body">
+												<input class="input-radio__input" name="checkout_payment_method" type="radio" value="ON" checked>
+												<span class="input-radio__circle"></span>
+											</span>
+										</span>
+										<span class="payment-methods__item-title">Онлайн (Физ. лицо)</span>
+									</label>
+								</li>
+								<li class="payment-methods__item">
+									<label class="payment-methods__item-header">
+										<span class="payment-methods__item-radio input-radio">
+											<span class="input-radio__body">
+												<input class="input-radio__input" name="checkout_payment_method" type="radio" value="BN">
+												<span class="input-radio__circle"></span>
+											</span>
+										</span>
+										<span class="payment-methods__item-title">Безналичная (Счет для Юр. лица)</span>
+									</label>
+								</li>
+								<li class="payment-methods__item">
+									<label class="payment-methods__item-header">
+										<span class="payment-methods__item-radio input-radio">
+											<span class="input-radio__body">
+												<input class="input-radio__input" name="checkout_payment_method" type="radio" value="NL">
+												<span class="input-radio__circle"></span>
+											</span>
+										</span>
+										<span class="payment-methods__item-title">Наличными при получении</span>
+									</label>
+								</li>
+							</ul>
+						</div>
+						<div class="checkout__agree form-group">
+							<div class="form-check">
+								<span class="input-check form-check-input">
+									<span class="input-check__body">
+										<input class="input-check__input" type="checkbox" id="checkout-terms" name="checkout_terms">
+										<span class="input-check__box"></span>
+										<span class="input-check__icon"><svg width="9px" height="7px">
+											<path d="M9,1.395L3.46,7L0,3.5L1.383,2.095L3.46,4.2L7.617,0L9,1.395Z" />
+										</svg>
+									</span>
+								</span>
+							</span>
+							<label class="form-check-label" for="checkout-terms">
+								Я подтверждаю, что ознакомился и согласен с <a target="_blank" href="#">политикой конфиденциальности сбора информации.</a>
+							</label>
+						</div>
+					</div>
+					<button disabled id="order-form-button" form="order-form" type="submit" class="btn btn-primary btn-xl btn-block">Разместить заказ</button>
+				</div>
+			</div>
+		</div>
+	</form>
+</div>
+</div>
+<div class="block-space block-space--layout--before-footer"></div>
+
+{% endblock %}
+
+{% block custom_script %}
+<script>
+
+	const checkbox = document.getElementById('checkout-terms');
+	var delType = document.getElementsByName('checkout_delivery_type');
+	var btn = document.getElementById('order-form-button');
+	btn.disabled = true;
+
+	checkbox.addEventListener('change', ()=>{
+		if (checkbox.checked) {
+			btn.disabled = false;
+		} else {
+			btn.disabled = true;
+		}
+		
+	});
+
+	var postcode = document.getElementById('checkout-postcode');
+	var city = document.getElementById('checkout-city');
+	var street = document.getElementById('checkout-street-address');
+	var house = document.getElementById('checkout-address');
+
+	for (var i = 0, length = delType.length; i < length; i++) {
+		delType[i].addEventListener('change', ()=>{
+
+			delTypeValue = getDeliveryTypeValue();
+			if (delTypeValue == 'DL') {
+
+				postcode.required = true;
+				city.required = true;
+				street.required = true;
+				house.required = true;
+
+			} else if (delTypeValue == 'SL') {
+
+				postcode.required = false;
+				city.city = false;
+				street.street = false;
+				house.house = false;
+
+			}
+		})
+	}
+
+	function getDeliveryTypeValue() {
+		for (var i = 0, length = delType.length; i < length; i++) {
+			if (delType[i].checked) {
+				console.log(delType[i].value)
+				return delType[i].value;
+				break;
+			}
+		}
+	}
+
+</script>
+{% endblock %}

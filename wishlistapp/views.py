@@ -11,9 +11,9 @@ from shagr.core import get_context
 
 # Create your views here.
 def show_wishlist(request):
-	if request.user.is_authenticated:	
-		return render(request, 'wishlistapp/wishlist.html', get_context(request))
-	return redirect(request.META['HTTP_REFERER'])
+	# if request.user.is_authenticated:	
+	return render(request, 'wishlistapp/wishlist.html', get_context(request))
+	# return redirect(request.META['HTTP_REFERER'])
 
 
 def add_good_to_wishlist(request, slug):

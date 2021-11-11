@@ -13,20 +13,9 @@
                         <li class="breadcrumb__item breadcrumb__item--parent breadcrumb__item--first">
                             <a href="{% url 'show_index' %}" class="breadcrumb__item-link">Главная</a>
                         </li>
-                        <li class="breadcrumb__item breadcrumb__item--parent breadcrumb__item--first">
-                            <a href="{% url 'show_catalog' %}" class="breadcrumb__item-link">Каталог</a>
-                        </li>
-                        {% if parent %}
-                        {% if parent.parent %}
-                        <li class="breadcrumb__item breadcrumb__item--parent">
-                            <a href="{% if parent.parent.slug %}{% url 'show_list' slug=parent.parent.slug %}{% endif %}" class="breadcrumb__item-link">{{ parent.parent }}</a>
-                        </li>
-                        {% endif %}
                         <li class="breadcrumb__item breadcrumb__item--current breadcrumb__item--last" aria-current="page">
-                            <span class="breadcrumb__item-link">{{ parent }}</span>
+                            <span class="breadcrumb__item-link">Избранное</span>
                         </li>
-                        {% endif %}
-
                         <li class="breadcrumb__title-safe-area" role="presentation"></li>
                     </ol>
                 </nav>
@@ -37,10 +26,11 @@
         </div>
     </div>
 
+    {% if wishlist.get_items %}
     <div class="block block-split block-split--has-sidebar">
         <div class="container">
-            <div class="block-split__row row no-gutters">
-                <div class="block-split__item block-split__item-sidebar col-auto">
+            <div class="block-split__row row no-gutters justify-content-center">
+                <!-- <div class="block-split__item block-split__item-sidebar col-auto">
                     <div class="card widget widget-categories-list">
                         <div class="widget-categories-list__body" data-collapse data-collapse-opened-class="widget-categories-list--open">
                             <ul class="widget-categories-list__root">
@@ -64,17 +54,12 @@
                             </ul>
                         </div>
                     </div>
-                </div>
-
+                </div> -->
 
 
                 <div class="block-split__item block-split__item-content col-auto">
                     <div class="block">
                         <div class="categories-list categories-list--layout--columns-3-sidebar">
-
-
-
-
 
                             <!-- Правая часть -->
                             <div class="block">
@@ -102,8 +87,8 @@
                                                     <td class="wishlist__column wishlist__column--body wishlist__column--image">
                                                         <div class="image image--type--product">
                                                             <a href="{% url 'show_item' slug=item.good.slug %}" class="image__body">
-                                                                {% if item.picture %}
-                                                                <img class="image__tag" src="{{ item.picture.image.url }}" alt="">
+                                                                {% if item.good.get_main_picture %}
+                                                                <img class="image__tag" src="{{ item.good.get_main_picture.image.url }}" alt="">
                                                                 {% else %}
                                                                 <img class="image__tag" src="{% static 'images/products/product-1-160x160.jpg' %}" alt="">
                                                                 {% endif %}
@@ -214,7 +199,6 @@
                                                     <th class="wishlist__column wishlist__column--head wishlist__column--stock"></th>
                                                     <th class="wishlist__column wishlist__column--head wishlist__column--price"></th>
                                                     <th class="wishlist__column wishlist__column--head wishlist__column--button"><div class="order-header__actions">
-                                        <a href="{% url 'clear_wishlist' %}" class="btn btn-xs btn-secondary">Очистить</a>
                                     </div></th>
                                                     <th class="wishlist__column wishlist__column--head wishlist__column--remove"></th>
                                                 </tr>
@@ -234,7 +218,22 @@
     </div>
 </div>
 
+{% else %}
 
+<div class="block-header">
+    <div class="container">
+        <div class="block-header__body">
+            <h4 align="center">
+                К сожалению в избранном пока нет товаров.
+            </h4>
+        </div>
+        <div align="center">
+            <a href="{% url 'show_catalog' %}"><button class="btn btn-primary btn-lg">В каталог</button></a>
+        </div>
+    </div>
+</div>
+
+{% endif %}
 
 <div class="block-space block-space--layout--before-footer"></div>
 {% endblock %}

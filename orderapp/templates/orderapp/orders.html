@@ -1,9 +1,10 @@
     {% extends 'baseapp/index.html' %}
 
-
     {% load static %}
 
     {% block body %}
+
+
     <div class="block-header block-header--has-breadcrumb block-header--has-title">
         <div class="container">
             <div class="block-header__body">
@@ -13,10 +14,9 @@
                         <li class="breadcrumb__item breadcrumb__item--parent breadcrumb__item--first">
                             <a href="{% url 'show_index' %}" class="breadcrumb__item-link">Главная</a>
                         </li>
-                        <li class="breadcrumb__item breadcrumb__item--parent breadcrumb__item--first">
-                            <a href="{% url 'show_orders' %}" class="breadcrumb__item-link">Мои заказы</a>
+                        <li class="breadcrumb__item breadcrumb__item--current breadcrumb__item--last" aria-current="page">
+                            <span class="breadcrumb__item-link">Мои заказы</span>
                         </li>
-
                         <li class="breadcrumb__title-safe-area" role="presentation"></li>
                     </ol>
                 </nav>
@@ -27,14 +27,29 @@
         </div>
     </div>
 
-
-    <div class="site__body">
-        <div class="block-space block-space--layout--after-header"></div>
-        <div class="block">
-            <div class="container container--max--xl">
-                <div class="row">
-                    <div class="col-12 col-lg-12 mt-2 mt-lg-0">
-                        <div class="card">
+    <div class="block">
+        <div class="container container--max--lg">
+            <div class="row">
+                <div class="col-12 col-lg-3 d-flex">
+                    <div class="account-nav flex-grow-1">
+                        <h4 class="account-nav__title">Личный кабинет</h4>
+                        <ul class="account-nav__list">
+                            <li class="account-nav__item ">
+                                <a href="{% url 'account_show' %}">Профиль</a>
+                            </li>
+                            <li class="account-nav__item  account-nav__item--active ">
+                                <a href="{% url 'show_orders' %}">История заказов</a>
+                            </li>
+                            <li class="account-nav__divider" role="presentation"></li>
+                            <li class="account-nav__item ">
+                                <a href="{% url 'account_logout' %}">Выйти</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                {% if orders %}
+                <div class="col-12 col-lg-9 mt-2 mt-lg-0">
+                    <div class="card">
                             <!-- <div class="card-header">
                                 <h5>Order History</h5>
                             </div> -->
@@ -52,108 +67,44 @@
                                         </thead>
                                         <tbody>
                                             {% for order in orders %}
-                                                <tr>
-                                                    <td><a href="{% url 'show_order' id=order.id %}">{{ order }}</a></td>                                                    
-                                                    <td>{{ order.display_current_payment_status }}</td>
-                                                    <td>{{ order.display_current_delivery_status }}</td>
-                                                    <td>{{ order.total }}</td>
-                                                </tr>
+                                            <tr>
+                                                <td><a href="{% url 'show_order' id=order.id %}">{{ order }}</a></td>                                                    
+                                                <td>{{ order.display_current_payment_status }}</td>
+                                                <td>{{ order.display_current_delivery_status }}</td>
+                                                <td>{{ order.total }}</td>
+                                            </tr>
                                             {% endfor %}
                                         </tbody>
                                     </table>
                                 </div>
                             </div>
                             <div class="card-divider"></div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-<div class="block-space block-space--layout--before-footer"></div>
-</div>
-
-    <!-- <div class="block">
-        <div class="container">
-            <div class="block-split__row row no-gutters">
-
-                <div class="block-split__item block-split__item-content col-auto">
-                    <div class="block">
-                        <div class="categories-list categories-list--layout--columns-3-sidebar">
-                            {% if orders %}
-                            <div class="block">
-                                <div class="container container--max--xl">
-                                    <div class="card">
-                                <div class="card-header">
-                                    <h5>История заказов</h5>
-                                </div>
-                                <div class="card-divider"></div>
-                                <div class="card-table">
-                                    <div class="table-responsive-sm">
-                                        <table>
-                                            <thead>
-                                                <tr>
-                                                    <th>Заказ</th>                                  
-                                                    <th>Состояние оплаты</th>
-                                                    <th>Состояние доставки</th>                       
-                                                    <th>Сумма заказа</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-
-                                                {% for order in orders %}
-                                                <tr>
-                                                    <td><a href="{% url 'show_order' id=order.id %}">{{ order }}</a></td>                                                    
-                                                    <td>{{ order.display_current_payment_status }}</td>
-                                                    <td>{{ order.display_current_delivery_status }}</td>
-                                                    <td>{{ order.total }}</td>
-                                                </tr>
-                                                {% endfor %}
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                </div>
-                                <div class="card-divider"></div>
-                                <div class="card-footer">
-                                <div class="card-table">
-                                    <div class="table-responsive-sm">
-                                        <table>
-                                            <thead>
-                                                <tr>
-                                                    <th>Всего заказов</th>
-                                                    <th>На сумму</th>
-                                                    <th>Оплаченных</th>
-                                                    <th>На сумму</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-
-                                                
-                                                <tr>
-                                                    <td></td>
-                                                    <td></td>
-                                                    <td></td>
-                                                    <td></td>
-                                                </tr>
-                                                
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                </div>   
-                                </div>
-                            </div>
-                                </div>
-                            </div>
-                            {% endif %}
-
                         </div>
                     </div>
+                    {% else %}
+                    <div class="col-12 col-lg-9 mt-2 mt-lg-0">
+                        <div class="block-header">
+                            <div class="container">
+                                <div class="block-header__body">
+                                    <h4 align="center">
+                                        История заказов отсутствует.
+                                    </h4>
+
+                                </div>
+                                <div align="center">
+                                    <a href="{% url 'show_catalog' %}"><button class="btn btn-primary btn-lg">В каталог</button></a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    {% endif %}
                 </div>
             </div>
         </div>
-    </div>
 
 
 
-    <div class="block-space block-space--layout--before-footer"></div> -->
+        <div class="block-space block-space--layout--before-footer"></div>
+
     {% endblock %}
 

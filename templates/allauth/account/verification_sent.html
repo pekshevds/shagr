@@ -2,47 +2,39 @@
 
 {% load static %}
 
-{% block meta_description %}
-{{ block.super }}
-{% endblock %}
-
-{% block title %}
-{{ block.super }}
-{% endblock %}
-
-{% block header %}
-{{ block.super }}
-{% endblock %}
-
 {% load i18n %}
 
-{% block social %}
-{% endblock %}
 
+{% block body %}
 
-{% block content %}
-
-<div class="main-container no-sidebar">
+<div class="block-header block-header--has-breadcrumb block-header--has-title">
 	<div class="container">
-		<nav class="woocommerce-breadcrumb breadcrumbs">
-			<a href="{% url 'show_index' %}">На главную</a>
-			Регистрация
-		</nav>
-		<div class="row">
-			<div class="col-sm-12 main-content">
-				<div class="text-center">
+		<div class="block-header__body">
+			<nav class="breadcrumb block-header__breadcrumb" aria-label="breadcrumb">
+				<ol class="breadcrumb__list">
+					<li class="breadcrumb__spaceship-safe-area" role="presentation"></li>
+					<li class="breadcrumb__item breadcrumb__item--parent breadcrumb__item--first">
+						<a href="{% url 'show_index' %}" class="breadcrumb__item-link">Главная</a>
+					</li>
+					<li class="breadcrumb__item breadcrumb__item--current breadcrumb__item--last" aria-current="page">
+						<span class="breadcrumb__item-link">Регистрация</span>
+					</li>
+					<li class="breadcrumb__title-safe-area" role="presentation"></li>
+				</ol>
+			</nav>
 
-					<h2 class="title">Подтвердите свой E-mail адрес</h2>
+		</div>
+		<div class="row justify-content-center">
+			<div class="col-8">
+				<h1 class="block-header__title" align="center">
+					Подтвердите свой E-mail адрес
+				</h1>
 
-					<p>Мы отправили вам электронное письмо для проверки. Перейдите по ссылке, чтобы завершить процесс регистрации. Пожалуйста, свяжитесь с нами, если вы не получили его в течение нескольких минут.</p>
-				</div>
+				<p align="center">Мы отправили вам электронное письмо для проверки. Перейдите по ссылке, чтобы завершить процесс регистрации. Пожалуйста, свяжитесь с нами, если вы не получили его в течение нескольких минут.</p>
 			</div>
 		</div>
 	</div>
-</div>
 
-
-{% endblock %}
-
-{% block magnific_popup %}
+	<div class="block-space block-space--layout--before-footer"></div>
+</div>	
 {% endblock %}

@@ -24,11 +24,12 @@ def show_orders(request):
 def send_cart_to_order(request):
 
 	order = create_order_from_cart(request)	
+
 	if order:
 
 		send_mail_with_order(order)
 
-		return redirect('show_order', id=order.id)
+		return redirect('order_success', id=order.id)
 
 	return redirect(request.META['HTTP_REFERER'])
 
@@ -58,3 +59,8 @@ def add_good_to_order(request, slug):
 	add_to_order(request, slug)
 	return redirect(request.META['HTTP_REFERER'])
 
+def order_success(request, id):
+
+	context = get_context(request)
+	context['order'] = get_order(id)
+	return render(request, 'orderapp/order_success.html', context)

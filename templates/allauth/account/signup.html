@@ -2,91 +2,96 @@
 
 {% load static %}
 
-{% block meta_description %}
-{{ block.super }}
-{% endblock %}
-
-{% block title %}
-{{ block.super }}
-{% endblock %}
-
-{% block header %}
-{{ block.super }}
-{% endblock %}
 
 {% load i18n %}
 
-{% block social %}
-{% endblock %}
 
+{% block body %}
 
-{% block content %}
-
-<div class="main-container no-sidebar no-padding">
+<div class="block-header block-header--has-breadcrumb block-header--has-title">
 	<div class="container">
-		<nav class="woocommerce-breadcrumb breadcrumbs">
-			<a href="{% url 'show_index' %}">На главную</a>
-			Регистрация
-		</nav>
-		<div class="form-authentication text-center">
-			<div class="form-register">
-				<h3 class="title">Создать аккаунт</h3>
+		<div class="block-header__body">
+			<nav class="breadcrumb block-header__breadcrumb" aria-label="breadcrumb">
+				<ol class="breadcrumb__list">
+					<li class="breadcrumb__spaceship-safe-area" role="presentation"></li>
+					<li class="breadcrumb__item breadcrumb__item--parent breadcrumb__item--first">
+						<a href="{% url 'show_index' %}" class="breadcrumb__item-link">Главная</a>
+					</li>
+					<li class="breadcrumb__item breadcrumb__item--current breadcrumb__item--last" aria-current="page">
+						<span class="breadcrumb__item-link">Регистрация</span>
+					</li>
+					<li class="breadcrumb__title-safe-area" role="presentation"></li>
+				</ol>
+			</nav>
 
-				<form class="signup" id="signup_form" method="post" action="{% url 'account_signup' %}">
-
-					
-					
-					{% csrf_token %}
-
-					{{ form.non_field_errors }}
-
-				    {% for error in form.email.errors %}
-		            <p  style="color: red">* {{ error|escape }}</p>
-		            {% endfor %}
-					<p>
-						<input type="email" name="email" placeholder="Email адрес" required id="id_email">
-					</p>
-					{% for error in form.username.errors %}
-		            <p  style="color: red">* {{ error|escape }}</p>
-		            {% endfor %}
-					<p>
-						<input type="text" name="username" placeholder="Имя пользователя" autofocus="autofocus" minlength="1" maxlength="150" required id="id_username">
-					</p>
-					{% for error in form.password1.errors %}
-					{% if forloop.first %}
-		            <p  style="color: red">* {{ error|escape }}</p>
-		            {% endif %}
-		            {% endfor %}
-					<p>
-						<input type="password" name="password1" placeholder="Пароль" required id="id_password1">
-					</p>
-					{% for error in form.password2.errors %}
-					{% if forloop.first %}
-		            <p  style="color: red">* {{ error|escape }}</p>
-		            {% endif %}
-		            {% endfor %}
-					<p>
-						<input type="password" name="password2" placeholder="Пароль (еще раз)" required id="id_password2">
-					</p>
-
-					{% if redirect_field_value %}
-					<input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}">
-					{% endif %}
-					{% for message in form.name_of_field.errors %}
-			        <p  style="color: red">* {{ message }} </p>
-			        {% endfor %}
-					<button type="submit">Регистрация</button>
-				</form>
-			</div>
-		</div>
-		<div class="form-authentication-footer">
-			<a href="{% url 'account_login' %}"> Войдите</a>, если у вас уже есть учетная запись.
 		</div>
 	</div>
-</div>
+	<div class="container container--max--lg">
+		<div class="row justify-content-center">
+			<div class="col-md-8 d-flex mt-4 mt-md-0">
+				<div class="card flex-grow-1 mb-0 ml-0 ml-lg-3 mr-0 mr-lg-4">
+					<div class="card-body card-body--padding--2">
+						<h3 class="card-title">Регистрация</h3>
+						<form id="signup" method="POST" action="{% url 'account_signup' %}">
+							{% csrf_token %}
+
+							{{ form.non_field_errors }}
+
+							{% for error in form.login.errors %}
+							<p  style="color: red">* {{ error|escape }}</p>
+							{% endfor %}
+
+							<div class="form-group">
+								<label for="signup-email">Адрес электронной почты</label>
+								<input id="signup-email" type="email" name="email" class="form-control" placeholder="Email адрес" required>
+							</div>
+
+							{% for error in form.username.errors %}
+				            <p  style="color: red">* {{ error|escape }}</p>
+				            {% endfor %}
+
+							<div class="form-group">
+                                <label for="signup-name">Имя пользователя</label>
+                                <input id="signup-name" type="text" name="username" class="form-control" placeholder="Имя пользователя" required>
+                            </div>
+
+                            {% for error in form.password1.errors %}
+							{% if forloop.first %}
+				            <p  style="color: red">* {{ error|escape }}</p>
+				            {% endif %}
+				            {% endfor %}
+
+				            <div class="form-group">
+                                <label for="signup-password">Пароль</label>
+                                <input id="signup-password" type="password" name="password1" class="form-control" placeholder="Пароль" required>
+                            </div>
+
+                            {% for error in form.password2.errors %}
+							{% if forloop.first %}
+				            <p  style="color: red">* {{ error|escape }}</p>
+				            {% endif %}
+				            {% endfor %}
+
+				            <div class="form-group">
+                                <label for="signup-confirm">Повторите пароль</label>
+                                <input id="signup-confirm" type="password" name="password2" class="form-control" placeholder="Повторите пароль" required>
+                            </div>
+
+                            <div class="form-group">
+									<span class="form-check-label"> <a href="{% url 'account_login' %}">Войдите</a>, если у вас есть учетная запись.</span>
+								</div>
 
 
-{% endblock %}
+							<div class="form-group mb-0">
+								<button form="signup" type="submit" class="btn btn-primary mt-3">Регистрация</button>
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="block-space block-space--layout--before-footer"></div>
+</div>	
 
-{% block magnific_popup %}
 {% endblock %}

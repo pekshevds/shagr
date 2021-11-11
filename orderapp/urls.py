@@ -5,6 +5,7 @@ from .views import show_order
 from .views import del_good_from_order
 from .views import send_cart_to_order
 from .views import pay_for_order
+from .views import order_success
 
 from orderapp.views import add_good_to_order
 
@@ -13,6 +14,7 @@ urlpatterns = [
 
 	path('', show_orders, name='show_orders'),
 	path('send_cart_to_order/', send_cart_to_order, name='send_cart_to_order'),
+	path('order_success/<int:id>/', order_success, name='order_success'),
 	path('pay_for_order/<int:id>/', pay_for_order, name='pay_for_order'),
 	path('order/<int:id>/', show_order, name='show_order'),
 	path('del_from_order/<int:id>/', del_good_from_order, name='del_from_order'),

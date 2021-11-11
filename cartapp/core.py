@@ -20,13 +20,24 @@ def get_cart(request):
 
 def add_to_cart(cart, good, quant=1):
 
-	items = CartItem.objects.filter(cart=cart, good=good)
-	if items:		
-		item = items[0]
+	item = CartItem.objects.filter(cart=cart, good=good).first()
+	if item:		
 		item.quant = item.quant + quant
 		item.save()
 	else:
-		items = CartItem.objects.create(cart=cart, good=good, quant=quant)	
+		item = CartItem.objects.create(cart=cart, good=good, quant=quant)	
+
+
+def decrease_item_from_cart(cart, good):
+
+	item = CartItem.objects.filter(cart=cart, good=good).first()
+
+	if item:
+		if item.quant == 1:
+			del_from_cart(cart, good)
+		elif item.quant > 1:
+			item.quant = item.quant - 1
+			item.save()
 
 
 def insert_to_cart(cart, good, quant=1):
@@ -69,3 +80,5 @@ def get_cart_by_id(id):
 		cart = Cart.objects.create()	
 
 	return cart
+
+

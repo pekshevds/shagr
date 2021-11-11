@@ -6,7 +6,6 @@ from authapp.models import Buyer
 from catalogapp.models import Good
 
 from shagr.core import get_uuid4
-# Create your models here.
 
 DEFAULT_PAYMENT_STATUS = 'NP'
 PAYMENT_STATUSES = (
@@ -17,11 +16,24 @@ PAYMENT_STATUSES = (
 
 DEFAULT_DELIVERY_STATUS = 'AW'
 DELIVERY_STATUSES = (
-	(DEFAULT_DELIVERY_STATUS, 'Ожидает подтверждения'),#Собирается	
+	(DEFAULT_DELIVERY_STATUS, 'Ожидает подтверждения'),
 	('GT', 'Собирается'),#Собирается
 	('TF', 'Передан'),#Передан на доставку в ТК
 	('DL', 'Доставлен'),#Передан заказчику
 	('RT', 'Вернулся'),#Вернулся отправителю
+	)
+
+DEFAUL_DELIVERY_TYPE = 'DL'
+DELIVERY_TYPE = (
+	(DEFAULT_DELIVERY_STATUS, 'Доставка до адреса'),
+	('SL', 'Самовывоз'),
+	)
+
+DEFAUL_PAYMENT_FORM = 'ON'
+PAYMENT_FORM = (
+	(DEFAULT_DELIVERY_STATUS, 'Онлайн'),
+	('BN', 'Безналичные'),
+	('NL', 'Наличные'),
 	)
 
 class Order(models.Model):
@@ -36,8 +48,33 @@ class Order(models.Model):
 	delivery_status = models.CharField(max_length=2, verbose_name="Состояние доставки", 
 										choices=DELIVERY_STATUSES, default=DEFAULT_DELIVERY_STATUS)
 
+	payment_form = models.CharField(max_length=2, verbose_name="Форма оплаты", 
+										choices=PAYMENT_FORM, default=DEFAUL_PAYMENT_FORM)
+
+	delivery_type = models.CharField(max_length=2, verbose_name="Тип доставки", 
+										choices=DELIVERY_TYPE, default=DEFAUL_DELIVERY_TYPE)
+
 	weight = models.DecimalField(verbose_name='Вес, кг', default=0, max_digits=15, decimal_places=3)
 	volume = models.DecimalField(verbose_name='Объем, м3', default=0, max_digits=15, decimal_places=5)
+
+	# Информация о заказе
+
+	first_name 				= models.CharField(max_length=150, verbose_name='Имя', blank=False, default='')
+	last_name 				= models.CharField(max_length=150, verbose_name='Фамилия', blank=True, default='')
+	middle_name 			= models.CharField(max_length=150, verbose_name='Отчество', blank=True, default='')
+	phone	 				= models.CharField(max_length=150, verbose_name='Телефон', blank=True, null=True, default='')
+	email 					= models.CharField(max_length=30, verbose_name='Email', blank=True, default='')
+	zipcode	 				= models.CharField(max_length=12, verbose_name='Индекс', blank=True, default='')
+
+	company_name 			= models.CharField(max_length=150, verbose_name='Наименование компании', blank=True, default='')
+	company_inn 			= models.CharField(max_length=20, verbose_name='ИНН компании', blank=True, default='')
+
+	locality 				= models.CharField(max_length=20, verbose_name='Нас. пункт', blank=True, default='')
+	street 					= models.CharField(max_length=30, verbose_name='Улица', blank=True, default='')
+	house 					= models.CharField(max_length=10, verbose_name='Дом', blank=True, default='')
+	apartments 				= models.CharField(max_length=10, verbose_name='Кв.', blank=True, default='')
+	porch 					= models.CharField(max_length=10, verbose_name='Подъезд', blank=True, default='')
+	floor 					= models.CharField(max_length=10, verbose_name='Этаж', blank=True, default='')
 
 	def __str__(self):
 		return str(self.id) + ' от ' + self.date.strftime("%d.%m.%Y")

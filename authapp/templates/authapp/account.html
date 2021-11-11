@@ -7,96 +7,141 @@
 <!-- Мегаменю -->
 {% block body %}
 
+<div class="block-header block-header--has-breadcrumb block-header--has-title">
+    <div class="container">
+        <div class="block-header__body">
+            <nav class="breadcrumb block-header__breadcrumb" aria-label="breadcrumb">
+                <ol class="breadcrumb__list">
+                    <li class="breadcrumb__spaceship-safe-area" role="presentation"></li>
+                    <li class="breadcrumb__item breadcrumb__item--parent breadcrumb__item--first">
+                        <a href="{% url 'show_index' %}" class="breadcrumb__item-link">Главная</a>
+                    </li>
+                    <li class="breadcrumb__item breadcrumb__item--current breadcrumb__item--last" aria-current="page">
+                        <span class="breadcrumb__item-link">Мой профиль</span>
+                    </li>
+                    <li class="breadcrumb__title-safe-area" role="presentation"></li>
+                </ol>
+            </nav>
+            <h1 class="block-header__title">
+                Мой профиль
+            </h1>
+        </div>
+    </div>
+</div>
 
 
-<!-- site__body -->
-<div class="site__body">
-    <div class="block-space block-space--layout--after-header"></div>
-    <div class="block">
-        <div class="container container--max--lg">
-            <div class="row">
+<div class="block">
+    <div class="container container--max--lg">
+        <div class="row">
 
-                <div class="col-md-6 d-flex mt-4 mt-md-0">
-                    <div class="card flex-grow-1 mb-0 ml-0 ml-lg-3 mr-0 mr-lg-4">
-                        <div class="card-body card-body--padding--2">
-                            <h3 class="card-title">Мой профиль</h3>
-                            <form method="post" action="{% url 'account_save' %}">
-                                {% csrf_token %}
-                                
-                                <div class="form-group">
-                                    <label for="signup-first-name">Имя</label>
-                                    <input id="signup-first-name" type="text" name="first_name" class="form-control" placeholder="Имя" value="{{ buyer.first_name }}">
-                                </div>
+            <div class="col-12 col-lg-3 d-flex">
+                <div class="account-nav flex-grow-1">
+                    <h4 class="account-nav__title">Личный кабинет</h4>
+                    <ul class="account-nav__list">
+                        <li class="account-nav__item account-nav__item--active">
+                            <a href="{% url 'account_show' %}">Профиль</a>
+                        </li>
+                        <li class="account-nav__item ">
+                            <a href="{% url 'show_orders' %}">История заказов</a>
+                        </li>
+                        <li class="account-nav__divider" role="presentation"></li>
+                        <li class="account-nav__item ">
+                            <a href="{% url 'account_logout' %}">Выйти</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
 
-                                <div class="form-group">
-                                    <label for="signup-last-name">Фамилия</label>
-                                    <input id="signup-last-name" type="text" name="last_name" class="form-control" placeholder="Фамилия" value="{{ buyer.last_name }}">
-                                </div>
+            <div class="col-12 col-lg-9 mt-4 mt-lg-0">
+                <div class="card">
+                    <div class="card-header">
+                        <h5>Мой профиль</h5>
+                    </div>
+                    <div class="card-divider"></div>
+                    <div class="card-body card-body--padding--2">
+                        <div class="row no-gutters">
+                            <div class="col-12 col-lg-12 col-xl-12">
+                                <form id="account_info" class="row" method="post" action="{% url 'account_save' %}">
+                                    {% csrf_token %}
+                                    <div class="form-group col-md-6">
+                                        <label for="signup-username">Username</label>
+                                        <input id="signup-username" type="text" class="form-control" placeholder="Username" value="{{ user.username }}" disabled>
+                                    </div>
+                                    <div class="form-group col-md-6">
+                                        <label for="signup-email">Email</label>
+                                        <input id="signup-email" type="email" name="email" class="form-control" placeholder="Email" value="{{ user.email }}" disabled>
+                                    </div>
 
-                                <div class="form-group">
-                                    <label for="signup-phone">Телефон</label>
-                                    <input id="signup-phone" type="tel" name="phone" class="form-control" placeholder="Телефон" value="{{ buyer.phone }}">
-                                </div>                                
+                                    <div class="form-group col-md-6">
+                                        <label for="signup-first-name">Имя</label>
+                                        <input id="signup-first-name" type="text" name="first_name" class="form-control" placeholder="Имя" value="{{ buyer.first_name }}" required>
+                                    </div>
 
-                                <div class="form-group">
-                                    <label for="signup-email">Адрес электронной почты</label>
-                                    <input id="signup-email" type="email" name="email" class="form-control" placeholder="Email" value="{{ buyer.email }}">
-                                </div>
-                                
-                                <div class="form-group">
-                                    <label for="signup-zipcode">Индекс</label>
-                                    <input id="signup-zipcode" type="text" name="zipcode" class="form-control" placeholder="Нас. пункт" value="{{ buyer.zipcode }}">
-                                </div>
+                                    <div class="form-group col-md-6">
+                                        <label for="signup-last-name">Фамилия</label>
+                                        <input id="signup-last-name" type="text" name="last_name" class="form-control" placeholder="Фамилия" value="{{ buyer.last_name }}" required>
+                                    </div>
 
-                                <div class="form-group">
-                                    <label for="signup-locality">Нас. пункт</label>
-                                    <input id="signup-locality" type="text" name="locality" class="form-control" placeholder="Нас. пункт" value="{{ buyer.locality }}">
-                                </div>
+                                    <div class="form-group col-md-6">
+                                        <label for="signup-phone">Телефон</label>
+                                        <input id="signup-phone" type="tel" name="phone" class="form-control" placeholder="Телефон" value="{{ buyer.phone }}" required>
+                                    </div>                                
 
-                                <div class="form-group">
-                                    <label for="signup-street">Улица</label>
-                                    <input id="signup-street" type="text" name="street" class="form-control" placeholder="Улица" value="{{ buyer.street }}">
-                                </div>
 
-                                <div class="form-group">
-                                    <label for="signup-house">Дом</label>
-                                    <input id="signup-house" type="text" name="house" class="form-control" placeholder="Дом" value="{{ buyer.house }}">
-                                </div>
+                                    <div class="form-group col-md-6">
+                                        <label for="signup-zipcode">Индекс</label>
+                                        <input id="signup-zipcode" type="text" name="zipcode" class="form-control" placeholder="Нас. пункт" value="{{ buyer.zipcode }}">
+                                    </div>
 
-                                <div class="form-group">
-                                    <label for="signup-porch">Подъезд</label>
-                                    <input id="signup-porch" type="text" name="porch" class="form-control" placeholder="Подъезд" value="{{ buyer.porch }}">
-                                </div>
+                                    <div class="form-group col-md-6">
+                                        <label for="signup-locality">Нас. пункт</label>
+                                        <input id="signup-locality" type="text" name="locality" class="form-control" placeholder="Нас. пункт" value="{{ buyer.locality }}">
+                                    </div>
 
-                                <div class="form-group">
-                                    <label for="signup-floor">Этаж</label>
-                                    <input id="signup-floor" type="text" name="floor" class="form-control" placeholder="Этаж" value="{{ buyer.floor }}">
-                                </div>
+                                    <div class="form-group col-md-6">
+                                        <label for="signup-street">Улица</label>
+                                        <input id="signup-street" type="text" name="street" class="form-control" placeholder="Улица" value="{{ buyer.street }}">
+                                    </div>
 
-                                <div class="form-group">
-                                    <label for="signup-apartments">Квартира</label>
-                                    <input id="signup-apartments" type="text" name="apartments" class="form-control" placeholder="Квартира" value="{{ buyer.apartments }}">
-                                </div>
-                               
-                                <div class="form-group">
-                                    <label for="signup-address">Адрес</label>
-                                    <input id="signup-address" type="text" name="address" class="form-control" placeholder="Адрес" value="{{ buyer.address }}">
-                                </div>
-                                
-                                <div class="form-group mb-0">
-                                    <button type="submit" class="btn btn-primary mt-3">Сохранить</button>
-                                </div>
-                            </form>
+                                    <div class="form-group col-md-6">
+                                        <label for="signup-house">Дом</label>
+                                        <input id="signup-house" type="text" name="house" class="form-control" placeholder="Дом" value="{{ buyer.house }}">
+                                    </div>
+
+                                    <div class="form-group col-md-6">
+                                        <label for="signup-porch">Подъезд</label>
+                                        <input id="signup-porch" type="text" name="porch" class="form-control" placeholder="Подъезд" value="{{ buyer.porch }}">
+                                    </div>
+
+                                    <div class="form-group col-md-6">
+                                        <label for="signup-floor">Этаж</label>
+                                        <input id="signup-floor" type="text" name="floor" class="form-control" placeholder="Этаж" value="{{ buyer.floor }}">
+                                    </div>
+
+                                    <div class="form-group col-md-6">
+                                        <label for="signup-apartments">Квартира</label>
+                                        <input id="signup-apartments" type="text" name="apartments" class="form-control" placeholder="Квартира" value="{{ buyer.apartments }}">
+                                    </div>
+
+                                    <div class="form-group col-md-12">
+                                        <label for="signup-address">Адрес</label>
+                                        <input id="signup-address" type="text" name="address" class="form-control" placeholder="Адрес" value="{% if buyer.address %}{{ buyer.address }}{% else %} Адрес доставки не заполнен... {% endif %}" disabled>
+                                    </div>
+
+                                    <div class="form-group mb-0 col-md-12">
+                                        <button form="account_info" type="submit" class="btn btn-primary mt-3">Сохранить</button>
+                                        <a class="btn btn-primary mt-3" href="{% url 'account_logout' %}">Выйти</a>
+                                    </div>
+                                </form>
+                            </div>
                         </div>
                     </div>
                 </div>
-
-
             </div>
         </div>
     </div>
-    <div class="block-space block-space--layout--before-footer"></div>
 </div>
-<!-- site__body / end -->
+<div class="block-space block-space--layout--before-footer"></div>
+
 
 {% endblock %}

@@ -102,3 +102,16 @@ def get_buyer(request):
 			buyer = None
 			
 	return buyer
+
+def create_buyer(user, email):
+
+	buyer = Buyer()
+	buyer.user = user
+	buyer.email = email
+	buyer.save()
+	if buyer:
+		return buyer
+	else:
+		return None	
+			
+		

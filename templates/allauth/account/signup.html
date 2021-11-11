@@ -41,19 +41,16 @@
 							<p  style="color: red">* {{ error|escape }}</p>
 							{% endfor %}
 
-							<div class="form-group">
-								<label for="signup-email">Адрес электронной почты</label>
-								<input id="signup-email" type="email" name="email" class="form-control" placeholder="Email адрес" required>
-							</div>
-
 							{% for error in form.username.errors %}
 				            <p  style="color: red">* {{ error|escape }}</p>
 				            {% endfor %}
 
 							<div class="form-group">
-                                <label for="signup-name">Имя пользователя</label>
-                                <input id="signup-name" type="text" name="username" class="form-control" placeholder="Имя пользователя" required>
-                            </div>
+								<label for="signup-email">Адрес электронной почты</label>
+								<input id="signup-email" type="email" name="email" class="form-control" placeholder="Email адрес" required>
+							</div>
+
+                            <input id="signup-name" type="text" name="username" class="form-control" hidden required>
 
                             {% for error in form.password1.errors %}
 							{% if forloop.first %}
@@ -94,4 +91,19 @@
 	<div class="block-space block-space--layout--before-footer"></div>
 </div>	
 
+{% endblock %}
+
+
+{% block custom_script %}
+<script>
+	
+	const emailField = document.getElementById('signup-email');
+	var nameField = document.getElementById('signup-name');
+
+	emailField.addEventListener('input', ()=> {
+		console.log(emailField.value);
+		nameField.value = emailField.value;
+	});
+
+</script>
 {% endblock %}

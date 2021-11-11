@@ -133,7 +133,6 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media') # пустая папка, сюда
 MEDIA_URL = '/media/'
 
 
-
 # tunning
 SITE_ID = 1
 
@@ -147,3 +146,5 @@ EMAIL_HOST_PASSWORD = config('MAIL_PASSWORD')
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 DEFAULT_FROM_EMAIL = config('MAIL_USER')
+
+DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'

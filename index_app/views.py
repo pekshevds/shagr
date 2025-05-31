@@ -6,6 +6,7 @@ from catalog_app.fetchers import (
     fetch_category_by_id,
     fetch_goods,
     fetch_categories,
+    fetch_goods_by_query,
 )
 
 
@@ -16,10 +17,35 @@ class IndexView(View):
 
 class CatalogView(View):
     def get(self, request: HttpRequest) -> HttpResponse:
+        search = request.GET.get("search", "")
+        if search:
+            goods = fetch_goods_by_query(search)
+        else:
+            goods = fetch_goods()
         return render(
             request,
             template_name="index_app/catalog.html",
-            context={"goods": fetch_goods(), "categories": fetch_categories()},
+            context={
+                "search": "",
+                "goods": goods,
+                "categories": fetch_categories(),
+            },
+        )
+
+    def post(self, request: HttpRequest) -> HttpResponse:
+        search = request.POST.get("search", "")
+        if search:
+            goods = fetch_goods_by_query(search)
+        else:
+            goods = fetch_goods()
+        return render(
+            request,
+            template_name="index_app/catalog.html",
+            context={
+                "search": search,
+                "goods": goods,
+                "categories": fetch_categories(),
+            },
         )
 
 

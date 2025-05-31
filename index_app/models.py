@@ -29,13 +29,5 @@ class Directory(Base):
     def __str__(self) -> str:
         return f"{self.name}"
 
-    @classmethod
-    def find_by_name(cls, name: str) -> object | None:
-        return cls.objects.filter(name=name).first()
-
-    @classmethod
-    def find_by_id(cls, id: models.UUIDField) -> object | None:
-        return cls.objects.filter(id=id).first()
-
     class Meta:
         abstract = True

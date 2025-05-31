@@ -41,7 +41,7 @@
         </div>        
         <nav class="humberger__menu__nav mobile-menu">
             <ul>
-                <li class="active"><a href="{% url 'index:index' %}">Домой</a></li>
+                <li class="active"><a href="{% url 'index:home' %}">Домой</a></li>
                 <li><a href="{% url 'index:catalog' %}">Каталог</a></li>
                 <li><a href="{% url 'index:contacts' %}">Контакты</a></li>
             </ul>
@@ -56,13 +56,13 @@
             <div class="row">
                 <div class="col-lg-3">
                     <div class="header__logo">
-                        <a href="./index.html"><img src="{% static "img/logo.png" %}" alt=""></a>
+                        <a href="{% url 'index:home' %}"><img src="{% static "img/logo.png" %}" alt=""></a>
                     </div>
                 </div>
                 <div class="col-lg-6">
                     <nav class="header__menu">
                         <ul>
-                            <li class="active"><a href="{% url 'index:index' %}">Домой</a></li>                                                        
+                            <li class="active"><a href="{% url 'index:home' %}">Домой</a></li>                                                        
                             <li><a href="{% url 'index:catalog' %}">Каталог</a></li>
                             <li><a href="{% url 'index:contacts' %}">Контакты</a></li>
                         </ul>
@@ -109,7 +109,7 @@
                 <div class="col-lg-3 col-md-6 col-sm-6">
                     <div class="footer__about">
                         <div class="footer__about__logo">
-                            <a href="./index.html"><img src="img/logo.png" alt=""></a>
+                            <a href="{% url 'index:home' %}"><img src="img/logo.png" alt=""></a>
                         </div>
                         <ul>
                             <li>Address: 60-49 Road 11378 New York</li>

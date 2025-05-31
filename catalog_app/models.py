@@ -75,7 +75,7 @@ class Good(Directory):
         on_delete=models.PROTECT,
         blank=True,
         null=True,
-        related_name="items",
+        related_name="goods",
     )
     not_active = models.BooleanField(verbose_name="Не активный", default=False)
     seo_title = models.TextField(

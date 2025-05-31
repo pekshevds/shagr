@@ -30,35 +30,33 @@
             <div class="col-lg-3 col-md-5">                
                 <div class="sidebar">
                     <div class="sidebar__item">
-                        <h4>Department</h4>
+                        <h4>Категории</h4>
                         <ul>
-                            <li><a href="#">Fresh Meat</a></li>
-                            <li><a href="#">Vegetables</a></li>
-                            <li><a href="#">Fruit & Nut Gifts</a></li>
-                            <li><a href="#">Fresh Berries</a></li>
-                            <li><a href="#">Ocean Foods</a></li>
-                            <li><a href="#">Butter & Eggs</a></li>
-                            <li><a href="#">Fastfood</a></li>
-                            <li><a href="#">Fresh Onion</a></li>
-                            <li><a href="#">Papayaya & Crisps</a></li>
-                            <li><a href="#">Oatmeal</a></li>
-                        </ul>
+                            {% if categories %}
+                                {% for category in categories %}
+                                <li><a href="{% url 'index:category' category.id %}">{{ category.name }}</a></li>
+                                {% endfor %}
+                            {% endif %}
+                            <li><a href="{% url 'index:catalog' %}">Все категории</a></li>
+                        </ul>                        
                     </div>
                 </div>
             </div>
             <div class="col-lg-9 col-md-7">                
                 <div class="row">
-                    {% for i in range %}
-                    <div class="col-lg-4 col-md-6 col-sm-6">
-                        <div class="product__item">
-                            <div class="product__item__pic set-bg" data-setbg="{% static "img/product/product-1.jpg" %}">                                
-                            </div>
-                            <div class="product__item__text">
-                                <h6><a href="{% url 'index:item' '1234' %}">Crab Pool Security</a></h6>                                
+                    {% if goods %}
+                        {% for good in goods %}
+                        <div class="col-lg-4 col-md-6 col-sm-6">
+                            <div class="product__item">
+                                <div class="product__item__pic set-bg" data-setbg="{% static "img/product/product-1.jpg" %}">                                
+                                </div>
+                                <div class="product__item__text">
+                                    <h6><a href="{% url 'index:good' good.id %}">{{ good.name }}</a></h6>                                
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    {% endfor %}
+                        {% endfor %}
+                    {% endif %}
                 </div>
                 <div class="product__pagination">
                     <a href="#">1</a>

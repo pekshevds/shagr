@@ -25,7 +25,7 @@ SECRET_KEY = "django-insecure-_9e40877!+esl^1z3de9*-*ro2vk6f8f2i4pt6x_@0bziq=@1p
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS: list[str] = []
+ALLOWED_HOSTS: list[str] = ["*"]
 
 
 # Application definition
@@ -53,10 +53,12 @@ MIDDLEWARE = [
 
 ROOT_URLCONF = "server.urls"
 
+PAGE_404_PATH = BASE_DIR / "index_app/templates/index_app/"
+
 TEMPLATES = [
     {
         "BACKEND": "django.template.backends.django.DjangoTemplates",
-        "DIRS": [],
+        "DIRS": [PAGE_404_PATH],
         "APP_DIRS": True,
         "OPTIONS": {
             "context_processors": [

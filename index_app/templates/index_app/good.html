@@ -14,8 +14,10 @@
                     <h2>Vegetable’s Package</h2>
                     <div class="breadcrumb__option">
                         <a href="{% url 'index:home' %}">Домой</a>
+                        {% if good.category %}
                         <a href="{% url 'index:category' good.category.id %}">{{ good.category.name }}</a>
-                        <span>{{ good }}</span>
+                        {% endif %}
+                        <span>{{ good }}</span>                        
                     </div>
                 </div>
             </div>

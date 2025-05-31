@@ -1,6 +1,8 @@
 from django.shortcuts import render
+from django.core.paginator import Paginator
 from django.views import View
 from django.http import HttpRequest, HttpResponse, Http404
+from django.conf import settings
 from catalog_app.fetchers import (
     fetch_good_by_id,
     fetch_category_by_id,
@@ -22,12 +24,15 @@ class CatalogView(View):
             goods = fetch_goods_by_query(search)
         else:
             goods = fetch_goods()
+        paginator = Paginator(goods, settings.PAGINATOR_ITEMS_ON_PAGE)
+        page_obj = paginator.get_page(request.GET.get("page"))
         return render(
             request,
             template_name="index_app/catalog.html",
             context={
                 "search": "",
-                "goods": goods,
+                "goods": page_obj,
+                "pages": range(1, page_obj.paginator.num_pages + 1),
                 "categories": fetch_categories(),
             },
         )
@@ -38,12 +43,15 @@ class CatalogView(View):
             goods = fetch_goods_by_query(search)
         else:
             goods = fetch_goods()
+        paginator = Paginator(goods, settings.PAGINATOR_ITEMS_ON_PAGE)
+        page_obj = paginator.get_page(None)
         return render(
             request,
             template_name="index_app/catalog.html",
             context={
                 "search": search,
-                "goods": goods,
+                "goods": page_obj,
+                "pages": range(1, page_obj.paginator.num_pages + 1),
                 "categories": fetch_categories(),
             },
         )
@@ -66,10 +74,18 @@ class CategoryView(View):
         category = fetch_category_by_id(id)
         if not category:
             raise Http404("Категория не существует")
+        goods = fetch_goods(category)
+        paginator = Paginator(goods, settings.PAGINATOR_ITEMS_ON_PAGE)
+        page_obj = paginator.get_page(request.GET.get("page"))
         return render(
             request,
             template_name="index_app/catalog.html",
-            context={"goods": fetch_goods(category), "categories": fetch_categories()},
+            context={
+                "search": "",
+                "goods": page_obj,
+                "pages": range(1, page_obj.paginator.num_pages + 1),
+                "categories": fetch_categories(),
+            },
         )
 
 

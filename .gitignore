@@ -12,3 +12,4 @@ media/images/
 
 # Virtual environments
 .venv
+.env

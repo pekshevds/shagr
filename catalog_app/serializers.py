@@ -1,6 +1,17 @@
 from typing import Any
 from rest_framework import serializers
-from catalog_app.models import Category, Good
+from catalog_app.models import Category, Good, Producer
+
+
+class ProducerSerializer(serializers.Serializer):
+    id = serializers.UUIDField()
+    name = serializers.CharField(max_length=150)
+
+    def create(self, validated_data: dict[str, Any]) -> Producer:
+        obj, _ = Producer.objects.get_or_create(id=validated_data.get("id"))
+        obj.name = validated_data.get("name", obj.name)
+        obj.save()
+        return obj
 
 
 class CategorySerializer(serializers.Serializer):
@@ -18,17 +29,13 @@ class CategorySerializer(serializers.Serializer):
     )
 
     def create(self, validated_data: dict[str, Any]) -> Category:
-        category, _ = Category.objects.get_or_create(id=validated_data.get("id"))
-        category.name = validated_data.get("name", category.name)
-        category.seo_title = validated_data.get("seo_title", category.seo_title)
-        category.seo_description = validated_data.get(
-            "seo_description", category.seo_description
-        )
-        category.seo_keywords = validated_data.get(
-            "seo_keywords", category.seo_keywords
-        )
-        category.save()
-        return category
+        obj, _ = Category.objects.get_or_create(id=validated_data.get("id"))
+        obj.name = validated_data.get("name", obj.name)
+        obj.seo_title = validated_data.get("seo_title", obj.seo_title)
+        obj.seo_description = validated_data.get("seo_description", obj.seo_description)
+        obj.seo_keywords = validated_data.get("seo_keywords", obj.seo_keywords)
+        obj.save()
+        return obj
 
 
 class GoodSerializer(serializers.Serializer):
@@ -37,6 +44,7 @@ class GoodSerializer(serializers.Serializer):
     art = serializers.CharField(max_length=50, required=False, allow_blank=True)
     code = serializers.CharField(max_length=11, required=False, allow_blank=True)
     category = CategorySerializer(required=False, allow_null=True)
+    producer = ProducerSerializer(required=False, allow_null=True)
     image = serializers.ImageField(use_url=True, read_only=True)
     image1 = serializers.ImageField(use_url=True, read_only=True)
     image2 = serializers.ImageField(use_url=True, read_only=True)
@@ -55,21 +63,25 @@ class GoodSerializer(serializers.Serializer):
 
     def create(self, validated_data: dict[str, Any]) -> Good:
 
-        good, _ = Good.objects.get_or_create(id=validated_data.get("id"))
-        good.name = validated_data.get("name", good.name)
-        good.art = validated_data.get("art", good.art)
-        good.code = validated_data.get("code", good.code)
-        good.description = validated_data.get("description", good.description)
-        good.seo_title = validated_data.get("seo_title", good.seo_title)
-        good.seo_description = validated_data.get(
-            "seo_description", good.seo_description
-        )
-        good.seo_keywords = validated_data.get("seo_keywords", good.seo_keywords)
+        obj, _ = Good.objects.get_or_create(id=validated_data.get("id"))
+        obj.name = validated_data.get("name", obj.name)
+        obj.art = validated_data.get("art", obj.art)
+        obj.code = validated_data.get("code", obj.code)
+        obj.description = validated_data.get("description", obj.description)
+        obj.seo_title = validated_data.get("seo_title", obj.seo_title)
+        obj.seo_description = validated_data.get("seo_description", obj.seo_description)
+        obj.seo_keywords = validated_data.get("seo_keywords", obj.seo_keywords)
 
         category_data = validated_data.get("category")
         if category_data:
             category_serializer = CategorySerializer(data=category_data)
             if category_serializer.is_valid():
-                good.category = category_serializer.save()
-        good.save()
-        return good
+                obj.category = category_serializer.save()
+
+        producer_data = validated_data.get("producer")
+        if producer_data:
+            producer_serializer = ProducerSerializer(data=producer_data)
+            if producer_serializer.is_valid():
+                obj.producer = producer_serializer.save()
+        obj.save()
+        return obj

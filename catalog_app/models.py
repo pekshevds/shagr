@@ -3,6 +3,12 @@ from django.db.models import QuerySet
 from index_app.models import Directory
 
 
+class Producer(Directory):
+    class Meta:
+        verbose_name = "Производитель"
+        verbose_name_plural = "Производители"
+
+
 class Category(Directory):
     image = models.ImageField(
         verbose_name="Превью", upload_to="images/", blank=True, null=True
@@ -25,7 +31,7 @@ class Category(Directory):
 
     class Meta:
         verbose_name = "Категория"
-        verbose_name_plural = "Котегории"
+        verbose_name_plural = "Категории"
 
 
 class ActiveGoodsManager(models.Manager):
@@ -72,6 +78,14 @@ class Good(Directory):
     category = models.ForeignKey(
         Category,
         verbose_name="Категория",
+        on_delete=models.PROTECT,
+        blank=True,
+        null=True,
+        related_name="goods",
+    )
+    producer = models.ForeignKey(
+        Producer,
+        verbose_name="Производитель",
         on_delete=models.PROTECT,
         blank=True,
         null=True,

@@ -1,6 +1,23 @@
 from django.contrib import admin
 from django.utils.html import format_html
-from catalog_app.models import Category, Good
+from catalog_app.models import Category, Good, Producer
+
+
+@admin.register(Producer)
+class ProducerAdmin(admin.ModelAdmin):
+    list_display = ("name", "id")
+    search_fields = ["name"]
+    fieldsets = (
+        (
+            None,
+            {
+                "fields": (
+                    "name",
+                    "comment",
+                )
+            },
+        ),
+    )
 
 
 @admin.register(Category)
@@ -43,15 +60,16 @@ class CategoryAdmin(admin.ModelAdmin):
 
 @admin.register(Good)
 class GoodAdmin(admin.ModelAdmin):
-    list_display = ("name", "art", "code", "category", "preview", "id")
+    list_display = ("name", "art", "code", "category", "producer", "preview", "id")
     search_fields = ["name", "art"]
-    list_filter = ["not_active", "category"]
+    list_filter = ["not_active", "category", "producer"]
     fieldsets = (
         (
             None,
             {
                 "fields": (
                     ("name", "category"),
+                    "producer",
                     "full_name",
                     ("art", "code"),
                     "description",

@@ -22,14 +22,17 @@ class ProducerAdmin(admin.ModelAdmin):
 
 @admin.register(Category)
 class CategoryAdmin(admin.ModelAdmin):
-    list_display = ("name", "preview", "id")
+    list_display = ("name", "preview", "parent", "id")
     search_fields = ["name"]
     fieldsets = (
         (
             None,
             {
                 "fields": (
-                    "name",
+                    (
+                        "name",
+                        "parent",
+                    ),
                     "comment",
                     ("image", "preview"),
                 )

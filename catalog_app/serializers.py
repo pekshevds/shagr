@@ -1,6 +1,22 @@
 from typing import Any
 from rest_framework import serializers
 from catalog_app.models import Category, Good, Producer
+from rest_framework_recursive.fields import RecursiveField
+
+
+def fill_by_link(
+    obj: object,
+    attr_name: str,
+    validated_data: dict[str, Any],
+    serializer: serializers.Serializer,
+) -> None:
+    if attr_name in validated_data:
+        setattr(obj, attr_name, None)
+    data = validated_data.get(attr_name)
+    if data:
+        ser = serializer(data=data)
+        if ser.is_valid():
+            setattr(obj, attr_name, ser.save())
 
 
 class ProducerSerializer(serializers.Serializer):
@@ -17,6 +33,7 @@ class ProducerSerializer(serializers.Serializer):
 class CategorySerializer(serializers.Serializer):
     id = serializers.UUIDField()
     name = serializers.CharField(max_length=150)
+    parent = RecursiveField(allow_null=True, required=False)
     image = serializers.ImageField(use_url=True, read_only=True)
     seo_cleaned_title = serializers.CharField(
         max_length=2048, required=False, allow_blank=True
@@ -34,6 +51,7 @@ class CategorySerializer(serializers.Serializer):
         obj.seo_title = validated_data.get("seo_title", obj.seo_title)
         obj.seo_description = validated_data.get("seo_description", obj.seo_description)
         obj.seo_keywords = validated_data.get("seo_keywords", obj.seo_keywords)
+        fill_by_link(obj, "parent", validated_data, CategorySerializer)
         obj.save()
         return obj
 
@@ -62,7 +80,6 @@ class GoodSerializer(serializers.Serializer):
     )
 
     def create(self, validated_data: dict[str, Any]) -> Good:
-
         obj, _ = Good.objects.get_or_create(id=validated_data.get("id"))
         obj.name = validated_data.get("name", obj.name)
         obj.art = validated_data.get("art", obj.art)
@@ -71,17 +88,7 @@ class GoodSerializer(serializers.Serializer):
         obj.seo_title = validated_data.get("seo_title", obj.seo_title)
         obj.seo_description = validated_data.get("seo_description", obj.seo_description)
         obj.seo_keywords = validated_data.get("seo_keywords", obj.seo_keywords)
-
-        category_data = validated_data.get("category")
-        if category_data:
-            category_serializer = CategorySerializer(data=category_data)
-            if category_serializer.is_valid():
-                obj.category = category_serializer.save()
-
-        producer_data = validated_data.get("producer")
-        if producer_data:
-            producer_serializer = ProducerSerializer(data=producer_data)
-            if producer_serializer.is_valid():
-                obj.producer = producer_serializer.save()
+        fill_by_link(obj, "category", validated_data, CategorySerializer)
+        fill_by_link(obj, "producer", validated_data, ProducerSerializer)
         obj.save()
         return obj

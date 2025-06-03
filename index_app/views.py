@@ -9,6 +9,7 @@ from catalog_app.fetchers import (
     fetch_goods,
     fetch_categories,
     fetch_goods_by_query,
+    fetch_path,
 )
 
 
@@ -33,7 +34,7 @@ class CatalogView(View):
                 "search": "",
                 "goods": page_obj,
                 "pages": range(1, page_obj.paginator.num_pages + 1),
-                "categories": fetch_categories(),
+                "categories": fetch_categories(parent=None),
             },
         )
 
@@ -52,7 +53,7 @@ class CatalogView(View):
                 "search": search,
                 "goods": page_obj,
                 "pages": range(1, page_obj.paginator.num_pages + 1),
-                "categories": fetch_categories(),
+                "categories": fetch_categories(parent=None),
             },
         )
 
@@ -84,7 +85,9 @@ class CategoryView(View):
                 "search": "",
                 "goods": page_obj,
                 "pages": range(1, page_obj.paginator.num_pages + 1),
-                "categories": fetch_categories(),
+                "categories": fetch_categories(parent=category),
+                "category": category,
+                "path": fetch_path(category),
             },
         )
 

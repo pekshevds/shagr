@@ -11,10 +11,13 @@
         <div class="row">
             <div class="col-lg-12 text-center">
                 <div class="breadcrumb__text">
-                    <h2>Organi Shop</h2>
+                    <h2>{{ category.name }}</h2>
                     <div class="breadcrumb__option">
-                        <a href="{% url 'index:home' %}">Домой</a>
-                        <span>Shop</span>
+                        <a href="{% url 'index:catalog' %}">Каталог</a>
+                        {% for cat in path %}
+                        <a href="{% url 'index:category' cat.id %}">{{ cat.name }}</a>
+                        {% endfor %}
+                        <span>{{ category.name }}</span>
                     </div>
                 </div>
             </div>
@@ -33,11 +36,15 @@
                         <h4>Категории</h4>
                         <ul>
                             {% if categories %}
-                                {% for category in categories %}
-                                <li><a href="{% url 'index:category' category.id %}">{{ category.name }}</a></li>
+                                {% for cat in categories %}
+                                <li><a href="{% url 'index:category' cat.id %}">{{ cat.name }}</a></li>
                                 {% endfor %}
                             {% endif %}
-                            <li><a href="{% url 'index:catalog' %}">Все категории</a></li>
+                            {% if category.parent %}
+                            <li><a href="{% url 'index:category' category.parent.id %}">Назад</a></li>
+                            {% else %}
+                            <li><a href="{% url 'index:catalog' %}">Назад</a></li>
+                            {% endif %}
                         </ul>                        
                     </div>
                 </div>

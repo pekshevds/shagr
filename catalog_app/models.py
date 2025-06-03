@@ -13,6 +13,14 @@ class Category(Directory):
     image = models.ImageField(
         verbose_name="Превью", upload_to="images/", blank=True, null=True
     )
+    parent = models.ForeignKey(
+        "Category",
+        verbose_name="Родитель",
+        on_delete=models.PROTECT,
+        blank=True,
+        null=True,
+        related_name="children",
+    )
     seo_title = models.TextField(
         verbose_name="<title>", null=True, blank=True, default=""
     )

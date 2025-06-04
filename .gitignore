@@ -6,10 +6,13 @@ dist/
 wheels/
 *.egg-info
 .mypy_cache/
+static/
 media/
 media/images/
 *.sqlite3
 db.sqlite3
+restart.txt
+passenger_wsgi.py
 
 # Virtual environments
 .venv

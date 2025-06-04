@@ -1,4 +1,5 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
+from django.urls import reverse
 from django.core.paginator import Paginator
 from django.views import View
 from django.http import HttpRequest, HttpResponse, Http404
@@ -15,7 +16,13 @@ from catalog_app.fetchers import (
 
 class IndexView(View):
     def get(self, request: HttpRequest) -> HttpResponse:
-        return render(request, template_name="index_app/index.html")
+        return render(
+            request,
+            template_name="index_app/index.html",
+            context={
+                "categories": fetch_categories(parent=None),
+            },
+        )
 
 
 class CatalogView(View):
@@ -31,7 +38,7 @@ class CatalogView(View):
             request,
             template_name="index_app/catalog.html",
             context={
-                "search": "",
+                "search": search,
                 "goods": page_obj,
                 "pages": range(1, page_obj.paginator.num_pages + 1),
                 "categories": fetch_categories(parent=None),
@@ -40,22 +47,7 @@ class CatalogView(View):
 
     def post(self, request: HttpRequest) -> HttpResponse:
         search = request.POST.get("search", "")
-        if search:
-            goods = fetch_goods_by_query(search)
-        else:
-            goods = fetch_goods()
-        paginator = Paginator(goods, settings.PAGINATOR_ITEMS_ON_PAGE)
-        page_obj = paginator.get_page(None)
-        return render(
-            request,
-            template_name="index_app/catalog.html",
-            context={
-                "search": search,
-                "goods": page_obj,
-                "pages": range(1, page_obj.paginator.num_pages + 1),
-                "categories": fetch_categories(parent=None),
-            },
-        )
+        return redirect(f"{reverse('index:catalog')}?search={search}&page=1")
 
 
 class GoodView(View):

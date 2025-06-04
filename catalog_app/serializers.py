@@ -35,15 +35,9 @@ class CategorySerializer(serializers.Serializer):
     name = serializers.CharField(max_length=150)
     parent = RecursiveField(allow_null=True, required=False)
     image = serializers.ImageField(use_url=True, read_only=True)
-    seo_cleaned_title = serializers.CharField(
-        max_length=2048, required=False, allow_blank=True
-    )
-    seo_cleaned_description = serializers.CharField(
-        max_length=2048, required=False, allow_blank=True
-    )
-    seo_cleaned_keywords = serializers.CharField(
-        max_length=2048, required=False, allow_blank=True
-    )
+    seo_cleaned_title = serializers.CharField(required=False, allow_blank=True)
+    seo_cleaned_description = serializers.CharField(required=False, allow_blank=True)
+    seo_cleaned_keywords = serializers.CharField(required=False, allow_blank=True)
 
     def create(self, validated_data: dict[str, Any]) -> Category:
         obj, _ = Category.objects.get_or_create(id=validated_data.get("id"))
@@ -68,16 +62,10 @@ class GoodSerializer(serializers.Serializer):
     image2 = serializers.ImageField(use_url=True, read_only=True)
     image3 = serializers.ImageField(use_url=True, read_only=True)
     image4 = serializers.ImageField(use_url=True, read_only=True)
-    description = serializers.CharField(
-        max_length=2048, required=False, allow_blank=True
-    )
-    seo_title = serializers.CharField(max_length=2048, required=False, allow_blank=True)
-    seo_description = serializers.CharField(
-        max_length=2048, required=False, allow_blank=True
-    )
-    seo_keywords = serializers.CharField(
-        max_length=2048, required=False, allow_blank=True
-    )
+    description = serializers.CharField(required=False, allow_blank=True)
+    seo_title = serializers.CharField(required=False, allow_blank=True)
+    seo_description = serializers.CharField(required=False, allow_blank=True)
+    seo_keywords = serializers.CharField(required=False, allow_blank=True)
 
     def create(self, validated_data: dict[str, Any]) -> Good:
         obj, _ = Good.objects.get_or_create(id=validated_data.get("id"))

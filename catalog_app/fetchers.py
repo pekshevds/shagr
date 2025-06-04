@@ -24,6 +24,7 @@ def fetch_path(category: Category) -> list[Category]:
             break
         category_list.append(parent)
         parent = parent.parent
+    category_list.reverse()
     return category_list
 
 

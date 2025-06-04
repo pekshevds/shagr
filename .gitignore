@@ -13,6 +13,7 @@ media/images/
 db.sqlite3
 restart.txt
 passenger_wsgi.py
+robots.txt
 
 # Virtual environments
 .venv

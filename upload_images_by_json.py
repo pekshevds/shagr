@@ -1,5 +1,5 @@
 import json
-from httpx import Client
+from requests import get
 from django.core.files import File
 from django.core.files.temp import NamedTemporaryFile
 from django.conf import settings
@@ -7,8 +7,8 @@ from catalog_app.models import Good
 
 
 def save_image(good: Good, attr_name: str, link: str) -> None:
-    result = Client().get(link)
-    if 200 <= result.status_code < 400:
+    result = get(link)
+    if result.ok:
         img_temp = NamedTemporaryFile()
         img_temp.write(result.content)
         img_temp.flush()
@@ -32,8 +32,8 @@ def run_upload() -> None:
             if good:
                 link1 = item.get("link1")
                 if link1:
-                    result = Client().get(link1)
-                    if 200 <= result.status_code < 400:
+                    result = get(link1)
+                    if result.ok:
                         img_temp = NamedTemporaryFile()
                         img_temp.write(result.content)
                         img_temp.flush()
@@ -41,8 +41,8 @@ def run_upload() -> None:
 
                 link2 = item.get("link2")
                 if link2:
-                    result = Client().get(link2)
-                    if 200 <= result.status_code < 400:
+                    result = get(link2)
+                    if result.ok:
                         img_temp = NamedTemporaryFile()
                         img_temp.write(result.content)
                         img_temp.flush()
@@ -50,8 +50,8 @@ def run_upload() -> None:
 
                 link3 = item.get("link3")
                 if link3:
-                    result = Client().get(link3)
-                    if 200 <= result.status_code < 400:
+                    result = get(link3)
+                    if result.ok:
                         img_temp = NamedTemporaryFile()
                         img_temp.write(result.content)
                         img_temp.flush()

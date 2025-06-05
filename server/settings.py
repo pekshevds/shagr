@@ -29,7 +29,8 @@ SECRET_KEY = os.getenv("SECRET_KEY")
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS: list[str] = ["shagrbel.ru", "www.shagrbel.ru"]
+CURRENT_HOST = "shagrbel.ru"
+ALLOWED_HOSTS: list[str] = [CURRENT_HOST, f"www.{CURRENT_HOST}"]
 
 
 # Application definition

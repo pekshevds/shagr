@@ -13,9 +13,15 @@
             <div class="categories__slider owl-carousel">
                 {% for cat in categories %}
                 <div class="col-lg-3">
+                    {% if cat.image1 %}
+                    <div class="categories__item set-bg" data-setbg="{{ cat.image1.url }}">
+                        <h5><a href="{% url 'index:category' cat.id %}">{{ cat.name }}</a></h5>
+                    </div>
+                    {% else %}
                     <div class="categories__item set-bg" data-setbg="{% static "img/categories/cat-1.jpg" %}">
                         <h5><a href="{% url 'index:category' cat.id %}">{{ cat.name }}</a></h5>
                     </div>
+                    {% endif %}
                 </div>
                 {% endfor %}                
             </div>

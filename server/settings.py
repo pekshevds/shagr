@@ -30,7 +30,12 @@ SECRET_KEY = os.getenv("SECRET_KEY")
 DEBUG = True
 
 CURRENT_HOST = "shagrbel.ru"
-ALLOWED_HOSTS: list[str] = [CURRENT_HOST, f"www.{CURRENT_HOST}"]
+ALLOWED_HOSTS: list[str] = [
+    "127.0.0.1",
+    "localhost",
+    CURRENT_HOST,
+    f"www.{CURRENT_HOST}",
+]
 
 
 # Application definition

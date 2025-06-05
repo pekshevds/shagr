@@ -33,18 +33,46 @@
             <div class="col-lg-6 col-md-6">
                 <div class="product__details__pic">
                     <div class="product__details__pic__item">
+                        {% if good.image1 %}
                         <img class="product__details__pic__item--large"
-                            src="{% static "img/product/details/product-details-1.jpg" %}" alt="">
+                            src="{{ good.image1.url }}" alt="">
+                        {% else %}
+                        <img class="product__details__pic__item--large"
+                            src="{% static "img/product/details/product-details.jpg" %}" alt="">
+                        {% endif %}
                     </div>
                     <div class="product__details__pic__slider owl-carousel">
-                        <img data-imgbigurl="{% static "img/product/details/product-details-2.jpg" %}"
-                            src="{% static "img/product/details/thumb-1.jpg" %}" alt="">
-                        <img data-imgbigurl="{% static "img/product/details/product-details-3.jpg" %}"
-                            src="{% static "img/product/details/thumb-2.jpg" %}" alt="">
-                        <img data-imgbigurl="{% static "img/product/details/product-details-5.jpg" %}"
-                            src="{% static "img/product/details/thumb-3.jpg" %}" alt="">
-                        <img data-imgbigurl="{% static "img/product/details/product-details-4.jpg" %}"
-                            src="{% static "img/product/details/thumb-4.jpg" %}" alt="">
+                        {% if good.image1 %}
+                        <img data-imgbigurl="{{ good.image1.url }}"
+                            src="{{ good.image1.url }}" alt="">
+                        {% else %}
+                        <img data-imgbigurl="{% static "img/product/details/product-details.jpg" %}"
+                            src="{% static "img/product/details/thumb.jpg" %}" alt="">
+                        {% endif %}
+
+                        {% if good.image2 %}
+                        <img data-imgbigurl="{{ good.image2.url }}"
+                            src="{{ good.image2.url }}" alt="">
+                        {% else %}
+                        <img data-imgbigurl="{% static "img/product/details/product-details.jpg" %}"
+                            src="{% static "img/product/details/thumb.jpg" %}" alt="">
+                        {% endif %}
+
+                        {% if good.image3 %}
+                        <img data-imgbigurl="{{ good.image3.url }}"
+                            src="{{ good.image3.url }}" alt="">
+                        {% else %}
+                        <img data-imgbigurl="{% static "img/product/details/product-details.jpg" %}"
+                            src="{% static "img/product/details/thumb.jpg" %}" alt="">
+                        {% endif %}
+
+                        {% if good.image4 %}
+                        <img data-imgbigurl="{{ good.image4.url }}"
+                            src="{{ good.image4.url }}" alt="">
+                        {% else %}
+                        <img data-imgbigurl="{% static "img/product/details/product-details.jpg" %}"
+                            src="{% static "img/product/details/thumb.jpg" %}" alt="">
+                        {% endif %}                                             
                     </div>
                 </div>
             </div>

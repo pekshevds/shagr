@@ -55,8 +55,13 @@
                         {% for good in goods %}
                         <div class="col-lg-4 col-md-6 col-sm-6">
                             <div class="product__item">
-                                <div class="product__item__pic set-bg" data-setbg="{% static "img/product/product-1.jpg" %}">                                
+                                {% if good.image1 %}
+                                <div class="product__item__pic set-bg" data-setbg="{{ good.image1.url }}">                                
                                 </div>
+                                {% else %}
+                                <div class="product__item__pic set-bg" data-setbg="{% static "img/product/product.jpg" %}">                                
+                                </div>
+                                {% endif %}
                                 <div class="product__item__text">
                                     <h6><a href="{% url 'index:good' good.id %}">{{ good.name }}</a></h6>                                
                                 </div>

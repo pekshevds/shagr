@@ -1,6 +1,42 @@
+from typing import Any
 from django.db import models
 from django.db.models import QuerySet
 from index_app.models import Directory
+
+DEFAULT_EXTENTION = "jpg"
+
+
+def fetch_image_name(
+    prefix: str, instance: Any, extension: str = DEFAULT_EXTENTION
+) -> str:
+    return f"images/{prefix}_{str(instance.id)}.{extension}"
+
+
+def fetch_extention_from_filename(filename: str) -> str:
+    parts_of_filename = filename.split(".")
+    if len(parts_of_filename) == 2:
+        return parts_of_filename[1]
+    return DEFAULT_EXTENTION
+
+
+def get_image_name1(instance: object, filename: str) -> str:
+    extention = fetch_extention_from_filename(filename)
+    return fetch_image_name("image1", instance, extention)
+
+
+def get_image_name2(instance: object, filename: str) -> str:
+    extention = fetch_extention_from_filename(filename)
+    return fetch_image_name("image2", instance, extention)
+
+
+def get_image_name3(instance: object, filename: str) -> str:
+    extention = fetch_extention_from_filename(filename)
+    return fetch_image_name("image3", instance, extention)
+
+
+def get_image_name4(instance: object, filename: str) -> str:
+    extention = fetch_extention_from_filename(filename)
+    return fetch_image_name("image4", instance, extention)
 
 
 class Producer(Directory):
@@ -10,8 +46,8 @@ class Producer(Directory):
 
 
 class Category(Directory):
-    image = models.ImageField(
-        verbose_name="Превью", upload_to="images/", blank=True, null=True
+    image1 = models.ImageField(
+        verbose_name="Превью", upload_to=get_image_name1, blank=True, null=True
     )
     parent = models.ForeignKey(
         "Category",
@@ -68,20 +104,17 @@ class Good(Directory):
         verbose_name="Наименование полное", blank=True, null=True
     )
     description = models.TextField(verbose_name="Описание", blank=True, null=True)
-    image = models.ImageField(
-        verbose_name="Превью", upload_to="images/", blank=True, null=True
-    )
     image1 = models.ImageField(
-        verbose_name="Изображение 1", upload_to="images/", blank=True, null=True
+        verbose_name="Изображение 1", upload_to=get_image_name1, blank=True, null=True
     )
     image2 = models.ImageField(
-        verbose_name="Изображение 2", upload_to="images/", blank=True, null=True
+        verbose_name="Изображение 2", upload_to=get_image_name2, blank=True, null=True
     )
     image3 = models.ImageField(
-        verbose_name="Изображение 3", upload_to="images/", blank=True, null=True
+        verbose_name="Изображение 3", upload_to=get_image_name3, blank=True, null=True
     )
     image4 = models.ImageField(
-        verbose_name="Изображение 4", upload_to="images/", blank=True, null=True
+        verbose_name="Изображение 4", upload_to=get_image_name4, blank=True, null=True
     )
     category = models.ForeignKey(
         Category,

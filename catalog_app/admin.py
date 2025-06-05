@@ -34,7 +34,7 @@ class CategoryAdmin(admin.ModelAdmin):
                         "parent",
                     ),
                     "comment",
-                    ("image", "preview"),
+                    ("image1", "preview"),
                 )
             },
         ),
@@ -54,8 +54,10 @@ class CategoryAdmin(admin.ModelAdmin):
     readonly_fields = ("preview",)
 
     def preview(self, obj: Good) -> str:
-        if obj.image:
-            return format_html("'<img src={} style='max-height: 75px;'>", obj.image.url)
+        if obj.image1:
+            return format_html(
+                "'<img src={} style='max-height: 75px;'>", obj.image1.url
+            )
         return ""
 
     preview.short_description = "Изображение (превью)"
@@ -85,9 +87,9 @@ class GoodAdmin(admin.ModelAdmin):
             "Изображения",
             {
                 "fields": (
-                    ("image", "preview"),
-                    ("image1", "image2"),
-                    ("image3", "image4"),
+                    ("image1", "preview"),
+                    ("image2", "image3"),
+                    ("image4",),
                 )
             },
         ),
@@ -107,8 +109,10 @@ class GoodAdmin(admin.ModelAdmin):
     readonly_fields = ("preview",)
 
     def preview(self, obj: Good) -> str:
-        if obj.image:
-            return format_html("'<img src={} style='max-height: 75px;'>", obj.image.url)
+        if obj.image1:
+            return format_html(
+                "'<img src={} style='max-height: 75px;'>", obj.image1.url
+            )
         return ""
 
     preview.short_description = "Изображение (превью)"

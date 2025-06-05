@@ -23,7 +23,7 @@ def save_image(good: Good, attr_name: str, link: str) -> None:
 
 def run_upload() -> None:
     with open(
-        settings.BASE_DIR / "links_test.json", mode="+r", encoding="utf-8-sig"
+        settings.BASE_DIR / "links.json", mode="+r", encoding="utf-8-sig"
     ) as file:
         data = json.load(file)
         for item in data.get("data"):

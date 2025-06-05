@@ -9,6 +9,7 @@ dependencies = [
     "django-stubs[compatible-mypy]>=5.2.0",
     "djangorestframework>=3.16.0",
     "djangorestframework-recursive>=0.1.2",
+    "httpx>=0.28.1",
     "mysqlclient>=2.2.7",
     "pillow>=11.2.1",
     "psycopg2>=2.9.10",

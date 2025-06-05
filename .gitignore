@@ -13,6 +13,7 @@ db.sqlite3
 restart.txt
 passenger_wsgi.py
 robots.txt
+*.json
 
 # Virtual environments
 .venv

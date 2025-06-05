@@ -6,7 +6,6 @@ dist/
 wheels/
 *.egg-info
 .mypy_cache/
-static/
 media/
 media/images/
 *.sqlite3

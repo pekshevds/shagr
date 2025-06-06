@@ -1,9 +1,16 @@
 import json
-from requests import get
+import requests
 from django.core.files import File
 from django.core.files.temp import NamedTemporaryFile
 from django.conf import settings
 from catalog_app.models import Good
+
+
+def get(link: str) -> requests.Response:
+    try:
+        return requests.get(link)
+    except (requests.exceptions.ConnectionError, requests.exceptions.ConnectTimeout):
+        return {"ok": False}
 
 
 def save_image(good: Good, attr_name: str, link: str) -> None:

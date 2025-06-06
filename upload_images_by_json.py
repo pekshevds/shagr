@@ -9,7 +9,7 @@ from catalog_app.models import Good
 
 @dataclass
 class Response:
-    Ok: bool = False
+    ok: bool = False
 
 
 def get(link: str) -> requests.Response:

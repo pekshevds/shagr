@@ -39,12 +39,14 @@ def run_upload() -> None:
         settings.BASE_DIR / "links.json", mode="+r", encoding="utf-8-sig"
     ) as file:
         data = json.load(file)
-        for item in data.get("data"):
+        count = len(data.get("data"))
+        for _, item in enumerate(data.get("data")):
+            print(f"{_}/{count}")
             good_id = item.get("id")
             good = Good.objects.filter(id=good_id).first()
             if good:
                 link1 = item.get("link1")
-                if link1:
+                if link1 and good.image1 is None:
                     result = get(link1)
                     if result.ok:
                         img_temp = NamedTemporaryFile()
@@ -53,7 +55,7 @@ def run_upload() -> None:
                         good.image1.save("image.jpg", File(img_temp), save=True)
 
                 link2 = item.get("link2")
-                if link2:
+                if link2 and good.image2 is None:
                     result = get(link2)
                     if result.ok:
                         img_temp = NamedTemporaryFile()
@@ -62,7 +64,7 @@ def run_upload() -> None:
                         good.image2.save("image.jpg", File(img_temp), save=True)
 
                 link3 = item.get("link3")
-                if link3:
+                if link3 and good.image3 is None:
                     result = get(link3)
                     if result.ok:
                         img_temp = NamedTemporaryFile()

@@ -14,8 +14,12 @@ class Response:
 
 def get(link: str) -> requests.Response:
     try:
-        return requests.get(link)
-    except (requests.exceptions.ConnectionError, requests.exceptions.ConnectTimeout):
+        return requests.get(link, timeout=10)
+    except (
+        requests.exceptions.ConnectionError,
+        requests.exceptions.ConnectTimeout,
+        requests.exceptions.Timeout,
+    ):
         return Response()
 
 

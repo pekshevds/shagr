@@ -148,7 +148,6 @@ class Good(Directory):
         blank=True,
         default="",
     )
-    objects = models.Manager()
     active_items = ActiveGoodsManager()
 
     class Meta:

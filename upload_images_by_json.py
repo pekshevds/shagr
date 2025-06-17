@@ -45,12 +45,14 @@ def run_upload() -> None:
         data = json.load(file)
         count = len(data.get("data"))
         for _, item in enumerate(data.get("data")):
+            if _ <= 6289:
+                continue
             print(f"{_}/{count}")
             good_id = item.get("id")
             good = Good.objects.filter(id=good_id).first()
             if good:
                 link1 = item.get("link1")
-                if link1:
+                if link1 and not good.image1:
                     result = get(link1)
                     if result.ok:
                         img_temp = NamedTemporaryFile()

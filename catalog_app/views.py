@@ -3,7 +3,7 @@ from rest_framework import permissions, authentication
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework.request import Request
-from catalog_app.fetchers import fetch_goods, fetch_categories
+from catalog_app.fetchers import fetch_goods, fetch_categories, fetch_good_by_id
 from catalog_app.serializers import GoodSerializer, CategorySerializer
 
 
@@ -40,7 +40,11 @@ class CatalogView(APIView):
     permission_classes = [permissions.AllowAny]
 
     def get(self, request: Request) -> Response:
-        serializer = GoodSerializer(fetch_goods(), many=True)
+        id = request.GET.get("id")
+        if id:
+            serializer = GoodSerializer([fetch_good_by_id(id=id)], many=True)
+        else:
+            serializer = GoodSerializer(fetch_goods(), many=True)
         return Response(
             {"data": serializer.data, "errors": []},
             status=status.HTTP_200_OK,

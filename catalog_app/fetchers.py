@@ -12,7 +12,7 @@ def fetch_goods(category: Category | None = None) -> QuerySet:
     return Good.active_items.all()
 
 
-def fetch_categories(parent: Category | None) -> QuerySet:
+def fetch_categories(parent: Category | None = None) -> QuerySet:
     return Category.objects.filter(parent=parent)
 
 

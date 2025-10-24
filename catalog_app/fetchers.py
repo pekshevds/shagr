@@ -1,5 +1,5 @@
 from django.db.models import QuerySet, Q
-from catalog_app.models import Good, Category
+from catalog_app.models import Good, Category, PropertyItem
 
 
 def fetch_good_by_id(id: str) -> Good | None:
@@ -10,6 +10,10 @@ def fetch_goods(category: Category | None = None) -> QuerySet:
     if category:
         return category.goods.all()
     return Good.active_items.all()
+
+
+def fetch_properties(good: Good) -> QuerySet:
+    return PropertyItem.objects.filter(good=good).all()
 
 
 def fetch_categories(parent: Category | None = None) -> QuerySet:

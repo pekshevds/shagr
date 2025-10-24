@@ -81,9 +81,10 @@
                     <h3>{{ good }}</h3>                    
                     <p>{{ good.description }}</p>
                     <ul>
-                        <li><b>Доступно</b> <span>In Stock</span></li>
-                        <li><b>Доставка</b> <span>01 day shipping. <samp>Free pickup today</samp></span></li>
-                        <li><b>Вес</b> <span>0.5 kg</span></li>                    
+                        {% for item in good.properties.all %}
+                            <li>
+                                <b>{{ item.property }}</b> <span>{{ item.value }} ({{ item.okei }})</span></li>
+                        {% endfor %}
                     </ul>
                 </div>
             </div>

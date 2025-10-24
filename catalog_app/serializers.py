@@ -1,6 +1,6 @@
 from typing import Any
 from rest_framework import serializers
-from catalog_app.models import Category, Good, Producer
+from catalog_app.models import Category, Good, Producer, PropertyItem
 from rest_framework_recursive.fields import RecursiveField
 
 
@@ -50,6 +50,12 @@ class CategorySerializer(serializers.Serializer):
         return obj
 
 
+class PropertySerializer(serializers.Serializer):
+    property = serializers.CharField(max_length=150, required=False, allow_blank=True)
+    okei = serializers.CharField(max_length=150, required=False, allow_blank=True)
+    value = serializers.CharField(max_length=50, required=False, allow_blank=True)
+
+
 class GoodSerializer(serializers.Serializer):
     id = serializers.UUIDField()
     name = serializers.CharField(max_length=150)
@@ -66,6 +72,9 @@ class GoodSerializer(serializers.Serializer):
     seo_title = serializers.CharField(required=False, allow_blank=True)
     seo_description = serializers.CharField(required=False, allow_blank=True)
     seo_keywords = serializers.CharField(required=False, allow_blank=True)
+    properties = serializers.ListField(
+        child=PropertySerializer(required=False, allow_null=True)
+    )
 
     def create(self, validated_data: dict[str, Any]) -> Good:
         obj, _ = Good.objects.get_or_create(id=validated_data.get("id"))
@@ -80,4 +89,13 @@ class GoodSerializer(serializers.Serializer):
         fill_by_link(obj, "category", validated_data, CategorySerializer)
         fill_by_link(obj, "producer", validated_data, ProducerSerializer)
         obj.save()
+        obj.properties.all().delete()
+        for item in validated_data.get("properties", []):
+            prop = PropertyItem.objects.create(
+                good=obj,
+                property=item["property"],
+                okei=item["okei"],
+                value=item["value"],
+            )
+            prop.save()
         return obj

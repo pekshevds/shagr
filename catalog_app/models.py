@@ -153,3 +153,39 @@ class Good(Directory):
     class Meta:
         verbose_name = "Товар"
         verbose_name_plural = "Товары"
+
+
+class PropertyItem(Directory):
+    good = models.ForeignKey(
+        Good,
+        verbose_name="Товар",
+        on_delete=models.CASCADE,
+        blank=False,
+        null=False,
+        related_name="properties",
+    )
+    property = models.CharField(
+        verbose_name="Свойство",
+        max_length=150,
+        blank=True,
+        null=True,
+        default="",
+    )
+    okei = models.CharField(
+        verbose_name="Ед.",
+        max_length=150,
+        blank=True,
+        null=True,
+        default="",
+    )
+    value = models.CharField(
+        verbose_name="Значение",
+        max_length=50,
+        blank=True,
+        null=True,
+        default="",
+    )
+
+    class Meta:
+        verbose_name = "Характеристика"
+        verbose_name_plural = "Характеристики"

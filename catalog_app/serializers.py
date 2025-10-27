@@ -63,7 +63,7 @@ class PropertySerializer(serializers.Serializer):
         )
 
 
-class PropertyListSerializer(serializers.ListField):
+class PropertyListSerializer(serializers.ListSerializer):
     child = PropertySerializer(required=False, allow_null=True)
 
 
@@ -83,9 +83,10 @@ class GoodSerializer(serializers.Serializer):
     seo_title = serializers.CharField(required=False, allow_blank=True)
     seo_description = serializers.CharField(required=False, allow_blank=True)
     seo_keywords = serializers.CharField(required=False, allow_blank=True)
-    properties = serializers.ListSerializer(
-        child=PropertySerializer(required=False, allow_null=True)
-    )
+    """properties = serializers.ListSerializer(
+        child=PropertySerializer(required=False, allow_null=True),
+    )"""
+    properties = PropertyListSerializer()
 
     def create(self, validated_data: dict[str, Any]) -> Good:
         obj, _ = Good.objects.get_or_create(id=validated_data.get("id"))

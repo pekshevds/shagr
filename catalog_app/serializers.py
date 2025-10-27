@@ -55,6 +55,13 @@ class PropertySerializer(serializers.Serializer):
     okei = serializers.CharField(max_length=150, required=False, allow_blank=True)
     value = serializers.CharField(max_length=50, required=False, allow_blank=True)
 
+    class Meta:
+        fields = (
+            "property",
+            "okei",
+            "value",
+        )
+
 
 class PropertyListSerializer(serializers.ListField):
     child = PropertySerializer(required=False, allow_null=True)

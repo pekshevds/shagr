@@ -55,12 +55,12 @@ class PropertySerializer(serializers.Serializer):
     okei = serializers.CharField(max_length=150, required=False, allow_blank=True)
     value = serializers.CharField(max_length=50, required=False, allow_blank=True)
 
-    class Meta:
-        fields = (
-            "property",
-            "okei",
-            "value",
-        )
+    def to_representation(self, data: Any) -> dict[str, Any]:
+        return {
+            "property": data.property,
+            "okei": data.okei,
+            "value": data.value,
+        }
 
 
 class PropertyListSerializer(serializers.ListSerializer):

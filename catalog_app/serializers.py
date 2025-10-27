@@ -56,6 +56,10 @@ class PropertySerializer(serializers.Serializer):
     value = serializers.CharField(max_length=50, required=False, allow_blank=True)
 
 
+class PropertyListSerializer(serializers.ListField):
+    child = PropertySerializer(required=False, allow_null=True)
+
+
 class GoodSerializer(serializers.Serializer):
     id = serializers.UUIDField()
     name = serializers.CharField(max_length=150)
@@ -72,7 +76,7 @@ class GoodSerializer(serializers.Serializer):
     seo_title = serializers.CharField(required=False, allow_blank=True)
     seo_description = serializers.CharField(required=False, allow_blank=True)
     seo_keywords = serializers.CharField(required=False, allow_blank=True)
-    properties = serializers.ListField(
+    properties = serializers.ListSerializer(
         child=PropertySerializer(required=False, allow_null=True)
     )
 

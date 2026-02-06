@@ -63,7 +63,8 @@
                                 </div>
                                 {% endif %}
                                 <div class="product__item__text">
-                                    <h6><a href="{% url 'index:good' good.id %}">{{ good.name }}</a></h6>                                
+                                    <h6><a href="{% url 'index:good' good.id %}">{{ good.name }}</a></h6>
+                                    <h7>Цена {{ good.price }} руб</h7>
                                 </div>
                             </div>
                         </div>

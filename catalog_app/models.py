@@ -148,6 +148,14 @@ class Good(Directory):
         blank=True,
         default="",
     )
+    price = models.DecimalField(
+        verbose_name="Цена",
+        max_digits=15,
+        decimal_places=2,
+        blank=True,
+        null=True,
+        default=0,
+    )
     active_items = ActiveGoodsManager()
 
     class Meta:

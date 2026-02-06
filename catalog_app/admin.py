@@ -79,7 +79,7 @@ class GoodAdmin(admin.ModelAdmin):
             None,
             {
                 "fields": (
-                    ("name", "category"),
+                    ("name", "category", "price"),
                     "producer",
                     "full_name",
                     ("art", "code"),

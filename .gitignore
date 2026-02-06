@@ -10,6 +10,7 @@ media/
 media/images/
 *.sqlite3
 db.sqlite3
+db.sqlite3
 restart.txt
 passenger_wsgi.py
 robots.txt

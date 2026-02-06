@@ -86,6 +86,11 @@ class GoodSerializer(serializers.Serializer):
     """properties = serializers.ListSerializer(
         child=PropertySerializer(required=False, allow_null=True),
     )"""
+    price = serializers.DecimalField(
+        required=False,
+        max_digits=15,
+        decimal_places=2,
+    )
     properties = PropertyListSerializer()
 
     def create(self, validated_data: dict[str, Any]) -> Good:
@@ -100,6 +105,7 @@ class GoodSerializer(serializers.Serializer):
         obj.seo_keywords = validated_data.get("seo_keywords", obj.seo_keywords)
         fill_by_link(obj, "category", validated_data, CategorySerializer)
         fill_by_link(obj, "producer", validated_data, ProducerSerializer)
+        obj.price = validated_data.get("price", obj.price)
         obj.save()
         obj.properties.all().delete()
         for item in validated_data.get("properties", []):

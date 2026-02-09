@@ -64,7 +64,11 @@
                                 {% endif %}
                                 <div class="product__item__text">
                                     <h6><a href="{% url 'index:good' good.id %}">{{ good.name }}</a></h6>
-                                    <h7>Цена {{ good.price }} руб</h7>
+                                    {% if good.price %}
+                                    <h7>Цена: {{ good.price }} руб.</h7>
+                                    {% else %}
+                                    <h7>Цена: уточняйте у менеджера</h7>
+                                    {% endif %}
                                 </div>
                             </div>
                         </div>

@@ -80,7 +80,11 @@
                 <div class="product__details__text">
                     <h3>{{ good }}</h3>                    
                     <p>{{ good.description }}</p>
-                    <h4>Цена {{ good.price }} руб.</h4>
+                    {% if good.price %}
+                    <h4>Цена: {{ good.price }} руб.</h4>
+                    {% else %}
+                    <h4>Цена: уточняйте у менеджера</h4>
+                    {% endif %}
                     <ul>
                         {% for item in good.properties.all %}
                             <li>

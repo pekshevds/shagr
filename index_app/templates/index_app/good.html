@@ -80,13 +80,13 @@
                 <div class="product__details__text">
                     <h3>{{ good }}</h3>                    
                     <p>{{ good.description }}</p>
+                    <h4>Цена {{ good.price }} руб.</h4>
                     <ul>
                         {% for item in good.properties.all %}
                             <li>
-                                <b>{{ item.property }}</b> <span>{{ item.value }} ({{ item.okei }})</span></li>
+                                <b>{{ item.property }}</b> <span>{{ item.value }} {% if item.okei %} ({{ item.okei }}) {% endif %}</span></li>
                         {% endfor %}
-                    </ul>
-                    <h4>Цена {{ good.price }} руб.</h4>
+                    </ul>                    
                 </div>
             </div>
         </div>

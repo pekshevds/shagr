@@ -15,13 +15,13 @@ class Response:
 def get(link: str) -> requests.Response:
     try:
         result = requests.get(link, timeout=10)
-        print(f"error {link}")
         return result
     except (
         requests.exceptions.ConnectionError,
         requests.exceptions.ConnectTimeout,
         requests.exceptions.Timeout,
     ):
+        print(f"error {link}")
         return Response()
 
 

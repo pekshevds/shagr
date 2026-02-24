@@ -1,9 +1,16 @@
 from django.urls import path
-from index_app.views import IndexView, CatalogView, GoodView, CategoryView, ContactView
+from index_app.views import (
+    # IndexView,
+    CatalogView,
+    GoodView,
+    CategoryView,
+    ContactView,
+)
 
 app_name = "index"
 urlpatterns = [
-    path("", IndexView.as_view(), name="home"),
+    # path("", IndexView.as_view(), name="home"),
+    path("", CatalogView.as_view(), name="home"),
     path("catalog/good/<str:id>/", GoodView.as_view(), name="good"),
     path("catalog/category/<str:id>/", CategoryView.as_view(), name="category"),
     path("catalog/", CatalogView.as_view(), name="catalog"),

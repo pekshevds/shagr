@@ -30,4 +30,5 @@ class Directory(Base):
         return f"{self.name}"
 
     class Meta:
+        ordering = ("name",)
         abstract = True

@@ -8,8 +8,8 @@ def fetch_good_by_id(id: str) -> Good | None:
 
 def fetch_goods(category: Category | None = None) -> QuerySet:
     if category:
-        return category.goods.all()
-    return Good.active_items.all()
+        return category.goods.all().order_by("name")
+    return Good.active_items.all().order_by("name")
 
 
 def fetch_properties(good: Good) -> QuerySet:
@@ -17,7 +17,7 @@ def fetch_properties(good: Good) -> QuerySet:
 
 
 def fetch_categories(parent: Category | None = None) -> QuerySet:
-    return Category.objects.filter(parent=parent)
+    return Category.objects.filter(parent=parent).order_by("name")
 
 
 def fetch_path(category: Category) -> list[Category]:
@@ -33,12 +33,16 @@ def fetch_path(category: Category) -> list[Category]:
 
 
 def fetch_goods_by_query(query: str) -> QuerySet:
-    return Good.active_items.filter(
-        Q(name__icontains=query)
-        | Q(art__icontains=query)
-        | Q(full_name__icontains=query)
-        | Q(description__icontains=query)
-    ).all()
+    return (
+        Good.active_items.filter(
+            Q(name__icontains=query)
+            | Q(art__icontains=query)
+            | Q(full_name__icontains=query)
+            | Q(description__icontains=query)
+        )
+        .all()
+        .order_by("name")
+    )
 
 
 def fetch_category_by_id(id: str) -> Category | None:
